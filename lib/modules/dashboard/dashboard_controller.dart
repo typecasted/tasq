@@ -1,7 +1,12 @@
+/// package imports
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/// utils imports
 import '../../utils/assets.gen.dart';
+
+/// screen imports
+import '../home/home_screen.dart';
 
 class DashboardController extends GetxController {
   /// - [currentScreenIndex] variable is used to set the index of the current screen being showed in the dashboard.
@@ -17,7 +22,15 @@ class DashboardController extends GetxController {
   final RxList<String> navIconList = <String>[].obs;
 
   /// - [initDashboardScreenList] this function will be call in [initState] method of [Dashboard] widget.
-  void initDashboardScreenList() {
+  void initDashboardScreenList() async {
+    isLoading.value = true;
+
+    await Future.delayed(
+      const Duration(
+        seconds: 2,
+      ),
+    );
+
     /// value of [currentScreenIndex] must be [0] at the time of dashboard initialization.
     currentScreenIndex.value = 0;
 
@@ -27,7 +40,7 @@ class DashboardController extends GetxController {
 
     /// reinitialising the lists
     dashboardScreenList.addAll([
-      const Center(child: Text('Home')),
+      const Center(child: HomeScreen()),
       const Center(child: Text('Calender')),
       const Center(child: Text('Profile')),
     ]);
@@ -37,6 +50,8 @@ class DashboardController extends GetxController {
       Assets.svgs.icCalenderFilled,
       Assets.svgs.icPersonFilled,
     ]);
+
+    isLoading.value = false;
   }
 
   void changeScreen(int index) {
