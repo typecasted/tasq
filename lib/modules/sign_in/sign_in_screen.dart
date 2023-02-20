@@ -15,6 +15,9 @@ import '../../utils/fonts.gen.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_login_text_field.dart';
 
+/// screen imports
+import '../dashboard/dashboard.dart';
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -133,7 +136,16 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   CommonButton(
                     text: AppStrings.login,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const Dashboard();
+                          },
+                        ),
+                      );
+                    },
                   ),
 
                   Padding(
