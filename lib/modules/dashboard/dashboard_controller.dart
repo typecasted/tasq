@@ -4,24 +4,19 @@ import 'package:get/get.dart';
 import '../../utils/assets.gen.dart';
 
 class DashboardController extends GetxController {
-  /// [currentScreenIndex] variable is used to set the index of the current screen being showed in the dashboard.
+  /// - [currentScreenIndex] variable is used to set the index of the current screen being showed in the dashboard.
   final RxInt currentScreenIndex = 0.obs;
 
-  /// [isLoading] is used for showing and hiding and loader at the time of screen initialization.
+  /// - [isLoading] is used for showing and hiding and loader at the time of screen initialization.
   final RxBool isLoading = false.obs;
 
-  /// [dashboardScreenList] variable is list of screen to be shown in the dashboard.
+  /// - [dashboardScreenList] variable is list of screen to be shown in the dashboard.
   final RxList<Widget> dashboardScreenList = <Widget>[].obs;
 
-  /// [navIconList] is list of navigation icons which is provided from [Assets.svgs]
+  /// - [navIconList] is list of navigation icons which is provided from [Assets.svgs]
   final RxList<String> navIconList = <String>[].obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    initDashboardScreenList();
-  }
-
+  /// - [initDashboardScreenList] this function will be call in [initState] method of [Dashboard] widget.
   void initDashboardScreenList() {
     /// value of [currentScreenIndex] must be [0] at the time of dashboard initialization.
     currentScreenIndex.value = 0;
