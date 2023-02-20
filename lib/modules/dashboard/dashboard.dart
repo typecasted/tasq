@@ -31,49 +31,42 @@ class _DashboardState extends State<Dashboard> {
       ),
       bottomNavigationBar: Obx(
         () => Container(
-          padding: EdgeInsets.symmetric(
-            vertical: Get.height * 0.02,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 30,
+                blurStyle: BlurStyle.normal,
+                color: AppColors.primaryColorLight.withOpacity(0.15),
+                offset: const Offset(0, -2),
+                spreadRadius: 10,
+              ),
+            ],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              GestureDetector(
-                onTap: () => dashboardController.changeScreen(0),
-                child: SvgPicture.asset(
-                  Assets.svgs.icHomeFilled,
-                  colorFilter: ColorFilter.mode(
-                    dashboardController.currentScreenIndex.value == 0
-                        ? AppColors.primaryColor
-                        : AppColors.primaryColorLight,
-                    BlendMode.srcIn,
+            children: List.generate(
+              dashboardController.navIconList.length,
+              (index) => GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () => dashboardController.changeScreen(index),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Get.width * 0.08,
+                    vertical: Get.height * 0.02,
+                  ),
+                  child: SvgPicture.asset(
+                    dashboardController.navIconList[index],
+                    colorFilter: ColorFilter.mode(
+                      dashboardController.currentScreenIndex.value == index
+                          ? AppColors.primaryColor
+                          : AppColors.primaryColorLight,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () => dashboardController.changeScreen(1),
-                child: SvgPicture.asset(
-                  Assets.svgs.icCalenderFilled,
-                  colorFilter: ColorFilter.mode(
-                    dashboardController.currentScreenIndex.value == 1
-                        ? AppColors.primaryColor
-                        : AppColors.primaryColorLight,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () => dashboardController.changeScreen(2),
-                child: SvgPicture.asset(
-                  Assets.svgs.icPersonFilled,
-                  colorFilter: ColorFilter.mode(
-                    dashboardController.currentScreenIndex.value == 2
-                        ? AppColors.primaryColor
-                        : AppColors.primaryColorLight,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
