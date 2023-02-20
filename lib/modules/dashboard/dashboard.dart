@@ -8,7 +8,6 @@ import './dashboard_controller.dart';
 
 /// utils imports
 import '../../utils/app_colors.dart';
-import '../../utils/assets.gen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
