@@ -28,10 +28,8 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       body: SafeArea(
         child: Obx(
-          () => dashboardController.isLoading.value
-              ? const Center(child: CircularProgressIndicator())
-              : dashboardController.dashboardScreenList[
-                  dashboardController.currentScreenIndex.value],
+          () => dashboardController.dashboardScreenList[
+              dashboardController.currentScreenIndex.value],
         ),
       ),
       bottomNavigationBar: Obx(

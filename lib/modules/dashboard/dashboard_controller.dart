@@ -23,14 +23,6 @@ class DashboardController extends GetxController {
 
   /// - [initDashboardScreenList] this function will be call in [initState] method of [Dashboard] widget.
   void initDashboardScreenList() async {
-    isLoading.value = true;
-
-    await Future.delayed(
-      const Duration(
-        seconds: 2,
-      ),
-    );
-
     /// value of [currentScreenIndex] must be [0] at the time of dashboard initialization.
     currentScreenIndex.value = 0;
 
@@ -50,8 +42,6 @@ class DashboardController extends GetxController {
       Assets.svgs.icCalenderFilled,
       Assets.svgs.icPersonFilled,
     ]);
-
-    isLoading.value = false;
   }
 
   void changeScreen(int index) {

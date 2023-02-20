@@ -16,4 +16,8 @@ class AppStrings {
   static const String signUp = 'Sign Up';
   static const String register = 'Register';
   static const String createYourAcc = 'Create your account';
+
+  /// Home screen
+  static const String myPriorityTasks = 'My Priority Tasks';
+  static const String dailyTasks = 'Daily Tasks';
 }
