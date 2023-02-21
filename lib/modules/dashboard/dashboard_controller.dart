@@ -30,7 +30,7 @@ class DashboardController extends GetxController {
     dashboardScreenList.clear();
     navIconList.clear();
 
-    /// reinitialising the lists
+    /// initializing the lists
     dashboardScreenList.addAll([
       const Center(child: HomeScreen()),
       const Center(child: Text('Calender')),

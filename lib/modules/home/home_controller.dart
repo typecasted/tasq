@@ -1,5 +1,9 @@
+/// packages import
 import 'package:get/get.dart';
+
+/// model import
 import 'package:tasq/modules/home/models/priority_task_model.dart';
+import 'models/daily_task_model.dart';
 
 class HomeController extends GetxController {
   /// - [isLoading] is used for showing and hiding and loader at the time of screen initialization.
@@ -13,11 +17,13 @@ class HomeController extends GetxController {
 
   final RxList<PriorityTaskModel> priorityTasks = <PriorityTaskModel>[].obs;
 
+  final RxList<DailyTaskModel> dailyTasks = <DailyTaskModel>[].obs;
+
   /// - [initHomeScreenList] this function will be call in [initState] method of [Home] widget.
   void initHomeScreenList() async {
     isLoading.value = true;
 
-    /// here i've put a deley to raplecate api call.
+    /// here i've put a delay to replicate api call.
     await Future.delayed(
       const Duration(
         seconds: 2,
@@ -113,7 +119,7 @@ class HomeController extends GetxController {
   void getGreetingsMessage() {
     greetingMessage.value = "Welcome Kunal!!!";
   }
-  
+
   getTasksData() async {
     priorityTasks.value = [
       PriorityTaskModel(
@@ -141,6 +147,16 @@ class HomeController extends GetxController {
         description: "Task 5 description",
         priority: 5,
       ),
+    ];
+
+    dailyTasks.value = [
+      DailyTaskModel(title: "Task 1", isCompleted: true),
+      DailyTaskModel(title: "Task 2", isCompleted: true),
+      DailyTaskModel(title: "Task 3", isCompleted: true),
+      DailyTaskModel(title: "Task 4", isCompleted: false),
+      DailyTaskModel(title: "Task 5", isCompleted: false),
+      DailyTaskModel(title: "Task 6", isCompleted: false),
+      DailyTaskModel(title: "Task 7", isCompleted: false),
     ];
   }
 }
