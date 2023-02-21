@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 /// controllers import
 import './sign_up_controller.dart';
 
+/// screen import
+import 'package:tasq/modules/dashboard/dashboard.dart';
+
 /// utils import
 import '../../utils/app_colors.dart';
 import '../../utils/app_strings.dart';
@@ -134,7 +137,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                   CommonButton(
                     text: AppStrings.register,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Dashboard(),
+                        ),
+                      );
+                    },
                   ),
 
                   Padding(
