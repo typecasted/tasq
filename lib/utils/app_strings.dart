@@ -20,4 +20,23 @@ class AppStrings {
   /// Home screen
   static const String myPriorityTasks = 'My Priority Tasks';
   static const String dailyTasks = 'Daily Tasks';
+
+  /// Add/Edit Task Screen
+  static String addTask = 'Add Task';
+  static String editTask = 'Edit Task';
+  static String start = 'Start';
+  static String end = 'End';
+
+  static String title = 'Title';
+
+  static String typeHere = 'Type here...';
+
+  static String category = 'Category';
+
+  static String dailyTask = 'Daily Task';
+  static String priorityTask = 'Priority Task';
+
+  static String description = 'Description';
+
+  static String createTask = 'Create Task';
 }

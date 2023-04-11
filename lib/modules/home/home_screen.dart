@@ -11,6 +11,7 @@ import 'package:tasq/utils/app_colors.dart';
 import '../../utils/app_strings.dart';
 import '../../utils/fonts.gen.dart';
 import '../../utils/assets.gen.dart';
+import '../add_task/add_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,6 +30,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const AddTaskScreen();
+              },
+            ),
+          );
+        },
+        backgroundColor: AppColors.primaryColor,
+        child: const Icon(Icons.add),
+      ),
       body: SafeArea(
         child: Obx(
           () => homeController.isLoading.value
