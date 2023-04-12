@@ -11,8 +11,7 @@ import 'package:tasq/utils/app_colors.dart';
 import '../../utils/app_strings.dart';
 import '../../utils/fonts.gen.dart';
 import '../../utils/assets.gen.dart';
-import '../task/add_task_screen.dart';
-import '../task/models/task_model.dart';
+import '../task/add_or_edit_task/add_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({

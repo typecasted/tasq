@@ -5,8 +5,8 @@ import 'package:tasq/utils/app_colors.dart';
 import 'package:tasq/utils/app_strings.dart';
 import 'package:tasq/utils/fonts.gen.dart';
 
+import '../models/task_model.dart';
 import 'add_task_controller.dart';
-import 'models/task_model.dart';
 
 class AddOrEditTaskScreen extends StatefulWidget {
   final bool isEdit;
