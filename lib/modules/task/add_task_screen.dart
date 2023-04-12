@@ -6,21 +6,37 @@ import 'package:tasq/utils/app_strings.dart';
 import 'package:tasq/utils/fonts.gen.dart';
 
 import 'add_task_controller.dart';
+import 'models/task_model.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class AddOrEditTaskScreen extends StatefulWidget {
+  final bool isEdit;
+  final TaskModel? task;
+  const AddOrEditTaskScreen({
+    super.key,
+    required this.isEdit,
+    this.task,
+  });
 
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<AddOrEditTaskScreen> createState() => _AddOrEditTaskScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
+class _AddOrEditTaskScreenState extends State<AddOrEditTaskScreen> {
   AddTaskController addTaskController = Get.put(AddTaskController());
 
   @override
   void initState() {
     addTaskController.titleController = TextEditingController();
     addTaskController.descriptionController = TextEditingController();
+    if (widget.isEdit) {
+      addTaskController.titleController.text = widget.task?.title ?? "";
+      addTaskController.descriptionController.text =
+          widget.task?.description ?? "";
+    } else {
+      addTaskController.titleController.text = '';
+      addTaskController.descriptionController.text = '';
+    }
+
     super.initState();
   }
 
@@ -38,7 +54,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          AppStrings.addTask,
+          !(widget.isEdit) ? AppStrings.addTask : AppStrings.editTask,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -493,7 +509,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             ),
                           ),
                           child: Text(
-                            AppStrings.createTask,
+                            !(widget.isEdit)
+                                ? AppStrings.createTask
+                                : AppStrings.editTask,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,

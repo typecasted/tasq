@@ -11,10 +11,13 @@ import 'package:tasq/utils/app_colors.dart';
 import '../../utils/app_strings.dart';
 import '../../utils/fonts.gen.dart';
 import '../../utils/assets.gen.dart';
-import '../add_task/add_task_screen.dart';
+import '../task/add_task_screen.dart';
+import '../task/models/task_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -36,7 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return const AddTaskScreen();
+                return const AddOrEditTaskScreen(
+                  isEdit: false,
+                );
               },
             ),
           );
