@@ -20,6 +20,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_rounded,
@@ -58,42 +59,149 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
+          horizontal: 25,
+          vertical: 20,
         ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      AppStrings.start,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: FontFamily.poppins,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Start Date & End Date
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Start Date
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.start,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: FontFamily.poppins,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      widget.task.startDate ?? "Not Set",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: FontFamily.poppins,
+                      const SizedBox(
+                        height: 7,
                       ),
-                    ),
-                  ],
+                      Text(
+                        widget.task.startDate ?? "Not Set",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: FontFamily.poppins,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // End Date
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        AppStrings.end,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: FontFamily.poppins,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      Text(
+                        widget.task.endDate ?? "Not Set",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: FontFamily.poppins,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              const Divider(height: 30),
+
+              Text(
+                AppStrings.description,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: FontFamily.poppins,
                 ),
-              ],
-            ),
-          ],
+              ),
+
+              const SizedBox(
+                height: 5,
+              ),
+
+              Text(
+                widget.task.description ?? "No Description",
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: FontFamily.poppins,
+                ),
+              ),
+
+              const Divider(height: 30),
+
+              // Progress bar
+              Text(
+                AppStrings.progress,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: FontFamily.poppins,
+                ),
+              ),
+
+              const SizedBox(
+                height: 5,
+              ),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: LinearProgressIndicator(
+                        value: 0.5,
+                        backgroundColor: Colors.grey[300],
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.primaryColor,
+                        ),
+                        minHeight: 10,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text(
+                    "50%",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: FontFamily.poppins,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

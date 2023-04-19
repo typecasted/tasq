@@ -12,6 +12,7 @@ import '../../utils/app_strings.dart';
 import '../../utils/fonts.gen.dart';
 import '../../utils/assets.gen.dart';
 import '../task/add_or_edit_task/add_task_screen.dart';
+import '../task/task_details/task_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -119,53 +120,73 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: homeController.priorityTasks.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: Get.height * 0.01,
-                                    horizontal: Get.width * 0.02,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          AppColors.primaryColor,
-                                          AppColors.primaryColorLight,
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
+                                return GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return TaskDetailsScreen(
+                                            task: homeController
+                                                .priorityTasks[index],
+                                          );
+                                        },
                                       ),
-                                    ),
-                                    height: Get.height * 0.2,
-                                    width: Get.width * 0.35,
+                                    );
+                                  },
+                                  child: Padding(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: Get.width * 0.02,
-                                        vertical: Get.height * 0.01),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          homeController
-                                              .priorityTasks[index].title,
-                                          style: TextStyle(
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: Get.height * 0.018,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                      vertical: Get.height * 0.01,
+                                      horizontal: Get.width * 0.02,
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            AppColors.primaryColor,
+                                            AppColors.primaryColorLight,
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
                                         ),
-                                        Text(
-                                          homeController
-                                              .priorityTasks[index].description,
-                                          style: TextStyle(
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: Get.height * 0.015,
-                                            fontWeight: FontWeight.w500,
+                                      ),
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.35,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: Get.width * 0.02,
+                                          vertical: Get.height * 0.01),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            homeController.priorityTasks[index]
+                                                    .title ??
+                                                "",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.poppins,
+                                              fontSize: Get.height * 0.018,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            homeController.priorityTasks[index]
+                                                    .description ??
+                                                "",
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.poppins,
+                                              fontSize: Get.height * 0.015,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );

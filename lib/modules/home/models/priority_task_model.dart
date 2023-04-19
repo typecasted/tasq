@@ -1,19 +1,21 @@
-class PriorityTaskModel {
-  final String title;
-  final String description;
-  final String? date;
-  final String? time;
-  final int? priority;
-  final String? status;
-  final String? id;
+// import 'package:tasq/modules/task/models/task_model.dart';
 
-  PriorityTaskModel({
-    required this.title,
-    required this.description,
-    this.date,
-    this.time,
-    this.priority,
-    this.status,
-    this.id,
-  });
-}
+// class PriorityTaskModel {
+//   final String title;
+//   final String description;
+//   final String? date;
+//   final String? time;
+//   final int? priority;
+//   final TaskStatus? status;
+//   final String? id;
+
+//   PriorityTaskModel({
+//     required this.title,
+//     required this.description,
+//     this.date,
+//     this.time,
+//     this.priority,
+//     this.status,
+//     this.id,
+//   });
+// }

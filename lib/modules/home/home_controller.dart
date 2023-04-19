@@ -1,8 +1,7 @@
 /// packages import
 import 'package:get/get.dart';
 
-/// model import
-import 'package:tasq/modules/home/models/priority_task_model.dart';
+import '../task/models/task_model.dart';
 import 'models/daily_task_model.dart';
 
 class HomeController extends GetxController {
@@ -15,7 +14,7 @@ class HomeController extends GetxController {
   /// - [greetingMessage] is used to show greetings message.
   final RxString greetingMessage = "".obs;
 
-  final RxList<PriorityTaskModel> priorityTasks = <PriorityTaskModel>[].obs;
+  final RxList<TaskModel> priorityTasks = <TaskModel>[].obs;
 
   final RxList<DailyTaskModel> dailyTasks = <DailyTaskModel>[].obs;
 
@@ -122,30 +121,37 @@ class HomeController extends GetxController {
 
   getTasksData() async {
     priorityTasks.value = [
-      PriorityTaskModel(
+      TaskModel(
         title: "Task 1",
-        description: "Task 1 description",
-        priority: 1,
+        // dummy data
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+
+        // priority: 1,
       ),
-      PriorityTaskModel(
+      TaskModel(
         title: "Task 2",
-        description: "Task 2 description",
-        priority: 2,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+        // priority: 2,
       ),
-      PriorityTaskModel(
+      TaskModel(
         title: "Task 3",
-        description: "Task 3 description",
-        priority: 3,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+        // priority: 3,
       ),
-      PriorityTaskModel(
+      TaskModel(
         title: "Task 4",
-        description: "Task 4 description",
-        priority: 4,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+        // priority: 4,
       ),
-      PriorityTaskModel(
+      TaskModel(
         title: "Task 5",
-        description: "Task 5 description",
-        priority: 5,
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+        // priority: 5,
       ),
     ];
 
