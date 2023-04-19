@@ -41,4 +41,6 @@ class AppStrings {
   static String createTask = 'Create Task';
 
   static String progress = 'Progress';
+
+  static String profile = 'Profile';
 }

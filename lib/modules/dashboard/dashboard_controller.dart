@@ -7,6 +7,7 @@ import '../../utils/assets.gen.dart';
 
 /// screen imports
 import '../home/home_screen.dart';
+import '../profile/profile_screen.dart';
 
 class DashboardController extends GetxController {
   /// - [currentScreenIndex] variable is used to set the index of the current screen being showed in the dashboard.
@@ -34,7 +35,7 @@ class DashboardController extends GetxController {
     dashboardScreenList.addAll([
       const Center(child: HomeScreen()),
       const Center(child: Text('Calender')),
-      const Center(child: Text('Profile')),
+      const ProfileScreen(),
     ]);
 
     navIconList.addAll([

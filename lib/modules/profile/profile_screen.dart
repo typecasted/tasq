@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tasq/utils/app_colors.dart';
+
+import '../../utils/app_strings.dart';
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: Colors.white,
+        title: Text(
+          AppStrings.profile,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        elevation: 0,
+        leadingWidth: 0,
+        automaticallyImplyLeading: false,
+      ),
+      body: SizedBox(
+        child: Column(
+          children: [
+
+            /// header
+            SizedBox(
+              height: 200,
+              child: Stack(
+                children: [
+                  Container(
+                    height: 70,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 45,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 150,
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey[300]!,
+                            blurRadius: 2,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 55),
+                          Text(
+                            'John Doe',
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          const Text(
+                            ' +91 123 456 7890',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          const Text(
+                            '201 Completed Tasks',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    left: 0,
+                    right: 0,
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.grey[200],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            /// body
+            
+          ],
+        ),
+      ),
+    );
+  }
+}
