@@ -43,4 +43,18 @@ class AppStrings {
   static String progress = 'Progress';
 
   static String profile = 'Profile';
+
+  static String myProfile = 'My Profile';
+
+  static String name = 'Name';
+
+  static String number = 'Number';
+
+  static String save = 'Save';
+
+  static String statistics = 'Statistics';
+
+  static String totalTasks = 'Total Tasks';
+
+  static String completedTasks = 'Completed Tasks';
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasq/modules/sign_in/sign_in_screen.dart';
+import 'package:tasq/modules/statistics/statistics_screen.dart';
 import 'package:tasq/utils/app_colors.dart';
 
 import '../../utils/app_strings.dart';
+import 'my_profile/my_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -27,7 +30,6 @@ class ProfileScreen extends StatelessWidget {
       body: SizedBox(
         child: Column(
           children: [
-
             /// header
             SizedBox(
               height: 200,
@@ -110,8 +112,87 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
 
+            const SizedBox(
+              height: 20,
+            ),
+
             /// body
-            
+            Column(
+              children: [
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 40),
+                  leading: Icon(
+                    Icons.person,
+                    color: AppColors.primaryColor,
+                  ),
+                  title: Text(
+                    'Profile',
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyProfileScreen(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 40),
+                  leading: Icon(
+                    Icons.stacked_bar_chart_rounded,
+                    color: AppColors.primaryColor,
+                  ),
+                  title: Text(
+                    'Statistics',
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const StatisticsScreen(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 40),
+                  leading: Icon(
+                    Icons.logout,
+                    color: AppColors.primaryColor,
+                  ),
+                  title: Text(
+                    'Logout',
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const SignInScreen();
+                        },
+                      ),
+                      (route) => false,
+                    );
+                  },
+                ),
+              ],
+            ),
           ],
         ),
       ),
