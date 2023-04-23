@@ -26,6 +26,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+
+  SignInController signInController = Get.put(SignInController());
   @override
   void initState() {
     super.initState();
@@ -137,13 +139,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   CommonButton(
                     text: AppStrings.login,
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const Dashboard();
-                          },
-                        ),
+                      signInController.onLoginButtonTap(
+                        context: context,
                       );
                     },
                   ),

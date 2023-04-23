@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tasq/utils/local_storage.dart';
 import './utils/app_colors.dart';
 import './modules/sign_in/sign_in_screen.dart';
+import 'utils/network_services/repository.dart';
 
-void main() {
+main() async {
+  await Repository.dryRunApi();
+  await LocalStorage.initLocalStorage();
+
   runApp(const MyApp());
 }
 

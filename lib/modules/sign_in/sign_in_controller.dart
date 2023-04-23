@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasq/modules/sign_up/sign_up_screen.dart';
+import 'package:tasq/utils/app_colors.dart';
+
+import '../../common_widgets/full_screen_loader.dart';
+import '../../utils/network_services/repository.dart';
 
 class SignInController extends GetxController {
   TextEditingController emailTextFieldController = TextEditingController();
@@ -25,8 +29,44 @@ class SignInController extends GetxController {
       ),
     );
   }
-}
 
-SignInController signInController = Get.put(
-  SignInController(),
-);
+  Future<void> onLoginButtonTap({required BuildContext context}) async {
+    if (validateFields(context: context)) {
+      showFullScreenLoader(context: context);
+
+      await Repository.loginUser();
+    }
+  }
+
+  bool validateFields({required BuildContext context}) {
+    if (emailTextFieldController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Email is required',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    }
+    if (passwordTextFieldController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Password is required',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
+}

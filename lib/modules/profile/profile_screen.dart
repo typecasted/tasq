@@ -6,9 +6,30 @@ import 'package:tasq/utils/app_colors.dart';
 
 import '../../utils/app_strings.dart';
 import 'my_profile/my_profile_screen.dart';
+import 'profile_controller.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  ProfileController profileController = Get.put(ProfileController());
+
+  @override
+  void initState() {
+    super.initState();
+    profileController.onInit();
+  }
+
+  @override
+  void dispose() {
+    profileController.onClose();
+    profileController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,15 +201,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return const SignInScreen();
-                        },
-                      ),
-                      (route) => false,
-                    );
+                    profileController.logout(context: context);
                   },
                 ),
               ],

@@ -28,6 +28,21 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  SignUpController signUpController = Get.put(SignUpController());
+
+  @override
+  void initState() {
+    super.initState();
+    signUpController.onInit();
+  }
+
+  @override
+  void dispose() {
+    signUpController.onClose();
+    signUpController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     iconPath: Assets.svgs.icMessage,
                     textInputType: TextInputType.emailAddress,
                     textEditingController:
-                        signUpController.emailTextFieldController,
+                        signUpController.userNameTextFieldController,
                   ),
 
                   SizedBox(
@@ -127,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     iconPath: Assets.svgs.icLock,
                     textInputType: TextInputType.text,
                     textEditingController:
-                        signUpController.passwordTextFieldController,
+                        signUpController.confirmPasswordTextFieldController,
                     obscureText: true,
                   ),
 
@@ -138,12 +153,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   CommonButton(
                     text: AppStrings.register,
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Dashboard(),
-                        ),
-                      );
+                      signUpController.onRegisterButtonTap(context: context);
                     },
                   ),
 
