@@ -34,7 +34,10 @@ class SignInController extends GetxController {
     if (validateFields(context: context)) {
       showFullScreenLoader(context: context);
 
-      await Repository.loginUser();
+      await Repository.loginUser(
+        email: emailTextFieldController.text.trim(),
+        password: passwordTextFieldController.text.trim(),
+      );
     }
   }
 
