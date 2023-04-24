@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasq/modules/otp/otp_screen.dart';
 import 'package:tasq/utils/local_storage.dart';
 import './utils/app_colors.dart';
 import './modules/sign_in/sign_in_screen.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: AppColors.materialColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const SignInScreen(),
+      home: const OTPScreen(),
     );
   }
 }

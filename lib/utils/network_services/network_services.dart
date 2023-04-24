@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class NetworkServices {
   /// - [baseUrl] is the base url of the backend
-  static const String baseUrl = "http://192.168.1.39:5000";
+  static const String baseUrl = "http://192.168.1.39:3000";
 
   static Future<http.Response?> get({
     required String path,

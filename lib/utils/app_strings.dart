@@ -57,4 +57,12 @@ class AppStrings {
   static String totalTasks = 'Total Tasks';
 
   static String completedTasks = 'Completed Tasks';
+
+  static String verifyAccount = 'Verify Account';
+
+  static String enterVerificationNumber = "Please enter the verification number we send to your email";
+
+  static String resendOTP = 'Resend OTP';
+
+  static String confirm = 'Confirm';
 }
