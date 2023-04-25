@@ -16,10 +16,6 @@ class StatisticsController extends GetxController {
     MonthStates(month: 'Dec', states: 40),
   ];
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 }
 
 class MonthStates {

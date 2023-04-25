@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart';
@@ -57,7 +58,6 @@ class Repository {
     required String email,
     required String password,
   }) async {
-
     Response? response;
     try {
       response = await NetworkServices.post(
@@ -75,5 +75,28 @@ class Repository {
     log("Repository - loginUser - Response - data: ${response?.body}");
 
     return userModelFromJson(response?.body ?? "");
+  }
+
+  static Future<String?> verifyOTP({
+    required String email,
+    required String otp,
+  }) async {
+    Response? response;
+    try {
+      response = await NetworkServices.post(
+        path: "/validate-email",
+        data: {
+          "email": email,
+          "otp": otp,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - verifyOTP - error: $e", stackTrace: s);
+    }
+
+    log("Repository - verifyOTP - Response - status: ${response?.statusCode}");
+    log("Repository - verifyOTP - Response - data: ${response?.body}");
+
+    return jsonDecode(response?.body ?? "")["status_code"].toString();
   }
 }

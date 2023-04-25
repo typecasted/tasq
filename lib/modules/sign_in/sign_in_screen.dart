@@ -15,8 +15,6 @@ import '../../utils/fonts.gen.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_login_text_field.dart';
 
-/// screen imports
-import '../dashboard/dashboard.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasq/common_widgets/full_screen_loader.dart';
-import 'package:tasq/modules/dashboard/dashboard.dart';
+import 'package:tasq/modules/otp/otp_screen.dart';
 import 'package:tasq/utils/app_colors.dart';
 import 'package:tasq/utils/local_storage.dart';
 
@@ -33,8 +33,11 @@ class SignUpController extends GetxController {
   }
 
   onRegisterButtonTap({required BuildContext context}) async {
+    /// validate the fields first
     if (validateFields(context: context)) {
       showFullScreenLoader(context: context);
+
+      /// call the api to register the user
       final response = await Repository.registerUser(
         userName: userNameTextFieldController.text,
         email: emailTextFieldController.text,
@@ -61,14 +64,16 @@ class SignUpController extends GetxController {
         /// save the user data in local storage
         await LocalStorage.saveUserData(data: response);
 
-        /// navigate to home screen
+        /// navigate to otp screen to verify the users otp.
         /// we are using [Navigator.pushAndRemoveUntil] to remove all the previous screens from the stack
         /// context is used to check if the screen is still mounted or not to avoid any errors
         if (context.mounted) {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => const Dashboard(),
+              builder: (context) => OTPScreen(
+                email: emailTextFieldController.text,
+              ),
             ),
             (route) {
               return false;

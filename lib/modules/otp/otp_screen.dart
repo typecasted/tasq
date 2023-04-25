@@ -13,7 +13,14 @@ import '../../utils/fonts.gen.dart';
 import 'otp_controller.dart';
 
 class OTPScreen extends StatefulWidget {
-  const OTPScreen({super.key});
+  final String email;
+
+  /// - [OTPScreen] screen is used to verify the otp sent to the user's email address.
+  /// - it will require the email to pass to the [OTPController] to verify the otp for given email.
+  const OTPScreen({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -124,6 +131,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     style: const TextStyle(fontSize: 17),
                     onChanged: (pin) {
                       log("Changed: $pin");
+                      otpController.otpString = pin;
                     },
                     onCompleted: (pin) {
                       log("Completed: $pin");
@@ -157,7 +165,10 @@ class _OTPScreenState extends State<OTPScreen> {
 
                 CommonButton(
                   text: AppStrings.confirm,
-                  onTap: () {},
+                  onTap: () {
+                    otpController.onConfirmButtonTap(
+                        context: context, email: widget.email);
+                  },
                 ),
               ],
             ),

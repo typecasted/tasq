@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasq/modules/sign_in/sign_in_screen.dart';
 import 'package:tasq/modules/statistics/statistics_screen.dart';
 import 'package:tasq/utils/app_colors.dart';
 

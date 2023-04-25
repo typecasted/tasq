@@ -11,6 +11,7 @@ class UserModel {
   String? email;
   int? totalTasks;
   int? completeTasks;
+  bool? isVerified;
 
   UserModel({
     this.firstName,
@@ -19,6 +20,7 @@ class UserModel {
     this.email,
     this.totalTasks,
     this.completeTasks,
+    this.isVerified,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -28,16 +30,18 @@ class UserModel {
     email = json['email'];
     totalTasks = json['totalTasks'];
     completeTasks = json['completeTasks'];
+    isVerified = json['isVerified'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['firstName'] = firstName;
-    data['lastName'] = lastName;
-    data['userName'] = userName;
-    data['email'] = email;
-    data['totalTasks'] = totalTasks;
-    data['completeTasks'] = completeTasks;
+    data['firstName'] = firstName ?? "";
+    data['lastName'] = lastName ?? "";
+    data['userName'] = userName ?? "";
+    data['email'] = email ?? "";
+    data['totalTasks'] = totalTasks ?? 0;
+    data['completeTasks'] = completeTasks ?? 0;
+    data['isVerified'] = isVerified ?? false;
     return data;
   }
 }

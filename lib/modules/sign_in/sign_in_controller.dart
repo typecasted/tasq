@@ -38,6 +38,10 @@ class SignInController extends GetxController {
         email: emailTextFieldController.text.trim(),
         password: passwordTextFieldController.text.trim(),
       );
+
+      if (context.mounted) {
+        hideFullScreenLoader(context: context);
+      }
     }
   }
 

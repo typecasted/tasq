@@ -7,16 +7,18 @@ import 'package:http/http.dart' as http;
 
 class NetworkServices {
   /// - [baseUrl] is the base url of the backend
-  static const String baseUrl = "http://192.168.1.39:3000";
+  static const String baseUrl = "http://192.168.1.14:3000";
 
   static Future<http.Response?> get({
     required String path,
   }) async {
     http.Response? response;
     try {
+      log("NetworkServices: get");
+      log("path: $path");
       response = await http.get(Uri.parse(baseUrl + path));
     } on Exception catch (e) {
-      log("NetworkServices: get - ${e.toString()}");
+      log("NetworkServices: get - Exception - ${e.toString()}");
     }
 
     return response;
@@ -26,6 +28,9 @@ class NetworkServices {
       {required String path, required Map<String, dynamic> data}) async {
     http.Response? response;
     try {
+      log("NetworkServices: post");
+      log("path: $path");
+      log("data: $data");
       response = await http.post(Uri.parse(baseUrl + path), body: data);
     } on Exception catch (e) {
       log("NetworkServices: post - ${e.toString()}");

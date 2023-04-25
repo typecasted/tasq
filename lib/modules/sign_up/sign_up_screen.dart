@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 /// controllers import
 import './sign_up_controller.dart';
 
-/// screen import
-import 'package:tasq/modules/dashboard/dashboard.dart';
 
 /// utils import
 import '../../utils/app_colors.dart';
