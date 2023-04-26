@@ -25,6 +25,8 @@ class ForgotPasswordController extends GetxController {
   }) async {
     if (validateFields()) {
       showFullScreenLoader(context: context);
+
+      /// Forgot password API call
       bool isOTPSent = await Repository.forgotPassword(
         email: emailTextController.text.trim(),
         context: context,
@@ -34,6 +36,7 @@ class ForgotPasswordController extends GetxController {
         hideFullScreenLoader(context: context);
       }
 
+      /// If OTP is sent then navigate to send OTP and password screen
       if (isOTPSent) {
         if (context.mounted) {
           Navigator.push(

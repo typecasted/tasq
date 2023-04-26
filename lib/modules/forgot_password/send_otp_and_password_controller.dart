@@ -32,6 +32,8 @@ class SendOTPAndPasswordController extends GetxController {
   }) async {
     if (validateFields(context)) {
       showFullScreenLoader(context: context);
+
+      /// Reset password API call
       bool hasReset = await Repository.resetPassword(
         email: email,
         otp: otpTextController.text.trim(),
@@ -43,6 +45,7 @@ class SendOTPAndPasswordController extends GetxController {
         hideFullScreenLoader(context: context);
       }
 
+      /// If password is reset then navigate to sign in screen
       if (hasReset) {
         if (context.mounted) {
           Navigator.pushAndRemoveUntil(

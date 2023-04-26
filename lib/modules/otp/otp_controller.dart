@@ -15,13 +15,14 @@ class OTPController extends GetxController {
     super.onInit();
     otpTextController = OtpFieldController();
   }
-  
+
   Future<void> onConfirmButtonTap({
     required BuildContext context,
     required String email,
   }) async {
     showFullScreenLoader(context: context);
 
+    /// Verify OTP API call
     String? responseStatusCode = await Repository.verifyOTP(
       email: email,
       otp: otpString,
@@ -31,13 +32,18 @@ class OTPController extends GetxController {
       hideFullScreenLoader(context: context);
     }
 
+    /// If response status code is 200 then navigate to dashboard
     if (responseStatusCode != null && responseStatusCode == "200") {
       if (context.mounted) {
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-          builder: (context) {
-            return const Dashboard();
-          },
-        ), (route) => false);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const Dashboard();
+            },
+          ),
+          (route) => false,
+        );
       }
     }
   }

@@ -95,8 +95,12 @@ class Repository {
 
       return null;
     }
-  }
+  } 
 
+
+  /// - [verifyOTP] method is used for otp verification purpose.
+  /// - it will require [email], [otp].
+  /// - it will return the status code of the response as a [String]
   static Future<String?> verifyOTP({
     required String email,
     required String otp,
@@ -120,6 +124,10 @@ class Repository {
     return jsonDecode(response?.body ?? "")["status_code"].toString();
   }
 
+
+  /// - [forgotPassword] method is used to send an otp to the user's email from backend.
+  /// - it will require [email].
+  /// - it will return a [bool] value if the otp is sent successfully or not.
   static Future<bool> forgotPassword({
     required String email,
     required BuildContext context,
@@ -140,6 +148,9 @@ class Repository {
     log("Repository - forgotPassword - Response - status: ${response?.statusCode}");
     log("Repository - forgotPassword - Response - data: ${response?.body}");
 
+
+    /// if the status code is 200 then the otp is sent successfully and it will return true
+    /// else it will return false
     if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -175,6 +186,9 @@ class Repository {
     return isSent;
   }
 
+  /// - [resetPassword] method is used to reset the password of the user.
+  /// - it will require [email], [otp], [password].
+  /// - it will return a [bool] value if the password is reset successfully or not.
   static Future<bool> resetPassword(
       {required String email,
       required String otp,
@@ -198,6 +212,8 @@ class Repository {
     log("Repository - resetPassword - Response - status: ${response?.statusCode}");
     log("Repository - resetPassword - Response - data: ${response?.body}");
 
+    /// if the status code is 200 then the password is reset successfully and it will return true
+    /// else it will return false
     if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
