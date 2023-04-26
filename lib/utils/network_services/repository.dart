@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:tasq/models/login_response_model.dart';
 import 'package:tasq/models/user_model.dart';
-
+import '../app_colors.dart';
 import './network_services.dart';
 
 class Repository {
@@ -52,11 +53,12 @@ class Repository {
 
   /// - [loginUser] is used to login a user
   /// - it will require [email], [password].
-  /// - it will return a [UserModel] if the user is logged in successfully
+  /// - it will return a [LoginResponseModel] if the user is logged in successfully
   /// - it will return null if the user is not logged in successfully
-  static loginUser({
+  static Future<LoginResponseModel?> loginUser({
     required String email,
     required String password,
+    required BuildContext context,
   }) async {
     Response? response;
     try {
@@ -74,7 +76,25 @@ class Repository {
     log("Repository - loginUser - Response - status: ${response?.statusCode}");
     log("Repository - loginUser - Response - data: ${response?.body}");
 
-    return userModelFromJson(response?.body ?? "");
+    if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
+      return loginResponseModelFromJson(response?.body ?? "");
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+      }
+
+      return null;
+    }
   }
 
   static Future<String?> verifyOTP({

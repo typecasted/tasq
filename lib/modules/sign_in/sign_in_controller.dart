@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasq/models/login_response_model.dart';
+import 'package:tasq/modules/dashboard/dashboard.dart';
 import 'package:tasq/modules/sign_up/sign_up_screen.dart';
 import 'package:tasq/utils/app_colors.dart';
+import 'package:tasq/utils/local_storage.dart';
 
 import '../../common_widgets/full_screen_loader.dart';
 import '../../utils/network_services/repository.dart';
@@ -34,13 +37,32 @@ class SignInController extends GetxController {
     if (validateFields(context: context)) {
       showFullScreenLoader(context: context);
 
-      await Repository.loginUser(
+      LoginResponseModel? logInResponse = await Repository.loginUser(
         email: emailTextFieldController.text.trim(),
         password: passwordTextFieldController.text.trim(),
+        context: context,
       );
 
       if (context.mounted) {
         hideFullScreenLoader(context: context);
+      }
+
+      if (logInResponse != null && context.mounted) {
+        LocalStorage.saveUserData(
+          data: logInResponse.userDataModel!,
+        );
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const Dashboard();
+            },
+          ),
+          (route) {
+            return false;
+          },
+        );
       }
     }
   }

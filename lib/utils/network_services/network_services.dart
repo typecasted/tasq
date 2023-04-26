@@ -1,13 +1,9 @@
 import 'dart:developer';
-
-// import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-
-// final dio = Dio();
 
 class NetworkServices {
   /// - [baseUrl] is the base url of the backend
-  static const String baseUrl = "http://192.168.1.14:3000";
+  static const String baseUrl = "http://192.168.194.205:3000";
 
   static Future<http.Response?> get({
     required String path,
