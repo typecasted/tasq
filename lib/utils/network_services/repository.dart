@@ -119,4 +119,59 @@ class Repository {
 
     return jsonDecode(response?.body ?? "")["status_code"].toString();
   }
+
+  static Future<bool> forgotPassword({
+    required String email,
+    required BuildContext context,
+  }) async {
+    bool isSent = false;
+    Response? response;
+    try {
+      response = await NetworkServices.post(
+        path: "/forgot-password",
+        data: {
+          "email": email,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - forgotPassword - error: $e", stackTrace: s);
+    }
+
+    log("Repository - forgotPassword - Response - status: ${response?.statusCode}");
+    log("Repository - forgotPassword - Response - data: ${response?.body}");
+
+    if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+        isSent = true;
+      }
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+      }
+      isSent = false;
+    }
+
+    return isSent;
+  }
 }

@@ -8,6 +8,7 @@ import 'package:tasq/utils/local_storage.dart';
 
 import '../../common_widgets/full_screen_loader.dart';
 import '../../utils/network_services/repository.dart';
+import '../forgot_password/forgot_password_screen.dart';
 
 class SignInController extends GetxController {
   TextEditingController emailTextFieldController = TextEditingController();
@@ -97,5 +98,16 @@ class SignInController extends GetxController {
       return false;
     }
     return true;
+  }
+
+  void navigateToForgotPasswordScreen({required BuildContext context}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return const ForgotPasswordScreen();
+        },
+      ),
+    );
   }
 }

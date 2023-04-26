@@ -15,7 +15,6 @@ import '../../utils/fonts.gen.dart';
 import '../../common_widgets/common_button.dart';
 import '../../common_widgets/common_login_text_field.dart';
 
-
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -24,7 +23,6 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-
   SignInController signInController = Get.put(SignInController());
   @override
   void initState() {
@@ -116,19 +114,27 @@ class _SignInScreenState extends State<SignInScreen> {
                     obscureText: true,
                   ),
 
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: Get.height * 0.01,
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        AppStrings.forgotPassword,
-                        style: TextStyle(
-                          fontSize: Get.height * 0.013,
-                          color: AppColors.primaryColor,
-                          fontFamily: FontFamily.poppins,
-                          fontWeight: FontWeight.w400,
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      signInController.navigateToForgotPasswordScreen(
+                        context: context,
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: Get.height * 0.01,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          AppStrings.forgotPassword,
+                          style: TextStyle(
+                            fontSize: Get.height * 0.013,
+                            color: AppColors.primaryColor,
+                            fontFamily: FontFamily.poppins,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ),

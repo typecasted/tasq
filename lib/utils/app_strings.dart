@@ -65,4 +65,8 @@ class AppStrings {
   static String resendOTP = 'Resend OTP';
 
   static String confirm = 'Confirm';
+
+  static String enterYourEmailHere = 'Enter your email here';
+
+  static String submit = 'Submit';
 }
