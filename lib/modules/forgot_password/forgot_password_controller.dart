@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasq/modules/forgot_password/send_otp_and_password_screen.dart';
+import 'package:tasq/utils/network_services/repository.dart';
+
+import '../../common_widgets/full_screen_loader.dart';
 
 class ForgotPasswordController extends GetxController {
   TextEditingController emailTextController = TextEditingController();
@@ -16,9 +20,34 @@ class ForgotPasswordController extends GetxController {
     super.onClose();
   }
 
-  void onSubmitTap() {
+  Future<void> onSubmitTap({
+    required BuildContext context,
+  }) async {
     if (validateFields()) {
-      Get.back();
+      showFullScreenLoader(context: context);
+      bool isOTPSent = await Repository.forgotPassword(
+        email: emailTextController.text.trim(),
+        context: context,
+      );
+
+      if (context.mounted) {
+        hideFullScreenLoader(context: context);
+      }
+
+      if (isOTPSent) {
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return SendOTPAndPasswordScreen(
+                  email: emailTextController.text.trim(),
+                );
+              },
+            ),
+          );
+        }
+      }
     }
   }
 

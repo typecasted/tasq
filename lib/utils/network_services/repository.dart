@@ -174,4 +174,64 @@ class Repository {
 
     return isSent;
   }
+
+  static Future<bool> resetPassword(
+      {required String email,
+      required String otp,
+      required String password,
+      required BuildContext context}) async {
+        bool hasReset = false;
+    Response? response;
+    try {
+      response = await NetworkServices.post(
+        path: "/reset-password",
+        data: {
+          "email": email,
+          "otp": otp,
+          "password": password,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - resetPassword - error: $e", stackTrace: s);
+    }
+
+    log("Repository - resetPassword - Response - status: ${response?.statusCode}");
+    log("Repository - resetPassword - Response - data: ${response?.body}");
+
+    if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+
+        hasReset = true;
+      }
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+
+        hasReset = false;
+      }
+    }
+
+    return hasReset;
+  }
 }

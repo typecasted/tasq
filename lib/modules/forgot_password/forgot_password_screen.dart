@@ -82,7 +82,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: CommonButton(
                 text: AppStrings.submit,
                 onTap: () {
-                  forgotPasswordController.onSubmitTap();
+                  forgotPasswordController.onSubmitTap(
+                    context: context,
+                  );
                 },
               ),
             ),

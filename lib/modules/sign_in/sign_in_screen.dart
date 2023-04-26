@@ -26,8 +26,9 @@ class _SignInScreenState extends State<SignInScreen> {
   SignInController signInController = Get.put(SignInController());
   @override
   void initState() {
-    super.initState();
     signInController.initSignInScreen();
+
+    super.initState();
   }
 
   @override

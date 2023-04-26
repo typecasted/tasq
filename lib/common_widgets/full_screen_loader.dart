@@ -10,12 +10,10 @@ class FullScreenLoader extends StatefulWidget {
 class _FullScreenLoaderState extends State<FullScreenLoader> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async => false,
-        child: const Center(
-          child: CircularProgressIndicator(),
-        ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: const Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
