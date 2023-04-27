@@ -426,6 +426,76 @@ class _AddOrEditTaskScreenState extends State<AddOrEditTaskScreen> {
                       height: Get.height * 0.03,
                     ),
 
+                    /// drop down section
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          AppStrings.assignee,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: FontFamily.poppins,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+
+                        /// category selection
+                        Obx(
+                          () {
+                            return Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 15,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(7),
+                                border: Border.all(
+                                  color: AppColors.primaryColorLight,
+                                  width: 1,
+                                ),
+                              ),
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                underline: const SizedBox(),
+                                isDense: true,
+                                value: addTaskController.selectedAssignee.value,
+                                onChanged: (value) {
+                                  addTaskController.selectedAssignee.value =
+                                      value!;
+                                },
+                                items: List.generate(
+                                  addTaskController.assigneeList.length,
+                                  (index) => DropdownMenuItem(
+                                    value:
+                                        addTaskController.assigneeList[index],
+                                    child: Text(
+                                      addTaskController.assigneeList[index],
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: FontFamily.poppins,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: Get.height * 0.03,
+                    ),
+
                     /// task description section
 
                     Text(
