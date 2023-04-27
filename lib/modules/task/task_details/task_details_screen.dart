@@ -156,50 +156,50 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
               const Divider(height: 30),
 
-              // Progress bar
-              Text(
-                AppStrings.progress,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: FontFamily.poppins,
-                ),
-              ),
+              // // Progress bar
+              // Text(
+              //   AppStrings.progress,
+              //   style: const TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 15,
+              //     fontWeight: FontWeight.w500,
+              //     fontFamily: FontFamily.poppins,
+              //   ),
+              // ),
 
-              const SizedBox(
-                height: 5,
-              ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
 
-              Row(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: LinearProgressIndicator(
-                        value: 0.5,
-                        backgroundColor: Colors.grey[300],
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          AppColors.primaryColor,
-                        ),
-                        minHeight: 10,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Text(
-                    "50%",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: FontFamily.poppins,
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: ClipRRect(
+              //         borderRadius: BorderRadius.circular(10),
+              //         child: LinearProgressIndicator(
+              //           value: 0.5,
+              //           backgroundColor: Colors.grey[300],
+              //           valueColor: AlwaysStoppedAnimation<Color>(
+              //             AppColors.primaryColor,
+              //           ),
+              //           minHeight: 10,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       width: 10,
+              //     ),
+              //     const Text(
+              //       "50%",
+              //       style: TextStyle(
+              //         color: Colors.black,
+              //         fontSize: 15,
+              //         fontWeight: FontWeight.w400,
+              //         fontFamily: FontFamily.poppins,
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
