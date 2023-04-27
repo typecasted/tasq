@@ -297,128 +297,128 @@ class _AddOrEditTaskScreenState extends State<AddOrEditTaskScreen> {
 
                         /// category selection section
 
-                        SizedBox(
-                          height: Get.height * 0.03,
-                        ),
+                        // SizedBox(
+                        //   height: Get.height * 0.03,
+                        // ),
 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppStrings.category,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: FontFamily.poppins,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Text(
+                        //       AppStrings.category,
+                        //       style: TextStyle(
+                        //         fontSize: 16,
+                        //         fontWeight: FontWeight.w500,
+                        //         fontFamily: FontFamily.poppins,
+                        //         color: AppColors.primaryColor,
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       height: Get.height * 0.01,
+                        //     ),
 
-                            /// category selection
-                            Obx(
-                              () {
-                                return Row(
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          addTaskController.selectedCategory
-                                              .value = TaskCategory.daily;
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 15,
-                                            vertical: 15,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: addTaskController
-                                                        .selectedCategory
-                                                        .value ==
-                                                    TaskCategory.daily
-                                                ? AppColors.primaryColor
-                                                : Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(7),
-                                            border: Border.all(
-                                              color:
-                                                  AppColors.primaryColorLight,
-                                              width: 1,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            AppStrings.dailyTask,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: FontFamily.poppins,
-                                              color: addTaskController
-                                                          .selectedCategory
-                                                          .value ==
-                                                      TaskCategory.daily
-                                                  ? Colors.white
-                                                  : AppColors.primaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: Get.width * 0.04,
-                                    ),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          addTaskController.selectedCategory
-                                              .value = TaskCategory.priority;
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 15,
-                                            vertical: 15,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: addTaskController
-                                                        .selectedCategory
-                                                        .value ==
-                                                    TaskCategory.priority
-                                                ? AppColors.primaryColor
-                                                : Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(7),
-                                            border: Border.all(
-                                              color:
-                                                  AppColors.primaryColorLight,
-                                              width: 1,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            AppStrings.priorityTask,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: FontFamily.poppins,
-                                              color: addTaskController
-                                                          .selectedCategory
-                                                          .value ==
-                                                      TaskCategory.priority
-                                                  ? Colors.white
-                                                  : AppColors.primaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                        //     /// category selection
+                        //     Obx(
+                        //       () {
+                        //         return Row(
+                        //           children: [
+                        //             Expanded(
+                        //               child: GestureDetector(
+                        //                 onTap: () {
+                        //                   addTaskController.selectedCategory
+                        //                       .value = TaskCategory.daily;
+                        //                 },
+                        //                 child: Container(
+                        //                   alignment: Alignment.center,
+                        //                   padding: const EdgeInsets.symmetric(
+                        //                     horizontal: 15,
+                        //                     vertical: 15,
+                        //                   ),
+                        //                   decoration: BoxDecoration(
+                        //                     color: addTaskController
+                        //                                 .selectedCategory
+                        //                                 .value ==
+                        //                             TaskCategory.daily
+                        //                         ? AppColors.primaryColor
+                        //                         : Colors.white,
+                        //                     borderRadius:
+                        //                         BorderRadius.circular(7),
+                        //                     border: Border.all(
+                        //                       color:
+                        //                           AppColors.primaryColorLight,
+                        //                       width: 1,
+                        //                     ),
+                        //                   ),
+                        //                   child: Text(
+                        //                     AppStrings.dailyTask,
+                        //                     style: TextStyle(
+                        //                       fontSize: 12,
+                        //                       fontWeight: FontWeight.w500,
+                        //                       fontFamily: FontFamily.poppins,
+                        //                       color: addTaskController
+                        //                                   .selectedCategory
+                        //                                   .value ==
+                        //                               TaskCategory.daily
+                        //                           ? Colors.white
+                        //                           : AppColors.primaryColor,
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             SizedBox(
+                        //               width: Get.width * 0.04,
+                        //             ),
+                        //             Expanded(
+                        //               child: GestureDetector(
+                        //                 onTap: () {
+                        //                   addTaskController.selectedCategory
+                        //                       .value = TaskCategory.priority;
+                        //                 },
+                        //                 child: Container(
+                        //                   alignment: Alignment.center,
+                        //                   padding: const EdgeInsets.symmetric(
+                        //                     horizontal: 15,
+                        //                     vertical: 15,
+                        //                   ),
+                        //                   decoration: BoxDecoration(
+                        //                     color: addTaskController
+                        //                                 .selectedCategory
+                        //                                 .value ==
+                        //                             TaskCategory.priority
+                        //                         ? AppColors.primaryColor
+                        //                         : Colors.white,
+                        //                     borderRadius:
+                        //                         BorderRadius.circular(7),
+                        //                     border: Border.all(
+                        //                       color:
+                        //                           AppColors.primaryColorLight,
+                        //                       width: 1,
+                        //                     ),
+                        //                   ),
+                        //                   child: Text(
+                        //                     AppStrings.priorityTask,
+                        //                     style: TextStyle(
+                        //                       fontSize: 12,
+                        //                       fontWeight: FontWeight.w500,
+                        //                       fontFamily: FontFamily.poppins,
+                        //                       color: addTaskController
+                        //                                   .selectedCategory
+                        //                                   .value ==
+                        //                               TaskCategory.priority
+                        //                           ? Colors.white
+                        //                           : AppColors.primaryColor,
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         );
+                        //       },
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
 
