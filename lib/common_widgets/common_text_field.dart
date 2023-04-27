@@ -12,6 +12,8 @@ class CommonTextField extends StatelessWidget {
     required this.hintText,
     required this.textInputType,
     required this.textEditingController,
+    this.textInputAction,
+    this.maxLines = 1,
     this.obscureText = false,
   });
 
@@ -19,6 +21,8 @@ class CommonTextField extends StatelessWidget {
   final TextInputType textInputType;
   final TextEditingController textEditingController;
   final bool obscureText;
+  final TextInputAction? textInputAction;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +46,8 @@ class CommonTextField extends StatelessWidget {
           ),
           child: TextFormField(
             keyboardType: textInputType,
+            textInputAction: textInputAction,
+            maxLines: maxLines,
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(

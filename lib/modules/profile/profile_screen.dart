@@ -4,6 +4,7 @@ import 'package:tasq/modules/statistics/statistics_screen.dart';
 import 'package:tasq/utils/app_colors.dart';
 
 import '../../utils/app_strings.dart';
+import '../add_user/add_user_screen.dart';
 import 'my_profile/my_profile_screen.dart';
 import 'profile_controller.dart';
 
@@ -158,6 +159,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => const MyProfileScreen(),
+                      ),
+                    );
+                  },
+                ),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 40),
+                  leading: Icon(
+                    Icons.account_circle_outlined,
+                    color: AppColors.primaryColor,
+                  ),
+                  title: Text(
+                    'Add User',
+                    style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddUserScreen(),
                       ),
                     );
                   },
