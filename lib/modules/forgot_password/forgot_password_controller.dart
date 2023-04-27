@@ -66,7 +66,7 @@ class ForgotPasswordController extends GetxController {
         ),
       );
       return false;
-    } else if (/* !GetUtils.isEmail(emailTextController.text) */ false) {
+    } else if (!GetUtils.isEmail(emailTextController.text)) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         const SnackBar(
           content: Text("Please enter valid email"),
