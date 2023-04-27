@@ -195,88 +195,88 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
 
-                        /// Daily Tasks
-                        Text(
-                          AppStrings.dailyTasks,
-                          style: TextStyle(
-                            fontFamily: FontFamily.poppins,
-                            fontSize: Get.height * 0.02,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        // /// Daily Tasks
+                        // Text(
+                        //   AppStrings.dailyTasks,
+                        //   style: TextStyle(
+                        //     fontFamily: FontFamily.poppins,
+                        //     fontSize: Get.height * 0.02,
+                        //     fontWeight: FontWeight.w600,
+                        //   ),
+                        // ),
 
-                        /// Daily Tasks List
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: Get.height * 0.01,
-                          ),
-                          child: GetBuilder<HomeController>(
-                            init: homeController,
-                            id: "dailyTasks",
-                            builder: (controller) {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: homeController.dailyTasks.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    onTap: () {
-                                      homeController
-                                              .dailyTasks[index].isCompleted =
-                                          !homeController
-                                              .dailyTasks[index].isCompleted;
-                                      homeController.update(["dailyTasks"]);
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: Get.height * 0.01,
-                                        horizontal: Get.width * 0.02,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            homeController
-                                                .dailyTasks[index].title,
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.poppins,
-                                              fontSize: Get.height * 0.018,
-                                              fontWeight: FontWeight.w600,
-                                              color: homeController
-                                                      .dailyTasks[index]
-                                                      .isCompleted
-                                                  ? AppColors.primaryColor
-                                                  : Colors.black,
-                                            ),
-                                          ),
-                                          Obx(
-                                            () => Checkbox(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                              ),
-                                              value: homeController
-                                                  .dailyTasks[index]
-                                                  .isCompleted,
-                                              onChanged: (value) {
-                                                homeController.dailyTasks[index]
-                                                    .isCompleted = value!;
-                                                homeController
-                                                    .update(["dailyTasks"]);
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        )
+                        // /// Daily Tasks List
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(
+                        //     vertical: Get.height * 0.01,
+                        //   ),
+                        //   child: GetBuilder<HomeController>(
+                        //     init: homeController,
+                        //     id: "dailyTasks",
+                        //     builder: (controller) {
+                        //       return ListView.builder(
+                        //         shrinkWrap: true,
+                        //         physics: const NeverScrollableScrollPhysics(),
+                        //         itemCount: homeController.dailyTasks.length,
+                        //         itemBuilder: (context, index) {
+                        //           return GestureDetector(
+                        //             behavior: HitTestBehavior.translucent,
+                        //             onTap: () {
+                        //               homeController
+                        //                       .dailyTasks[index].isCompleted =
+                        //                   !homeController
+                        //                       .dailyTasks[index].isCompleted;
+                        //               homeController.update(["dailyTasks"]);
+                        //             },
+                        //             child: Padding(
+                        //               padding: EdgeInsets.symmetric(
+                        //                 vertical: Get.height * 0.01,
+                        //                 horizontal: Get.width * 0.02,
+                        //               ),
+                        //               child: Row(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.spaceBetween,
+                        //                 children: [
+                        //                   Text(
+                        //                     homeController
+                        //                         .dailyTasks[index].title,
+                        //                     style: TextStyle(
+                        //                       fontFamily: FontFamily.poppins,
+                        //                       fontSize: Get.height * 0.018,
+                        //                       fontWeight: FontWeight.w600,
+                        //                       color: homeController
+                        //                               .dailyTasks[index]
+                        //                               .isCompleted
+                        //                           ? AppColors.primaryColor
+                        //                           : Colors.black,
+                        //                     ),
+                        //                   ),
+                        //                   Obx(
+                        //                     () => Checkbox(
+                        //                       shape: RoundedRectangleBorder(
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(50),
+                        //                       ),
+                        //                       value: homeController
+                        //                           .dailyTasks[index]
+                        //                           .isCompleted,
+                        //                       onChanged: (value) {
+                        //                         homeController.dailyTasks[index]
+                        //                             .isCompleted = value!;
+                        //                         homeController
+                        //                             .update(["dailyTasks"]);
+                        //                       },
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           );
+                        //         },
+                        //       );
+                        //     },
+                        //   ),
+                        // )
                       ],
                     ),
                   ),
