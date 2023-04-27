@@ -43,12 +43,10 @@ class SignInController extends GetxController {
       LoginResponseModel? logInResponse = await Repository.loginUser(
         email: emailTextFieldController.text.trim(),
         password: passwordTextFieldController.text.trim(),
+        isManager: isManager.value,
         context: context,
       );
 
-      if (context.mounted) {
-        hideFullScreenLoader(context: context);
-      }
 
       if (logInResponse != null && context.mounted) {
         LocalStorage.saveUserData(

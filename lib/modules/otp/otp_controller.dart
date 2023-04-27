@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:tasq/common_widgets/full_screen_loader.dart';
 import 'package:tasq/modules/dashboard/dashboard.dart';
+import 'package:tasq/utils/app_colors.dart';
 import 'package:tasq/utils/network_services/repository.dart';
 
 class OTPController extends GetxController {
@@ -19,14 +20,19 @@ class OTPController extends GetxController {
   Future<void> onConfirmButtonTap({
     required BuildContext context,
     required String email,
+    required bool isManager,
   }) async {
     showFullScreenLoader(context: context);
 
-    /// Verify OTP API call
-    String? responseStatusCode = await Repository.verifyOTP(
-      email: email,
-      otp: otpString,
-    );
+    String? responseStatusCode;
+    if (validateFields(context)) {
+      /// Verify OTP API call
+      responseStatusCode = await Repository.verifyOTP(
+        email: email,
+        otp: otpString,
+        isManager: isManager,
+      );
+    }
 
     if (context.mounted) {
       hideFullScreenLoader(context: context);
@@ -46,5 +52,21 @@ class OTPController extends GetxController {
         );
       }
     }
+  }
+
+  bool validateFields(BuildContext context) {
+    if (otpString.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            "Please enter OTP",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 }

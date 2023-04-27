@@ -51,9 +51,13 @@ class SignUpController extends GetxController {
 
       /// call the api to register the user
       final response = await Repository.registerUser(
+        firstName: firstNameTextFieldController.text,
+        lastName: lastNameTextFieldController.text,
         userName: userNameTextFieldController.text,
         email: emailTextFieldController.text,
         password: passwordTextFieldController.text,
+        isManager: isManager.isTrue,
+        firmName: companyNameTextFieldController.text,
       );
 
       if (context.mounted) hideFullScreenLoader(context: context);
@@ -85,6 +89,7 @@ class SignUpController extends GetxController {
             MaterialPageRoute(
               builder: (context) => OTPScreen(
                 email: emailTextFieldController.text,
+                isManager: isManager.isTrue,
               ),
             ),
             (route) {
@@ -111,14 +116,13 @@ class SignUpController extends GetxController {
   }
 
   bool validateFields({required BuildContext context}) {
-
     /// validate the fields here
 
     if (userNameTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
-            'Please enter your name',
+            'Please enter your username',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -127,8 +131,7 @@ class SignUpController extends GetxController {
         ),
       );
       return false;
-    } 
-    else if(firstNameTextFieldController.text.isEmpty){
+    } else if (firstNameTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -141,8 +144,7 @@ class SignUpController extends GetxController {
         ),
       );
       return false;
-    }
-    else if(lastNameTextFieldController.text.isEmpty){
+    } else if (lastNameTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -154,9 +156,10 @@ class SignUpController extends GetxController {
           backgroundColor: AppColors.primaryColor,
         ),
       );
+
       return false;
-    }
-    else if(companyNameTextFieldController.text.isEmpty){
+    } else if (isManager.isTrue &&
+        companyNameTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -169,8 +172,7 @@ class SignUpController extends GetxController {
         ),
       );
       return false;
-    }
-    else if (emailTextFieldController.text.isEmpty) {
+    } else if (emailTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -186,7 +188,7 @@ class SignUpController extends GetxController {
     }
 
     /// validate the email here
-    else if (emailTextFieldController.text.contains('@') == false) {
+    else if (!GetUtils.isEmail(emailTextFieldController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -239,11 +241,7 @@ class SignUpController extends GetxController {
         ),
       );
       return false;
-    }
-
-
-
-     else {
+    } else {
       return true;
     }
   }

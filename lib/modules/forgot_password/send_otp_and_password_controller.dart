@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tasq/common_widgets/full_screen_loader.dart';
 import 'package:tasq/modules/sign_in/sign_in_screen.dart';
 
+import '../../utils/app_colors.dart';
 import '../../utils/network_services/repository.dart';
 
 class SendOTPAndPasswordController extends GetxController {
@@ -29,6 +30,7 @@ class SendOTPAndPasswordController extends GetxController {
   Future<void> onSubmitTap({
     required BuildContext context,
     required String email,
+    required bool isManager,
   }) async {
     if (validateFields(context)) {
       showFullScreenLoader(context: context);
@@ -38,6 +40,7 @@ class SendOTPAndPasswordController extends GetxController {
         email: email,
         otp: otpTextController.text.trim(),
         password: passwordTextController.text.trim(),
+        isManager: isManager,
         context: context,
       );
 
@@ -72,23 +75,35 @@ class SendOTPAndPasswordController extends GetxController {
       return false;
     } else if (passwordTextController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter password"),
+        SnackBar(
+          content: const Text(
+            "Please enter password",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppColors.primaryColor,
         ),
       );
       return false;
     } else if (confirmPasswordTextController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter confirm password"),
+        SnackBar(
+          content: const Text(
+            "Please enter confirm password",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppColors.primaryColor,
         ),
       );
       return false;
     } else if (passwordTextController.text !=
         confirmPasswordTextController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Password and confirm password does not match"),
+        SnackBar(
+          content: const Text(
+            "Password and confirm password does not match",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppColors.primaryColor,
         ),
       );
       return false;

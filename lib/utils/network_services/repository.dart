@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:tasq/models/login_response_model.dart';
 import 'package:tasq/models/user_model.dart';
+import '../../common_widgets/full_screen_loader.dart';
 import '../app_colors.dart';
 import './network_services.dart';
 
@@ -30,6 +31,10 @@ class Repository {
     required String userName,
     required String email,
     required String password,
+    required String firstName,
+    required String lastName,
+    required bool isManager,
+    required String firmName,
   }) async {
     Response? response;
     try {
@@ -39,6 +44,10 @@ class Repository {
           "userName": userName,
           "email": email,
           "password": password,
+          "firstName": firstName,
+          "lastName": lastName,
+          "isManager": isManager.toString(),
+          "firmName": firmName,
         },
       );
     } on Exception catch (e, s) {
@@ -58,6 +67,7 @@ class Repository {
   static Future<LoginResponseModel?> loginUser({
     required String email,
     required String password,
+    required bool isManager,
     required BuildContext context,
   }) async {
     Response? response;
@@ -67,6 +77,7 @@ class Repository {
         data: {
           "email": email,
           "password": password,
+          "isManager": isManager.toString(),
         },
       );
     } on Exception catch (e, s) {
@@ -75,6 +86,10 @@ class Repository {
 
     log("Repository - loginUser - Response - status: ${response?.statusCode}");
     log("Repository - loginUser - Response - data: ${response?.body}");
+
+    if (context.mounted) {
+      hideFullScreenLoader(context: context);
+    }
 
     if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
       return loginResponseModelFromJson(response?.body ?? "");
@@ -95,8 +110,7 @@ class Repository {
 
       return null;
     }
-  } 
-
+  }
 
   /// - [verifyOTP] method is used for otp verification purpose.
   /// - it will require [email], [otp].
@@ -104,6 +118,7 @@ class Repository {
   static Future<String?> verifyOTP({
     required String email,
     required String otp,
+    required bool isManager,
   }) async {
     Response? response;
     try {
@@ -112,6 +127,7 @@ class Repository {
         data: {
           "email": email,
           "otp": otp,
+          "isManager": isManager.toString(),
         },
       );
     } on Exception catch (e, s) {
@@ -124,12 +140,12 @@ class Repository {
     return jsonDecode(response?.body ?? "")["status_code"].toString();
   }
 
-
   /// - [forgotPassword] method is used to send an otp to the user's email from backend.
   /// - it will require [email].
   /// - it will return a [bool] value if the otp is sent successfully or not.
   static Future<bool> forgotPassword({
     required String email,
+    required bool isManager,
     required BuildContext context,
   }) async {
     bool isSent = false;
@@ -139,6 +155,7 @@ class Repository {
         path: "/forgot-password",
         data: {
           "email": email,
+          "isManager": isManager.toString(),
         },
       );
     } on Exception catch (e, s) {
@@ -148,10 +165,9 @@ class Repository {
     log("Repository - forgotPassword - Response - status: ${response?.statusCode}");
     log("Repository - forgotPassword - Response - data: ${response?.body}");
 
-
     /// if the status code is 200 then the otp is sent successfully and it will return true
     /// else it will return false
-    if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
+    if (response?.statusCode == 200) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -171,7 +187,7 @@ class Repository {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              jsonDecode(response?.body ?? "")["message"],
+              response?.body ?? "",
               style: const TextStyle(
                 color: Colors.white,
               ),
@@ -189,12 +205,14 @@ class Repository {
   /// - [resetPassword] method is used to reset the password of the user.
   /// - it will require [email], [otp], [password].
   /// - it will return a [bool] value if the password is reset successfully or not.
-  static Future<bool> resetPassword(
-      {required String email,
-      required String otp,
-      required String password,
-      required BuildContext context}) async {
-        bool hasReset = false;
+  static Future<bool> resetPassword({
+    required String email,
+    required String otp,
+    required String password,
+    required bool isManager,
+    required BuildContext context,
+  }) async {
+    bool hasReset = false;
     Response? response;
     try {
       response = await NetworkServices.post(
@@ -203,6 +221,7 @@ class Repository {
           "email": email,
           "otp": otp,
           "password": password,
+          "isManager": isManager.toString(),
         },
       );
     } on Exception catch (e, s) {

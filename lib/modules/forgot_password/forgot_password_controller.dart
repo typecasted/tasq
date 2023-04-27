@@ -8,6 +8,8 @@ import '../../common_widgets/full_screen_loader.dart';
 class ForgotPasswordController extends GetxController {
   TextEditingController emailTextController = TextEditingController();
 
+  RxBool isManager = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -29,6 +31,7 @@ class ForgotPasswordController extends GetxController {
       /// Forgot password API call
       bool isOTPSent = await Repository.forgotPassword(
         email: emailTextController.text.trim(),
+        isManager: isManager.isTrue,
         context: context,
       );
 
@@ -45,6 +48,7 @@ class ForgotPasswordController extends GetxController {
               builder: (context) {
                 return SendOTPAndPasswordScreen(
                   email: emailTextController.text.trim(),
+                  isManager: isManager.isTrue,
                 );
               },
             ),
@@ -62,7 +66,7 @@ class ForgotPasswordController extends GetxController {
         ),
       );
       return false;
-    } else if (!GetUtils.isEmail(emailTextController.text)) {
+    } else if (/* !GetUtils.isEmail(emailTextController.text) */ false) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         const SnackBar(
           content: Text("Please enter valid email"),
@@ -72,5 +76,9 @@ class ForgotPasswordController extends GetxController {
       return false;
     }
     return true;
+  }
+
+  void onManagerCheckBoxChanged(bool? bool) {
+    isManager.value = bool!;
   }
 }

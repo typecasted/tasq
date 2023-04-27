@@ -26,14 +26,18 @@ class _SignInScreenState extends State<SignInScreen> {
   SignInController signInController = Get.put(SignInController());
   @override
   void initState() {
-    signInController.initSignInScreen();
-
+    // signInController.initSignInScreen();
+    signInController.emailTextFieldController = TextEditingController();
+    signInController.passwordTextFieldController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    signInController.disposeSignInScreen();
+    // signInController.disposeSignInScreen();
+    signInController.emailTextFieldController.clear();
+
+    signInController.passwordTextFieldController.clear();
     super.dispose();
   }
 

@@ -5,6 +5,7 @@ import 'package:tasq/utils/app_colors.dart';
 
 import '../../common_widgets/common_button.dart';
 import '../../utils/app_strings.dart';
+import '../../utils/fonts.gen.dart';
 import 'forgot_password_controller.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -74,7 +75,39 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   forgotPasswordController.emailTextController,
             ),
             SizedBox(
-              height: Get.height * 0.05,
+              height: Get.height * 0.03,
+            ),
+
+            ListTile(
+              splashColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              onTap: () {
+                forgotPasswordController.onManagerCheckBoxChanged(
+                  !forgotPasswordController.isManager.value,
+                );
+              },
+              leading: Obx(
+                () => Checkbox(
+                  value: forgotPasswordController.isManager.value,
+                  onChanged: (value) {
+                    forgotPasswordController.onManagerCheckBoxChanged(value);
+                  },
+                  activeColor: AppColors.primaryColor,
+                ),
+              ),
+              title: Text(
+                AppStrings.loginAsManager,
+                style: TextStyle(
+                  fontSize: Get.height * 0.014,
+                  color: AppColors.solidTextColor,
+                  fontFamily: FontFamily.poppins,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: Get.height * 0.03,
             ),
 
             /// Submit Button

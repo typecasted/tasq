@@ -9,10 +9,13 @@ import '../../utils/app_colors.dart';
 
 class SendOTPAndPasswordScreen extends StatefulWidget {
   final String email;
+  
+  final bool isManager;
 
   const SendOTPAndPasswordScreen({
     super.key,
     required this.email,
+    required this.isManager,
   });
 
   @override
@@ -117,7 +120,10 @@ class _SendOTPAndPasswordScreenState extends State<SendOTPAndPasswordScreen> {
                 text: AppStrings.submit,
                 onTap: () {
                   sendOTPAndPasswordController.onSubmitTap(
-                      context: context, email: widget.email);
+                    context: context,
+                    email: widget.email,
+                    isManager: widget.isManager,
+                  );
                 },
               ),
             ],
