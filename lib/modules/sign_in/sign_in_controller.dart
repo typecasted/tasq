@@ -15,6 +15,8 @@ class SignInController extends GetxController {
 
   TextEditingController passwordTextFieldController = TextEditingController();
 
+  RxBool isManager = false.obs;
+
   void initSignInScreen() {
     emailTextFieldController = TextEditingController();
     passwordTextFieldController = TextEditingController();
@@ -109,5 +111,9 @@ class SignInController extends GetxController {
         },
       ),
     );
+  }
+
+  void onManagerCheckBoxChanged(bool? value) {
+    isManager.value = value ?? false;
   }
 }

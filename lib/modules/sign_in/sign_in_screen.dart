@@ -141,6 +141,41 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
 
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+
+                  ListTile(
+                    splashColor: Colors.transparent,
+                    contentPadding: EdgeInsets.zero,
+                    onTap: () {
+                      signInController.onManagerCheckBoxChanged(
+                        !signInController.isManager.value,
+                      );
+                    },
+                    leading: Obx(
+                      () => Checkbox(
+                        value: signInController.isManager.value,
+                        onChanged: (value) {
+                          signInController.onManagerCheckBoxChanged(value);
+                        },
+                        activeColor: AppColors.primaryColor,
+                      ),
+                    ),
+                    title: Text(
+                      AppStrings.loginAsManager,
+                      style: TextStyle(
+                        fontSize: Get.height * 0.014,
+                        color: AppColors.solidTextColor,
+                        fontFamily: FontFamily.poppins,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+
                   CommonButton(
                     text: AppStrings.login,
                     onTap: () {

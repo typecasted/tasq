@@ -69,4 +69,12 @@ class AppStrings {
   static String enterYourEmailHere = 'Enter your email here';
 
   static String submit = 'Submit';
+
+  static String loginAsManager = 'Login as Manager';
+
+  static String firstName = 'First Name';
+
+  static String lastName = 'Last Name';
+
+  static String companyName = 'Company Name'; 
 }

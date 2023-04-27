@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 /// controllers import
 import './sign_up_controller.dart';
 
-
 /// utils import
 import '../../utils/app_colors.dart';
 import '../../utils/app_strings.dart';
@@ -99,6 +98,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
 
                   CommonLoginTextField(
+                    hintText: AppStrings.firstName,
+                    iconPath: Assets.svgs.icPersonUnfilled,
+                    textInputType: TextInputType.name,
+                    textEditingController:
+                        signUpController.firstNameTextFieldController,
+                  ),
+
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+
+                  CommonLoginTextField(
+                    hintText: AppStrings.lastName,
+                    iconPath: Assets.svgs.icPersonUnfilled,
+                    textInputType: TextInputType.name,
+                    textEditingController:
+                        signUpController.lastNameTextFieldController,
+                  ),
+
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+
+                  CommonLoginTextField(
                     hintText: AppStrings.username,
                     iconPath: Assets.svgs.icMessage,
                     textInputType: TextInputType.emailAddress,
@@ -144,6 +167,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: true,
                   ),
 
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+
+                  ListTile(
+                    splashColor: Colors.transparent,
+                    contentPadding: EdgeInsets.zero,
+                    onTap: () {
+                      signUpController.onManagerCheckBoxChanged(
+                        !signUpController.isManager.value,
+                      );
+                    },
+                    leading: Obx(
+                      () => Checkbox(
+                        value: signUpController.isManager.value,
+                        onChanged: (value) {
+                          signUpController.onManagerCheckBoxChanged(value);
+                        },
+                        activeColor: AppColors.primaryColor,
+                      ),
+                    ),
+                    title: Text(
+                      AppStrings.loginAsManager,
+                      style: TextStyle(
+                        fontSize: Get.height * 0.014,
+                        color: AppColors.solidTextColor,
+                        fontFamily: FontFamily.poppins,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+
+                  Obx(
+                    () => signUpController.isManager.value
+                        ? CommonLoginTextField(
+                            hintText: AppStrings.companyName,
+                            iconPath: Assets.svgs.icPersonUnfilled,
+                            textInputType: TextInputType.name,
+                            textEditingController:
+                                signUpController.companyNameTextFieldController,
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                   SizedBox(
                     height: Get.height * 0.03,
                   ),

@@ -13,6 +13,12 @@ class SignUpController extends GetxController {
   TextEditingController passwordTextFieldController = TextEditingController();
   TextEditingController confirmPasswordTextFieldController =
       TextEditingController();
+  TextEditingController firstNameTextFieldController = TextEditingController();
+  TextEditingController lastNameTextFieldController = TextEditingController();
+  TextEditingController companyNameTextFieldController =
+      TextEditingController();
+
+  RxBool isManager = false.obs;
 
   @override
   onInit() {
@@ -21,6 +27,9 @@ class SignUpController extends GetxController {
     emailTextFieldController = TextEditingController();
     passwordTextFieldController = TextEditingController();
     confirmPasswordTextFieldController = TextEditingController();
+    firstNameTextFieldController = TextEditingController();
+    lastNameTextFieldController = TextEditingController();
+    companyNameTextFieldController = TextEditingController();
   }
 
   @override
@@ -29,6 +38,9 @@ class SignUpController extends GetxController {
     emailTextFieldController.dispose();
     passwordTextFieldController.dispose();
     confirmPasswordTextFieldController.dispose();
+    firstNameTextFieldController.dispose();
+    lastNameTextFieldController.dispose();
+    companyNameTextFieldController.dispose();
     super.onClose();
   }
 
@@ -99,6 +111,9 @@ class SignUpController extends GetxController {
   }
 
   bool validateFields({required BuildContext context}) {
+
+    /// validate the fields here
+
     if (userNameTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -112,7 +127,50 @@ class SignUpController extends GetxController {
         ),
       );
       return false;
-    } else if (emailTextFieldController.text.isEmpty) {
+    } 
+    else if(firstNameTextFieldController.text.isEmpty){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Please enter your first name',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    }
+    else if(lastNameTextFieldController.text.isEmpty){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Please enter your last name',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    }
+    else if(companyNameTextFieldController.text.isEmpty){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Please enter your company name',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    }
+    else if (emailTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -181,8 +239,16 @@ class SignUpController extends GetxController {
         ),
       );
       return false;
-    } else {
+    }
+
+
+
+     else {
       return true;
     }
+  }
+
+  void onManagerCheckBoxChanged(bool? bool) {
+    isManager.value = bool!;
   }
 }
