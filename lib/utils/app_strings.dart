@@ -60,7 +60,8 @@ class AppStrings {
 
   static String verifyAccount = 'Verify Account';
 
-  static String enterVerificationNumber = "Please enter the verification number we send to your email";
+  static String enterVerificationNumber =
+      "Please enter the verification number we send to your email";
 
   static String resendOTP = 'Resend OTP';
 
@@ -76,5 +77,9 @@ class AppStrings {
 
   static String lastName = 'Last Name';
 
-  static String companyName = 'Company Name'; 
+  static String companyName = 'Company Name';
+
+  static String status = 'Status';
+
+  static String remarks = 'Remarks';
 }

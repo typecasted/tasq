@@ -5,7 +5,7 @@ class TaskModel {
   String? startDate;
   String? endDate;
   String? time;
-  TaskStatus? status;
+  String? status;
 
   TaskModel({
     this.id,

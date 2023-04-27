@@ -156,6 +156,73 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
               const Divider(height: 30),
 
+              Text(
+                AppStrings.status,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: FontFamily.poppins,
+                ),
+              ),
+
+              const SizedBox(
+                height: 5,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.task.status ?? "No Status",
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: FontFamily.poppins,
+                    ),
+                  ),
+
+                  /// Action button
+
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Task actions",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: FontFamily.poppins,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const Divider(height: 30),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppStrings.remarks,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: FontFamily.poppins,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.open_in_new_outlined,
+                    ),
+                  )
+                ],
+              ),
+
               // // Progress bar
               // Text(
               //   AppStrings.progress,
