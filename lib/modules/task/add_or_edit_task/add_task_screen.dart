@@ -22,28 +22,18 @@ class AddOrEditTaskScreen extends StatefulWidget {
 }
 
 class _AddOrEditTaskScreenState extends State<AddOrEditTaskScreen> {
-  AddTaskController addTaskController = Get.put(AddTaskController());
+  late AddTaskController addTaskController;
 
   @override
   void initState() {
-    addTaskController.titleController = TextEditingController();
-    addTaskController.descriptionController = TextEditingController();
-    if (widget.isEdit) {
-      addTaskController.titleController.text = widget.task?.title ?? "";
-      addTaskController.descriptionController.text =
-          widget.task?.description ?? "";
-    } else {
-      addTaskController.titleController.text = '';
-      addTaskController.descriptionController.text = '';
-    }
-
     super.initState();
+    addTaskController = Get.put(AddTaskController());
+    addTaskController.onInitStateCalled(widget: widget);
   }
 
   @override
   void dispose() {
-    addTaskController.titleController.dispose();
-    addTaskController.descriptionController.dispose();
+    addTaskController.onClose();
     super.dispose();
   }
 
@@ -149,25 +139,36 @@ class _AddOrEditTaskScreenState extends State<AddOrEditTaskScreen> {
                                   width: 1,
                                 ),
                               ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.calendar_today_rounded,
-                                    color: AppColors.primaryColor,
-                                    size: 18,
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.02,
-                                  ),
-                                  const Text(
-                                    '12/12/2020',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: FontFamily.poppins,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  addTaskController.selectDate(
+                                    context: context,
+                                    isStartDate: true,
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_today_rounded,
+                                      color: AppColors.primaryColor,
+                                      size: 18,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: Get.width * 0.02,
+                                    ),
+                                    Obx(
+                                      () => Text(
+                                        '${addTaskController.startDate.value.day}/${addTaskController.startDate.value.month}/${addTaskController.startDate.value.year}',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: FontFamily.poppins,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -203,25 +204,36 @@ class _AddOrEditTaskScreenState extends State<AddOrEditTaskScreen> {
                                   width: 1,
                                 ),
                               ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.calendar_today_rounded,
-                                    color: AppColors.primaryColor,
-                                    size: 18,
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.02,
-                                  ),
-                                  const Text(
-                                    '12/12/2020',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: FontFamily.poppins,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  addTaskController.selectDate(
+                                    context: context,
+                                    isStartDate: false,
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_today_rounded,
+                                      color: AppColors.primaryColor,
+                                      size: 18,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: Get.width * 0.02,
+                                    ),
+                                    Obx(
+                                      () => Text(
+                                        '${addTaskController.endDate.value.day}/${addTaskController.endDate.value.month}/${addTaskController.endDate.value.year}',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: FontFamily.poppins,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

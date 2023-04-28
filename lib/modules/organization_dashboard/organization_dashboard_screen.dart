@@ -12,6 +12,6 @@ class _OrganizationDashboardScreenState
     extends State<OrganizationDashboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

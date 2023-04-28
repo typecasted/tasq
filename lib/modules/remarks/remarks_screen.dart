@@ -10,6 +10,6 @@ class RemarkScreen extends StatefulWidget {
 class _RemarkScreenState extends State<RemarkScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }
