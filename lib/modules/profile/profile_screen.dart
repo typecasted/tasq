@@ -16,18 +16,21 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  ProfileController profileController = Get.put(ProfileController());
+  late ProfileController profileController;
 
   @override
   void initState() {
     super.initState();
+
+    profileController = Get.put(ProfileController());
     profileController.onInit();
   }
 
   @override
   void dispose() {
     profileController.onClose();
-    profileController.dispose();
+    // profileController.dispose();
+
     super.dispose();
   }
 
@@ -52,84 +55,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: [
             /// header
-            SizedBox(
-              height: 200,
-              child: Stack(
-                children: [
-                  Container(
-                    height: 70,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 45,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      height: 150,
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
+            Obx(
+              () => SizedBox(
+                height: 200,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 70,
+                      width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey[300]!,
-                            blurRadius: 2,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(20),
+                        color: AppColors.primaryColor,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30),
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 55),
-                          Text(
-                            'John Doe',
-                            style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
+                    ),
+                    Positioned(
+                      top: 45,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        height: 150,
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey[300]!,
+                              blurRadius: 2,
+                              offset: const Offset(0, 3),
                             ),
+                          ],
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
                           ),
-                          const SizedBox(height: 5),
-                          const Text(
-                            ' +91 123 456 7890',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                        ),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 55),
+                            Text(
+                              profileController.userData.value.firstName ?? '',
+                              style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          const Text(
-                            '201 Completed Tasks',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                            const SizedBox(height: 5),
+                            Text(
+                              profileController.userData.value.email ?? '',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 5),
+                            Text(
+                              "Completed Tasks : ${profileController.userData.value.completeTasks != null ? profileController.userData.value.completeTasks.toString() : ''}",
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    left: 0,
-                    right: 0,
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.grey[200],
+                    Positioned(
+                      top: 10,
+                      left: 0,
+                      right: 0,
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.grey[200],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 
@@ -163,29 +168,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     );
                   },
                 ),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 40),
-                  leading: Icon(
-                    Icons.account_circle_outlined,
-                    color: AppColors.primaryColor,
-                  ),
-                  title: Text(
-                    'Add User',
-                    style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddUserScreen(),
+                profileController.isLoggedInAsManager.isFalse
+                    ? Container()
+                    : ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 40),
+                        leading: Icon(
+                          Icons.person_add_rounded,
+                          color: AppColors.primaryColor,
+                        ),
+                        title: Text(
+                          'Add User',
+                          style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AddUserScreen(),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 40),
                   leading: Icon(

@@ -47,8 +47,8 @@ class SignInController extends GetxController {
         context: context,
       );
 
-      if (logInResponse != null && context.mounted) {
-        LocalStorage.saveUserData(
+      if (logInResponse != null) {
+        await LocalStorage.saveUserData(
           data: logInResponse.userDataModel!,
         );
 
@@ -56,17 +56,19 @@ class SignInController extends GetxController {
           isLoggedInAsManager: isManager.value,
         );
 
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return const Dashboard();
+        if (context.mounted) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const Dashboard();
+              },
+            ),
+            (route) {
+              return false;
             },
-          ),
-          (route) {
-            return false;
-          },
-        );
+          );
+        }
       }
     }
   }

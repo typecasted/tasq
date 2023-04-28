@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tasq/models/user_model.dart';
 
@@ -22,9 +24,9 @@ class LocalStorage {
   /// - it will return a [UserModel] if the user data is found in local storage else it will return null
   static Future<UserModel?> getUserData() async {
     final box = await Hive.openBox(userData);
-    final data = box.get(userData);
+    final data = await box.get(userData);
     if (data != null) {
-      return userModelFromJson(data);
+      return userModelFromJson(jsonEncode(data));
     }
     return null;
   }
