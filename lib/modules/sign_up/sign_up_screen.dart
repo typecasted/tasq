@@ -121,17 +121,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: Get.height * 0.03,
                   ),
 
-                  CommonLoginTextField(
-                    hintText: AppStrings.username,
-                    iconPath: Assets.svgs.icMessage,
-                    textInputType: TextInputType.emailAddress,
-                    textEditingController:
-                        signUpController.userNameTextFieldController,
-                  ),
+                  // CommonLoginTextField(
+                  //   hintText: AppStrings.username,
+                  //   iconPath: Assets.svgs.icMessage,
+                  //   textInputType: TextInputType.emailAddress,
+                  //   textEditingController:
+                  //       signUpController.userNameTextFieldController,
+                  // ),
 
-                  SizedBox(
-                    height: Get.height * 0.03,
-                  ),
+                  // SizedBox(
+                  //   height: Get.height * 0.03,
+                  // ),
 
                   CommonLoginTextField(
                     hintText: AppStrings.email,

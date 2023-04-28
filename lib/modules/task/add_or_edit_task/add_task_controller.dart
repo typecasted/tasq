@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasq/common_widgets/full_screen_loader.dart';
+import 'package:tasq/modules/task/models/task_model.dart';
+import 'package:tasq/utils/local_storage.dart';
+import 'package:tasq/utils/network_services/repository.dart';
 
 import '../../../utils/app_colors.dart';
 import 'add_task_screen.dart';
@@ -17,15 +21,15 @@ class AddTaskController extends GetxController {
   /// - [endDate] is used to store the end date of the task.
   Rx<DateTime> endDate = DateTime.now().obs;
 
+  /// - [isManager] is used to check if the user is manager or not.
+  /// - if the user is manager then he can assign the task to other users.
+  /// - if this is true then the assignee dropdown button will be visible.
+  RxBool isManager = false.obs;
+
   /// - [assigneeList] will store the list of emails of the assignees a manager can assign the task to.
-  List<String> assigneeList = [
+  RxList<String> assigneeList = [
     "Select Assignee",
-    "Assignee 1",
-    "Assignee 2",
-    "Assignee 3",
-    "Assignee 4",
-    "Assignee 5",
-  ];
+  ].obs;
 
   /// - [selectedAssignee] will store the selected assignee from the list of assignees.
   /// - it is used in dropdown button to show the selected assignee.
@@ -33,15 +37,35 @@ class AddTaskController extends GetxController {
 
   /// - [onInitStateCalled] is used to initiate all the controllers and variables of the screen.
   /// - [widget] is of [AddOrEditTaskScreen] and used to get the data from the screen.
-  void onInitStateCalled({required AddOrEditTaskScreen widget}) {
+  Future<void> onInitStateCalled({required AddOrEditTaskScreen widget}) async {
     titleController = TextEditingController();
     descriptionController = TextEditingController();
+
     if (widget.isEdit) {
       titleController.text = widget.task?.title ?? "";
       descriptionController.text = widget.task?.description ?? "";
     } else {
       titleController.text = '';
       descriptionController.text = '';
+    }
+
+    /// check if the user is manager or not.
+    isManager.value = await LocalStorage.getIsLoggedInAsManager();
+
+    /// if the user is manager then get the list of assignees.
+
+    if (isManager.value) {
+      assigneeList.clear();
+      assigneeList.add("Select Assignee");
+
+      final userData = await LocalStorage.getUserData();
+      userData?.users?.forEach(
+        (element) {
+          if (element.email != null && element.email != "") {
+            assigneeList.add(element.email!);
+          }
+        },
+      );
     }
   }
 
@@ -87,5 +111,88 @@ class AddTaskController extends GetxController {
         }
       },
     );
+  }
+
+  Future<void> createTask({
+    required bool isEdit,
+    required TaskModel? task,
+    required BuildContext context,
+  }) async {
+    if (validateFields(context: context)) {
+      showFullScreenLoader(context: context);
+
+      final userData = await LocalStorage.getUserData();
+      if (!isEdit && context.mounted) {
+        bool isAdded = await Repository.addTask(
+          title: titleController.text,
+          description: descriptionController.text,
+          start: startDate.value.toIso8601String(),
+          end: endDate.value.toIso8601String(),
+          email:
+              isManager.value ? selectedAssignee.value : userData?.email ?? "",
+          isPersonal: !isManager.value,
+          context: context,
+        );
+
+        if (isAdded && context.mounted) {
+          Navigator.pop(context);
+        }
+      }
+      if (context.mounted) {
+        hideFullScreenLoader(context: context);
+      }
+    }
+  }
+
+  bool validateFields({required BuildContext context}) {
+    if (titleController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            "Please enter title",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    } else if (descriptionController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            "Please enter description",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+
+      return false;
+    } else if (!(endDate.value.isAfter(startDate.value) ||
+        endDate.value.isAtSameMomentAs(startDate.value))) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            "End date should be greater than start date",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    } else if (isManager.value && selectedAssignee.value == "Select Assignee") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            "Please select assignee",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+      return false;
+    } else {
+      return true;
+    }
   }
 }

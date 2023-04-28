@@ -12,6 +12,7 @@ class UserModel {
   int? totalTasks;
   int? completeTasks;
   bool? isVerified;
+  List<Users>? users;
 
   UserModel({
     this.firstName,
@@ -21,6 +22,7 @@ class UserModel {
     this.totalTasks,
     this.completeTasks,
     this.isVerified,
+    this.users,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,12 @@ class UserModel {
     totalTasks = json['totalTasks'];
     completeTasks = json['completeTasks'];
     isVerified = json['isVerified'];
+    if (json['users'] != null) {
+      users = <Users>[];
+      json['users'].forEach((dynamic v) {
+        users?.add(Users.fromJson(v as Map<String, dynamic>));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +50,31 @@ class UserModel {
     data['totalTasks'] = totalTasks ?? 0;
     data['completeTasks'] = completeTasks ?? 0;
     data['isVerified'] = isVerified ?? false;
+    if (users != null) {
+      data['users'] = users?.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Users {
+  String? email;
+  String? designation;
+
+  Users({
+    this.email,
+    this.designation,
+  });
+
+  Users.fromJson(Map<String, dynamic> json) {
+    email = json['email'];
+    designation = json['designation'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['email'] = email ?? "";
+    data['designation'] = designation ?? "";
     return data;
   }
 }

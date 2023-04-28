@@ -29,7 +29,7 @@ class Repository {
   /// - it will require [userName], [email], [password].
   /// - it will return a [UserModel] if the user is registered successfully
   static Future<UserModel?> registerUser({
-    required String userName,
+    // required String userName,
     required String email,
     required String password,
     required String firstName,
@@ -42,7 +42,7 @@ class Repository {
       response = await NetworkServices.post(
         path: "/register",
         data: {
-          "userName": userName,
+          // "userName": userName,
           "email": email,
           "password": password,
           "firstName": firstName,
@@ -352,6 +352,68 @@ class Repository {
     log("Repository - sendOTP - Response - data: ${response?.body}");
 
     if (response?.statusCode == 200) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+      }
+      return true;
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+      }
+      return false;
+    }
+  }
+
+  static Future<bool> addTask({
+    required String email,
+    required String title,
+    required String description,
+    required String start,
+    required String end,
+    required bool isPersonal,
+    required BuildContext context,
+  }) async {
+    Response? response;
+    try {
+      response = await NetworkServices.post(
+        path: "/add-task",
+        data: {
+          "email": email,
+          "title": title,
+          "description": description,
+          "start": start,
+          "end": end,
+          "isPersonal": isPersonal.toString(),
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - addTask - error: $e", stackTrace: s);
+    }
+
+    log("Repository - addTask - Response - status: ${response?.statusCode}");
+    log("Repository - addTask - Response - data: ${response?.body}");
+
+    if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

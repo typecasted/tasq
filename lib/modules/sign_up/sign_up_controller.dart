@@ -8,7 +8,7 @@ import 'package:tasq/utils/local_storage.dart';
 import '../../utils/network_services/repository.dart';
 
 class SignUpController extends GetxController {
-  TextEditingController userNameTextFieldController = TextEditingController();
+  // TextEditingController userNameTextFieldController = TextEditingController();
   TextEditingController emailTextFieldController = TextEditingController();
   TextEditingController passwordTextFieldController = TextEditingController();
   TextEditingController confirmPasswordTextFieldController =
@@ -23,7 +23,7 @@ class SignUpController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    userNameTextFieldController = TextEditingController();
+    // userNameTextFieldController = TextEditingController();
     emailTextFieldController = TextEditingController();
     passwordTextFieldController = TextEditingController();
     confirmPasswordTextFieldController = TextEditingController();
@@ -34,7 +34,7 @@ class SignUpController extends GetxController {
 
   @override
   void onClose() {
-    userNameTextFieldController.dispose();
+    // userNameTextFieldController.dispose();
     emailTextFieldController.dispose();
     passwordTextFieldController.dispose();
     confirmPasswordTextFieldController.dispose();
@@ -53,7 +53,7 @@ class SignUpController extends GetxController {
       final response = await Repository.registerUser(
         firstName: firstNameTextFieldController.text,
         lastName: lastNameTextFieldController.text,
-        userName: userNameTextFieldController.text,
+        // userName: userNameTextFieldController.text,
         email: emailTextFieldController.text,
         password: passwordTextFieldController.text,
         isManager: isManager.isTrue,
@@ -118,8 +118,9 @@ class SignUpController extends GetxController {
 
   bool validateFields({required BuildContext context}) {
     /// validate the fields here
-
-    if (userNameTextFieldController.text.isEmpty) {
+    
+    /// ! username no longer in use
+    /* if (userNameTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -132,7 +133,8 @@ class SignUpController extends GetxController {
         ),
       );
       return false;
-    } else if (firstNameTextFieldController.text.isEmpty) {
+    } else */
+    if (firstNameTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
