@@ -113,12 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               EdgeInsets.symmetric(vertical: Get.height * 0.01),
                           child: SizedBox(
                             width: Get.width,
-                            height: Get.height * 0.2,
+                            //
+
                             child: ListView.builder(
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
                               itemCount: homeController.priorityTasks.length,
-                              scrollDirection: Axis.horizontal,
+                              // scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   behavior: HitTestBehavior.translucent,
@@ -138,24 +139,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                       vertical: Get.height * 0.01,
-                                      horizontal: Get.width * 0.02,
+                                      // horizontal: Get.width * 0.02,
                                     ),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            AppColors.primaryColor,
-                                            AppColors.primaryColorLight,
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
+                                        // gradient: LinearGradient(
+                                        //   colors: [
+                                        //     AppColors.primaryColor,
+                                        //     AppColors.primaryColorLight,
+                                        //   ],
+                                        //   begin: Alignment.topLeft,
+                                        //   end: Alignment.bottomRight,
+                                        // ),
+
+                                        color: AppColors.primaryColorLight
+                                            .withOpacity(0.5),
+
+                                        border: Border.all(
+                                          color: AppColors.primaryColor,
+                                          width: 1,
                                         ),
                                       ),
-                                      height: Get.height * 0.2,
+                                      height: Get.height * 0.18,
                                       width: Get.width * 0.35,
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: Get.width * 0.02,
+                                          horizontal: Get.width * 0.04,
                                           vertical: Get.height * 0.01),
                                       child: Column(
                                         mainAxisAlignment:
@@ -163,15 +172,52 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            homeController.priorityTasks[index]
-                                                    .title ??
-                                                "",
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.poppins,
-                                              fontSize: Get.height * 0.018,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                homeController
+                                                        .priorityTasks[index]
+                                                        .title ??
+                                                    "",
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                      FontFamily.poppins,
+                                                  fontSize: Get.height * 0.019,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+
+                                              /// Task Status
+
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        Get.width * 0.02,
+                                                    vertical:
+                                                        Get.height * 0.005),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: AppColors.primaryColor,
+                                                ),
+                                                child: Text(
+                                                  homeController
+                                                          .priorityTasks[index]
+                                                          .status ??
+                                                      "Task Status",
+                                                  style: TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.poppins,
+                                                    fontSize:
+                                                        Get.height * 0.015,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                           Text(
                                             homeController.priorityTasks[index]
