@@ -90,6 +90,7 @@ class SignUpController extends GetxController {
               builder: (context) => OTPScreen(
                 email: emailTextFieldController.text,
                 isManager: isManager.isTrue,
+                isFromLogin: false,
               ),
             ),
             (route) {

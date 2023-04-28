@@ -6,6 +6,8 @@ import 'package:tasq/modules/user_dashboard/user_dashboard.dart';
 import 'package:tasq/utils/app_colors.dart';
 import 'package:tasq/utils/network_services/repository.dart';
 
+import '../sign_in/sign_in_screen.dart';
+
 class OTPController extends GetxController {
   OtpFieldController otpTextController = OtpFieldController();
 
@@ -21,6 +23,7 @@ class OTPController extends GetxController {
     required BuildContext context,
     required String email,
     required bool isManager,
+    required bool isFromLogin,
   }) async {
     showFullScreenLoader(context: context);
 
@@ -45,7 +48,7 @@ class OTPController extends GetxController {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return const Dashboard();
+              return isFromLogin ? const SignInScreen() : const Dashboard();
             },
           ),
           (route) => false,

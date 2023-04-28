@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:tasq/models/login_response_model.dart';
 import 'package:tasq/models/user_model.dart';
 import '../../common_widgets/full_screen_loader.dart';
+import '../../modules/otp/otp_screen.dart';
 import '../app_colors.dart';
 import './network_services.dart';
 
@@ -93,6 +94,31 @@ class Repository {
 
     if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
       return loginResponseModelFromJson(response?.body ?? "");
+    } else if (jsonDecode(response?.body ?? "")["status_code"] == 402) {
+      late bool isSent;
+
+      if (context.mounted) {
+        showFullScreenLoader(context: context);
+        isSent = await sendOTP(email: email, context: context);
+        if (context.mounted) {
+          hideFullScreenLoader(context: context);
+        }
+      }
+
+      if (isSent && context.mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return OTPScreen(
+                email: email,
+                isManager: isManager,
+                isFromLogin: true,
+              );
+            },
+          ),
+        );
+      }
     } else {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -304,6 +330,56 @@ class Repository {
     if (response?.statusCode == 200) {
       return true;
     } else {
+      return false;
+    }
+  }
+
+  static Future<bool> sendOTP(
+      {required String email, required BuildContext context}) async {
+    Response? response;
+    try {
+      response = await NetworkServices.post(
+        path: "/send-otp",
+        data: {
+          "email": email,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - sendOTP - error: $e", stackTrace: s);
+    }
+
+    log("Repository - sendOTP - Response - status: ${response?.statusCode}");
+    log("Repository - sendOTP - Response - data: ${response?.body}");
+
+    if (response?.statusCode == 200) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+      }
+      return true;
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              jsonDecode(response?.body ?? "")["message"],
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: AppColors.primaryColor,
+          ),
+        );
+      }
       return false;
     }
   }

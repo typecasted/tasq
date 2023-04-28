@@ -50,7 +50,7 @@ class LocalStorage {
     final box = await Hive.openBox(loggedInAsManager);
     final data = box.get(loggedInAsManager);
     if (data != null) {
-      return true;
+      return data;
     }
     return false;
   }
