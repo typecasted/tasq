@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasq/models/login_response_model.dart';
-import 'package:tasq/modules/dashboard/dashboard.dart';
+import 'package:tasq/modules/user_dashboard/user_dashboard.dart';
 import 'package:tasq/modules/sign_up/sign_up_screen.dart';
 import 'package:tasq/utils/app_colors.dart';
 import 'package:tasq/utils/local_storage.dart';
@@ -47,10 +47,13 @@ class SignInController extends GetxController {
         context: context,
       );
 
-
       if (logInResponse != null && context.mounted) {
         LocalStorage.saveUserData(
           data: logInResponse.userDataModel!,
+        );
+
+        LocalStorage.setIsLoggedInAsManager(
+          isLoggedInAsManager: isManager.value,
         );
 
         Navigator.pushAndRemoveUntil(

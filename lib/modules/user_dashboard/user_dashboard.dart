@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 /// controllers
-import './dashboard_controller.dart';
+import 'user_dashboard_controller.dart';
 
 /// utils imports
 import '../../utils/app_colors.dart';

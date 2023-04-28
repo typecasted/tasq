@@ -1,6 +1,7 @@
 /// package imports
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasq/modules/organization_dashboard/organization_dashboard_screen.dart';
 
 /// utils imports
 import '../../utils/assets.gen.dart';
@@ -34,7 +35,9 @@ class DashboardController extends GetxController {
     /// initializing the lists
     dashboardScreenList.addAll([
       const Center(child: HomeScreen()),
-      const Center(child: Text('Calender')),
+      const Center(
+        child: OrganizationDashboardScreen(),
+      ),
       const ProfileScreen(),
     ]);
 

@@ -5,11 +5,8 @@ import '../../utils/local_storage.dart';
 import '../sign_in/sign_in_screen.dart';
 
 class ProfileController extends GetxController {
-
-
-
   Future<void> logout({required BuildContext context}) async {
-    await LocalStorage.deleteUserData();
+    await LocalStorage.resetLocalStorage();
 
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(

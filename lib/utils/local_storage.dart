@@ -3,6 +3,8 @@ import 'package:tasq/models/user_model.dart';
 
 class LocalStorage {
   static const String userData = "userData";
+  static const String loggedInAsManager = "loggedInAsManager";
+
   static Future<void> initLocalStorage() async {
     await Hive.initFlutter();
   }
@@ -38,5 +40,45 @@ class LocalStorage {
       return true;
     }
     return false;
+  }
+
+  /// - [getIsLoggedInAsManager] is used to check if the user is logged in as manager
+  /// - it will return a [bool] if the user is logged in as manager
+  static Future<bool> getIsLoggedInAsManager() async {
+    final box = await Hive.openBox(loggedInAsManager);
+    final data = box.get(loggedInAsManager);
+    if (data != null) {
+      return true;
+    }
+    return false;
+  }
+
+  /// - [setIsLoggedInAsManager] is used to set the user is logged in as manager
+  /// - it will require [isLoggedInAsManager] which is of type [bool]
+  static Future<void> setIsLoggedInAsManager({
+    required bool isLoggedInAsManager,
+  }) async {
+    final box = await Hive.openBox(loggedInAsManager);
+    await box.put(loggedInAsManager, isLoggedInAsManager);
+  }
+
+  /// [isUserLoggedIn] is used to check if the user is logged in
+  /// - it will return a [bool] if the user is logged in
+  static Future<bool> isUserLoggedIn() async {
+    final box = await Hive.openBox(userData);
+    final data = box.get(userData);
+    if (data != null) {
+      return true;
+    }
+    return false;
+  }
+
+  /// - [resetLocalStorage] is used to reset the local storage
+  /// - it will delete the local storage boxes
+  /// ! - make sure to call this method when the user logs out
+  /// ! - and to delete all the boxes from local storage
+  static resetLocalStorage() async {
+    await Hive.deleteBoxFromDisk(userData);
+    await Hive.deleteBoxFromDisk(loggedInAsManager);
   }
 }
