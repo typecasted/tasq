@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tasq/modules/task/models/task_model.dart';
+import 'package:tasq/modules/task/task_details/task_details_controller.dart';
 import 'package:tasq/utils/app_colors.dart';
 import 'package:tasq/utils/app_strings.dart';
 import 'package:tasq/utils/fonts.gen.dart';
@@ -15,6 +17,15 @@ class TaskDetailsScreen extends StatefulWidget {
 }
 
 class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
+  late TaskDetailController taskDetailController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    taskDetailController = Get.put(TaskDetailController());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -202,25 +213,35 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
               const Divider(height: 30),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppStrings.remarks,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: FontFamily.poppins,
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  taskDetailController.onRemarksTap(context: context);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppStrings.remarks,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: FontFamily.poppins,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.open_in_new_outlined,
-                    ),
-                  )
-                ],
+                    IconButton(
+                      onPressed: () {
+                        taskDetailController.onRemarksTap(
+                          context: context,
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.open_in_new_outlined,
+                      ),
+                    )
+                  ],
+                ),
               ),
 
               // // Progress bar

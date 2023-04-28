@@ -84,4 +84,6 @@ class AppStrings {
   static String remarks = 'Remarks';
 
   static String assignee = 'Assignee';
+
+  static String note = 'Note';
 }

@@ -128,7 +128,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       height: Get.height * 0.02,
                     ),
                     Text(
-                      AppStrings.remarks,
+                      AppStrings.note,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
