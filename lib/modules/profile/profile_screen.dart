@@ -168,32 +168,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     );
                   },
                 ),
-                profileController.isLoggedInAsManager.isFalse
-                    ? Container()
-                    : ListTile(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 40),
-                        leading: Icon(
-                          Icons.person_add_rounded,
-                          color: AppColors.primaryColor,
-                        ),
-                        title: Text(
-                          'Add User',
-                          style: TextStyle(
+                Obx(
+                  () => profileController.isLoggedInAsManager.isFalse
+                      ? Container()
+                      : ListTile(
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 40),
+                          leading: Icon(
+                            Icons.person_add_rounded,
                             color: AppColors.primaryColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
                           ),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AddUserScreen(),
+                          title: Text(
+                            'Add User',
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddUserScreen(
+                                  managerEmail:
+                                      profileController.userData.value.email ??
+                                          "",
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                ),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 40),
                   leading: Icon(

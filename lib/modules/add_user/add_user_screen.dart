@@ -11,7 +11,12 @@ import '../../utils/fonts.gen.dart';
 import 'add_user_controller.dart';
 
 class AddUserScreen extends StatefulWidget {
-  const AddUserScreen({super.key});
+  final String managerEmail;
+
+  const AddUserScreen({
+    super.key,
+    required this.managerEmail,
+  });
 
   @override
   State<AddUserScreen> createState() => _AddUserScreenState();
@@ -30,7 +35,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
   @override
   void dispose() {
     addUserController.onClose();
-    addUserController.dispose();
     super.dispose();
   }
 
@@ -127,6 +131,26 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
+                    CommonLoginTextField(
+                      hintText: AppStrings.firstName,
+                      iconPath: Assets.svgs.icPersonUnfilled,
+                      textInputType: TextInputType.name,
+                      textEditingController:
+                          addUserController.firstNameController,
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.02,
+                    ),
+                    CommonLoginTextField(
+                      hintText: AppStrings.lastName,
+                      iconPath: Assets.svgs.icPersonUnfilled,
+                      textInputType: TextInputType.name,
+                      textEditingController:
+                          addUserController.lastNameController,
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.02,
+                    ),
                     Text(
                       AppStrings.note,
                       style: TextStyle(
@@ -144,16 +168,19 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       textInputType: TextInputType.multiline,
                       textEditingController:
                           addUserController.remarksController,
-                      maxLines: 7,
+                      maxLines: 5,
                       textInputAction: TextInputAction.newline,
                     ),
                     SizedBox(
-                      height: Get.height * 0.1,
+                      height: Get.height * 0.05,
                     ),
                     CommonButton(
                       text: "Add User",
                       onTap: () {
-                        addUserController.addUserButtonTap(context: context);
+                        addUserController.addUserButtonTap(
+                          context: context,
+                          managerEmail: widget.managerEmail,
+                        );
                       },
                     ),
                   ],

@@ -36,6 +36,5 @@ class ProfileController extends GetxController {
   Future<void> initProfileScreen() async {
     isLoggedInAsManager.value = await LocalStorage.getIsLoggedInAsManager();
     userData.value = await LocalStorage.getUserData() ?? UserModel();
-    log("userData.value ${userData.value.toJson()}");
   }
 }

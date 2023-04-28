@@ -269,4 +269,42 @@ class Repository {
 
     return hasReset;
   }
+
+  /// ! - here [toEmail] is the new email to be added and [assigneeEmail] is the email to which the new email is to be assigned
+  static Future<bool> addUser({
+    required String managerEmail,
+    required String toEmail,
+    required String assigneeEmail,
+    required String designation,
+    required String remarks,
+    required String firstName,
+    required String lastName,
+  }) async {
+    Response? response;
+    try {
+      response = await NetworkServices.post(
+        path: "/add-user",
+        data: {
+          "managerEmail": managerEmail,
+          "emailTo": assigneeEmail,
+          "email": toEmail,
+          "designation": designation,
+          "note": remarks,
+          "firstName": firstName,
+          "lastName": lastName,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - addUser - error: $e", stackTrace: s);
+    }
+
+    log("Repository - addUser - Response - status: ${response?.statusCode}");
+    log("Repository - addUser - Response - data: ${response?.body}");
+
+    if (response?.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

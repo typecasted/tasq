@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasq/common_widgets/full_screen_loader.dart';
+import 'package:tasq/utils/network_services/repository.dart';
 
 import '../../utils/app_colors.dart';
 
@@ -8,6 +12,8 @@ class AddUserController extends GetxController {
   TextEditingController assigneeEmailController = TextEditingController();
   TextEditingController designationController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
 
   @override
   void onInit() {
@@ -16,6 +22,8 @@ class AddUserController extends GetxController {
     assigneeEmailController = TextEditingController();
     designationController = TextEditingController();
     remarksController = TextEditingController();
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
   }
 
   @override
@@ -24,15 +32,37 @@ class AddUserController extends GetxController {
     assigneeEmailController.dispose();
     designationController.dispose();
     remarksController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     super.onClose();
   }
 
-  void addUserButtonTap({
+  Future<void> addUserButtonTap({
     required BuildContext context,
-  }) {
+    required String managerEmail,
+  }) async {
     if (validateFields(
       context: context,
-    )) {}
+    )) {
+      showFullScreenLoader(context: context);
+
+      bool isSent = await Repository.addUser(
+        managerEmail: managerEmail,
+        toEmail: toEmailController.text,
+        assigneeEmail: assigneeEmailController.text,
+        designation: designationController.text,
+        remarks: remarksController.text,
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+      );
+
+      log("AddUserController - addUserButtonTap - isSent: $isSent");
+
+      if (context.mounted) {
+        hideFullScreenLoader(context: context);
+        Navigator.pop(context);
+      }
+    }
   }
 
   bool validateFields({required BuildContext context}) {
