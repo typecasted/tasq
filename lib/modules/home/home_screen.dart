@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    homeController.initHomeScreenList();
+    homeController.initHomeScreenList(context: context);
   }
 
   @override
@@ -114,210 +114,158 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: RefreshIndicator(
                           onRefresh: () async {},
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: homeController.priorityTasks.length,
-                            // scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return TaskDetailsScreen(
-                                          task: homeController
-                                              .priorityTasks[index],
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: Get.height * 0.01,
-                                    // horizontal: Get.width * 0.02,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      // gradient: LinearGradient(
-                                      //   colors: [
-                                      //     AppColors.primaryColor,
-                                      //     AppColors.primaryColorLight,
-                                      //   ],
-                                      //   begin: Alignment.topLeft,
-                                      //   end: Alignment.bottomRight,
-                                      // ),
-
-                                      color: AppColors.primaryColorLight
-                                          .withOpacity(0.5),
-
-                                      border: Border.all(
-                                        color: AppColors.primaryColor,
-                                        width: 1,
+                          child: Obx(
+                            () => homeController.taskList.isEmpty
+                                ? Center(
+                                    child: Text(
+                                      "No Tasks Found",
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.poppins,
+                                        fontSize: Get.height * 0.02,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                    height: Get.height * 0.18,
-                                    width: Get.width * 0.35,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: Get.width * 0.04,
-                                        vertical: Get.height * 0.01),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              homeController
-                                                      .priorityTasks[index]
-                                                      .title ??
-                                                  "",
-                                              style: TextStyle(
-                                                fontFamily: FontFamily.poppins,
-                                                fontSize: Get.height * 0.019,
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: homeController.taskList.length,
+
+                                    // scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        behavior: HitTestBehavior.translucent,
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return TaskDetailsScreen(
+                                                  task: homeController
+                                                      .taskList[index],
+                                                );
+                                              },
                                             ),
+                                          );
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: Get.height * 0.01,
+                                            // horizontal: Get.width * 0.02,
+                                          ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              // gradient: LinearGradient(
+                                              //   colors: [
+                                              //     AppColors.primaryColor,
+                                              //     AppColors.primaryColorLight,
+                                              //   ],
+                                              //   begin: Alignment.topLeft,
+                                              //   end: Alignment.bottomRight,
+                                              // ),
 
-                                            /// Task Status
+                                              color: AppColors.primaryColorLight
+                                                  .withOpacity(0.5),
 
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: Get.width * 0.02,
-                                                  vertical: Get.height * 0.005),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
+                                              border: Border.all(
                                                 color: AppColors.primaryColor,
-                                              ),
-                                              child: Text(
-                                                homeController
-                                                        .priorityTasks[index]
-                                                        .status ??
-                                                    "Task Status",
-                                                style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.poppins,
-                                                  fontSize: Get.height * 0.015,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.white,
-                                                ),
+                                                width: 1,
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                        Text(
-                                          homeController.priorityTasks[index]
-                                                  .description ??
-                                              "",
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontFamily: FontFamily.poppins,
-                                            fontSize: Get.height * 0.015,
-                                            fontWeight: FontWeight.w500,
+                                            height: Get.height * 0.18,
+                                            width: Get.width * 0.35,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: Get.width * 0.04,
+                                                vertical: Get.height * 0.01),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      homeController
+                                                              .taskList[index]
+                                                              .title ??
+                                                          "",
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            FontFamily.poppins,
+                                                        fontSize:
+                                                            Get.height * 0.019,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+
+                                                    /// Task Status
+
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: Get
+                                                                      .width *
+                                                                  0.02,
+                                                              vertical:
+                                                                  Get.height *
+                                                                      0.005),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                        color: AppColors
+                                                            .primaryColor,
+                                                      ),
+                                                      child: Text(
+                                                        homeController
+                                                                .taskList[index]
+                                                                .status ??
+                                                            "Task Status",
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .poppins,
+                                                          fontSize: Get.height *
+                                                              0.015,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  homeController.taskList[index]
+                                                          .description ??
+                                                      "",
+                                                  maxLines: 3,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.poppins,
+                                                    fontSize:
+                                                        Get.height * 0.015,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      );
+                                    },
                                   ),
-                                ),
-                              );
-                            },
                           ),
                         ),
                       ),
-
-                      // /// Daily Tasks
-                      // Text(
-                      //   AppStrings.dailyTasks,
-                      //   style: TextStyle(
-                      //     fontFamily: FontFamily.poppins,
-                      //     fontSize: Get.height * 0.02,
-                      //     fontWeight: FontWeight.w600,
-                      //   ),
-                      // ),
-
-                      // /// Daily Tasks List
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(
-                      //     vertical: Get.height * 0.01,
-                      //   ),
-                      //   child: GetBuilder<HomeController>(
-                      //     init: homeController,
-                      //     id: "dailyTasks",
-                      //     builder: (controller) {
-                      //       return ListView.builder(
-                      //         shrinkWrap: true,
-                      //         physics: const NeverScrollableScrollPhysics(),
-                      //         itemCount: homeController.dailyTasks.length,
-                      //         itemBuilder: (context, index) {
-                      //           return GestureDetector(
-                      //             behavior: HitTestBehavior.translucent,
-                      //             onTap: () {
-                      //               homeController
-                      //                       .dailyTasks[index].isCompleted =
-                      //                   !homeController
-                      //                       .dailyTasks[index].isCompleted;
-                      //               homeController.update(["dailyTasks"]);
-                      //             },
-                      //             child: Padding(
-                      //               padding: EdgeInsets.symmetric(
-                      //                 vertical: Get.height * 0.01,
-                      //                 horizontal: Get.width * 0.02,
-                      //               ),
-                      //               child: Row(
-                      //                 mainAxisAlignment:
-                      //                     MainAxisAlignment.spaceBetween,
-                      //                 children: [
-                      //                   Text(
-                      //                     homeController
-                      //                         .dailyTasks[index].title,
-                      //                     style: TextStyle(
-                      //                       fontFamily: FontFamily.poppins,
-                      //                       fontSize: Get.height * 0.018,
-                      //                       fontWeight: FontWeight.w600,
-                      //                       color: homeController
-                      //                               .dailyTasks[index]
-                      //                               .isCompleted
-                      //                           ? AppColors.primaryColor
-                      //                           : Colors.black,
-                      //                     ),
-                      //                   ),
-                      //                   Obx(
-                      //                     () => Checkbox(
-                      //                       shape: RoundedRectangleBorder(
-                      //                         borderRadius:
-                      //                             BorderRadius.circular(50),
-                      //                       ),
-                      //                       value: homeController
-                      //                           .dailyTasks[index]
-                      //                           .isCompleted,
-                      //                       onChanged: (value) {
-                      //                         homeController.dailyTasks[index]
-                      //                             .isCompleted = value!;
-                      //                         homeController
-                      //                             .update(["dailyTasks"]);
-                      //                       },
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           );
-                      //         },
-                      //       );
-                      //     },
-                      //   ),
-                      // )
                     ],
                   ),
                 ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasq/models/login_response_model.dart';
 import 'package:tasq/modules/user_dashboard/user_dashboard.dart';
 import 'package:tasq/modules/sign_up/sign_up_screen.dart';
 import 'package:tasq/utils/app_colors.dart';
 import 'package:tasq/utils/local_storage.dart';
 
 import '../../common_widgets/full_screen_loader.dart';
+import '../../models/user_model.dart';
 import '../../utils/network_services/repository.dart';
 import '../forgot_password/forgot_password_screen.dart';
 
@@ -40,7 +40,7 @@ class SignInController extends GetxController {
     if (validateFields(context: context)) {
       showFullScreenLoader(context: context);
 
-      LoginResponseModel? logInResponse = await Repository.loginUser(
+      UserModel? logInResponse = await Repository.loginUser(
         email: emailTextFieldController.text.trim(),
         password: passwordTextFieldController.text.trim(),
         isManager: isManager.value,
@@ -49,7 +49,7 @@ class SignInController extends GetxController {
 
       if (logInResponse != null) {
         await LocalStorage.saveUserData(
-          data: logInResponse.userDataModel!,
+          data: logInResponse,
         );
 
         LocalStorage.setIsLoggedInAsManager(

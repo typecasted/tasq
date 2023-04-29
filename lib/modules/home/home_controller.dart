@@ -1,8 +1,10 @@
 /// packages import
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasq/utils/local_storage.dart';
+import 'package:tasq/utils/network_services/repository.dart';
 
 import '../task/models/task_model.dart';
-import 'models/daily_task_model.dart';
 
 class HomeController extends GetxController {
   /// - [isLoading] is used for showing and hiding and loader at the time of screen initialization.
@@ -14,12 +16,10 @@ class HomeController extends GetxController {
   /// - [greetingMessage] is used to show greetings message.
   final RxString greetingMessage = "".obs;
 
-  final RxList<TaskModel> priorityTasks = <TaskModel>[].obs;
-
-  final RxList<DailyTaskModel> dailyTasks = <DailyTaskModel>[].obs;
-
   /// - [initHomeScreenList] this function will be call in [initState] method of [Home] widget.
-  void initHomeScreenList() async {
+  void initHomeScreenList({
+    required BuildContext context,
+  }) async {
     isLoading.value = true;
 
     /// here i've put a delay to replicate api call.
@@ -31,9 +31,11 @@ class HomeController extends GetxController {
 
     getDayAndDateValues();
 
-    getGreetingsMessage();
+    await getGreetingsMessage();
 
-    await getTasksData();
+    if (context.mounted) {
+      await getTasksData(context: context);
+    }
     isLoading.value = false;
   }
 
@@ -113,59 +115,40 @@ class HomeController extends GetxController {
         '$weekDay, $month ${DateTime.now().day} ${DateTime.now().year}';
   }
 
+  /// [isTaskLoading] is used for showing and hiding and loader at the time of screen initialization.
+  RxBool isTaskLoading = false.obs;
+
   /// [getGreetingsMessage] get greetings message for user.
   /// todo : randomize the greeting message.
-  void getGreetingsMessage() {
-    greetingMessage.value = "Welcome Kunal!!!";
+  Future<void> getGreetingsMessage() async {
+    final userData = await LocalStorage.getUserData();
+
+    greetingMessage.value =
+        "Welcome ${userData?.body?.model?.firmName ?? ""}!!!";
   }
 
-  getTasksData() async {
-    priorityTasks.value = [
-      TaskModel(
-        title: "Task 1",
-        // dummy data
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+  /// - [taskList] is used to show the list of tasks.
+  RxList<TaskModel> taskList = <TaskModel>[].obs;
 
-        // priority: 1,
-      ),
-      TaskModel(
-        title: "Task 2",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-        // priority: 2,
-      ),
-      TaskModel(
-        title: "Task 3",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-        // priority: 3,
-      ),
-      TaskModel(
-        title: "Task 4",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-        // priority: 4,
-      ),
-      TaskModel(
-        title: "Task 5",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-        // priority: 5,
-      ),
-    ];
+  getTasksData({
+    required BuildContext context,
+  }) async {
+    isTaskLoading.value = true;
+    taskList.clear();
 
-    dailyTasks.value = [
-      DailyTaskModel(title: "Task 1", isCompleted: true),
-      DailyTaskModel(title: "Task 2", isCompleted: true),
-      DailyTaskModel(title: "Task 3", isCompleted: true),
-      DailyTaskModel(title: "Task 4", isCompleted: false),
-      DailyTaskModel(title: "Task 5", isCompleted: false),
-      DailyTaskModel(title: "Task 6", isCompleted: false),
-      DailyTaskModel(title: "Task 7", isCompleted: false),
-    ];
+    final userData = await LocalStorage.getUserData();
+    final bool isPersonal = !(await LocalStorage.getIsLoggedInAsManager());
+
+    if (context.mounted) {
+      taskList.value = (await Repository.getTask(
+        context: context,
+        email: userData?.body?.model?.email ?? "",
+        isPersonal: isPersonal,
+      ))!;
+    }
+
+    isTaskLoading.value = false;
   }
-
 }
 
 HomeController get homeController => Get.put(HomeController());

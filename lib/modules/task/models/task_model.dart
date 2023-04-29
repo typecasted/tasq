@@ -1,47 +1,76 @@
+import 'dart:convert';
+
+TaskModel taskModelFromJson(String str) => TaskModel.fromJson(json.decode(str));
+
+String taskModelToJson(TaskModel data) => json.encode(data.toJson());
+
 class TaskModel {
-  int? id;
+  String? id;
+  String? email;
   String? title;
   String? description;
-  String? startDate;
-  String? endDate;
-  String? time;
+  DateTime? start;
+  DateTime? end;
   String? status;
+  bool? isCompleted;
+  bool? isPersonal;
 
   TaskModel({
     this.id,
+    this.email,
     this.title,
     this.description,
-    this.startDate,
-    this.endDate,
-    this.time,
+    this.start,
+    this.end,
     this.status,
+    this.isCompleted,
+    this.isPersonal,
   });
 
-  TaskModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    description = json['description'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-    time = json['time'];
-    status = json['status'];
-  }
+  TaskModel copyWith({
+    String? id,
+    String? email,
+    String? title,
+    String? description,
+    DateTime? start,
+    DateTime? end,
+    String? status,
+    bool? isCompleted,
+    bool? isPersonal,
+  }) =>
+      TaskModel(
+        id: id ?? this.id,
+        email: email ?? this.email,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        start: start ?? this.start,
+        end: end ?? this.end,
+        status: status ?? this.status,
+        isCompleted: isCompleted ?? this.isCompleted,
+        isPersonal: isPersonal ?? this.isPersonal,
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['description'] = description;
-    data['start_date'] = startDate;
-    data['end_date'] = startDate;
-    data['time'] = time;
-    data['status'] = status;
-    return data;
-  }
-}
+  factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
+        id: json["_id"],
+        email: json["email"],
+        title: json["title"],
+        description: json["description"],
+        start: DateTime.parse(json["start"]),
+        end: DateTime.parse(json["end"]),
+        status: json["status"],
+        isCompleted: json["isCompleted"],
+        isPersonal: json["isPersonal"],
+      );
 
-enum TaskStatus {
-  inProgress,
-  completed,
-  pending,
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "email": email,
+        "title": title,
+        "description": description,
+        "start": start?.toIso8601String(),
+        "end": end?.toIso8601String(),
+        "status": status,
+        "isCompleted": isCompleted,
+        "isPersonal": isPersonal,
+      };
 }

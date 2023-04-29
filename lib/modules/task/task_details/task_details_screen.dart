@@ -98,7 +98,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                         height: 7,
                       ),
                       Text(
-                        widget.task.startDate ?? "Not Set",
+                        "${widget.task.start!.day}/${widget.task.start!.month}/${widget.task.start!.year}",
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -126,7 +126,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                         height: 7,
                       ),
                       Text(
-                        widget.task.endDate ?? "Not Set",
+                        "${widget.task.end!.day}/${widget.task.end!.month}/${widget.task.end!.year}",
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,

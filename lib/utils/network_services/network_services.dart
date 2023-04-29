@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,15 +24,17 @@ class NetworkServices {
     switch (response.statusCode) {
       case 200:
         log("NetworkServices: checkResponse - 200");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response.body)["message"],
-              style: const TextStyle(color: Colors.white),
+        if (jsonDecode(response.body)["message"] != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                jsonDecode(response.body)["message"] ?? "",
+                style: const TextStyle(color: Colors.white),
+              ),
+              backgroundColor: AppColors.primaryColor,
             ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
+          );
+        }
         return true;
       case 402:
         log("NetworkServices: checkResponse - 402");

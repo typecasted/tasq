@@ -17,7 +17,7 @@ class LoginResponseModel {
   });
 
   LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    statusCode = json['status_code'];
+    // statusCode = json['status_code'];
     userDataModel = json['Model'] != null
         ? UserModel.fromJson(json['Model'])
         : null;

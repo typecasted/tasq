@@ -119,7 +119,7 @@ class SignUpController extends GetxController {
 
   bool validateFields({required BuildContext context}) {
     /// validate the fields here
-    
+
     /// ! username no longer in use
     /* if (userNameTextFieldController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(

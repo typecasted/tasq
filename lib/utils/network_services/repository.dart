@@ -6,7 +6,7 @@ import 'package:tasq/models/login_response_model.dart';
 import 'package:tasq/models/user_model.dart';
 import '../../common_widgets/full_screen_loader.dart';
 import '../../modules/otp/otp_screen.dart';
-import '../app_colors.dart';
+import '../../modules/task/models/task_model.dart';
 import './network_services.dart';
 
 class Repository {
@@ -72,7 +72,7 @@ class Repository {
   /// - it will require [email], [password].
   /// - it will return a [LoginResponseModel] if the user is logged in successfully
   /// - it will return null if the user is not logged in successfully
-  static Future<LoginResponseModel?> loginUser({
+  static Future<UserModel?> loginUser({
     required String email,
     required String password,
     required bool isManager,
@@ -104,7 +104,7 @@ class Repository {
           response: response!,
           context: context,
         )) {
-      return loginResponseModelFromJson(response.body);
+      return userModelFromJson(response.body);
     } else {
       /// [402] status code means that the user is not verified
       /// if the user is not verified then it will send the otp to the user
@@ -365,6 +365,44 @@ class Repository {
       return true;
     } else {
       return false;
+    }
+  }
+
+  static Future<List<TaskModel>?> getTask({
+    String? id,
+    required String email,
+    required bool isPersonal,
+    required BuildContext context,
+  }) async {
+    Response? response;
+    try {
+      response = await NetworkServices.post(
+        path: "/get-task",
+        data: {
+          "id": id ?? "",
+          "email": email,
+          "isPersonal": isPersonal.toString(),
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - getTask - error: $e", stackTrace: s);
+    }
+
+    log("Repository - getTask - Response - status: ${response?.statusCode}");
+    log("Repository - getTask - Response - data: ${response?.body}");
+
+    if (context.mounted &&
+        NetworkServices.checkResponse(
+          response: response!,
+          context: context,
+        )) {
+      return List<TaskModel>.from(
+        jsonDecode(response.body)["tasks"].map(
+          (x) => TaskModel.fromJson(x),
+        ),
+      );
+    } else {
+      return null;
     }
   }
 }

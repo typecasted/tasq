@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:tasq/common_widgets/full_screen_loader.dart';
-import 'package:tasq/modules/user_dashboard/user_dashboard.dart';
 import 'package:tasq/utils/app_colors.dart';
 import 'package:tasq/utils/network_services/repository.dart';
 
