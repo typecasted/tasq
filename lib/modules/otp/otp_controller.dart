@@ -23,17 +23,18 @@ class OTPController extends GetxController {
     required BuildContext context,
     required String email,
     required bool isManager,
-    required bool isFromLogin,
+    // required bool isFromLogin,
   }) async {
     showFullScreenLoader(context: context);
 
-    String? responseStatusCode;
+    bool? isVerified;
     if (validateFields(context)) {
       /// Verify OTP API call
-      responseStatusCode = await Repository.verifyOTP(
+      isVerified = await Repository.verifyOTP(
         email: email,
         otp: otpString,
         isManager: isManager,
+        context: context,
       );
     }
 
@@ -41,14 +42,14 @@ class OTPController extends GetxController {
       hideFullScreenLoader(context: context);
     }
 
-    /// If response status code is 200 then navigate to dashboard
-    if (responseStatusCode != null && responseStatusCode == "200") {
+    /// if isVerified is true then navigate to [SignInScreen] screen to log in the user.
+    if (isVerified ?? false) {
       if (context.mounted) {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) {
-              return isFromLogin ? const SignInScreen() : const Dashboard();
+              return const SignInScreen();
             },
           ),
           (route) => false,

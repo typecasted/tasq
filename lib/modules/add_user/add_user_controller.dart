@@ -54,6 +54,7 @@ class AddUserController extends GetxController {
         remarks: remarksController.text,
         firstName: firstNameController.text,
         lastName: lastNameController.text,
+        context: context,
       );
 
       log("AddUserController - addUserButtonTap - isSent: $isSent");

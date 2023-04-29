@@ -36,6 +36,7 @@ class Repository {
     required String lastName,
     required bool isManager,
     required String firmName,
+    required BuildContext context,
   }) async {
     Response? response;
     try {
@@ -58,7 +59,13 @@ class Repository {
     log("Repository - registerUser - Response - status: ${response?.statusCode}");
     log("Repository - registerUser - Response - data: ${response?.body}");
 
-    return userModelFromJson(response?.body ?? "");
+    if (context.mounted &&
+        NetworkServices.checkResponse(
+          response: response!,
+          context: context,
+        )) {
+      return userModelFromJson(response.body);
+    }
   }
 
   /// - [loginUser] is used to login a user
@@ -92,59 +99,54 @@ class Repository {
       hideFullScreenLoader(context: context);
     }
 
-    if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
-      return loginResponseModelFromJson(response?.body ?? "");
-    } else if (jsonDecode(response?.body ?? "")["status_code"] == 402) {
-      late bool isSent;
-
-      if (context.mounted) {
-        showFullScreenLoader(context: context);
-        isSent = await sendOTP(email: email, context: context);
-        if (context.mounted) {
-          hideFullScreenLoader(context: context);
-        }
-      }
-
-      if (isSent && context.mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return OTPScreen(
-                email: email,
-                isManager: isManager,
-                isFromLogin: true,
-              );
-            },
-          ),
-        );
-      }
+    if (context.mounted &&
+        NetworkServices.checkResponse(
+          response: response!,
+          context: context,
+        )) {
+      return loginResponseModelFromJson(response.body);
     } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response?.body ?? "")["message"],
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-      }
+      /// [402] status code means that the user is not verified
+      /// if the user is not verified then it will send the otp to the user
+      if (response!.statusCode == 402) {
+        late bool isSent;
 
-      return null;
+        if (context.mounted) {
+          showFullScreenLoader(context: context);
+          isSent = await sendOTP(email: email, context: context);
+          if (context.mounted) {
+            hideFullScreenLoader(context: context);
+          }
+        }
+
+        if (isSent && context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return OTPScreen(
+                  email: email,
+                  isManager: isManager,
+                  // isFromLogin: true,
+                );
+              },
+            ),
+          );
+        }
+
+        return null;
+      }
     }
   }
 
   /// - [verifyOTP] method is used for otp verification purpose.
   /// - it will require [email], [otp].
-  /// - it will return the status code of the response as a [String]
-  static Future<String?> verifyOTP({
+  /// - it will return a [bool] value if the otp is verified successfully or not.
+  static Future<bool?> verifyOTP({
     required String email,
     required String otp,
     required bool isManager,
+    required BuildContext context,
   }) async {
     Response? response;
     try {
@@ -163,7 +165,14 @@ class Repository {
     log("Repository - verifyOTP - Response - status: ${response?.statusCode}");
     log("Repository - verifyOTP - Response - data: ${response?.body}");
 
-    return jsonDecode(response?.body ?? "")["status_code"].toString();
+    if (context.mounted &&
+        NetworkServices.checkResponse(response: response!, context: context)) {
+      return true;
+    } else {
+      return false;
+    }
+
+    // return jsonDecode(response?.body ?? "")["status_code"].toString();
   }
 
   /// - [forgotPassword] method is used to send an otp to the user's email from backend.
@@ -174,7 +183,6 @@ class Repository {
     required bool isManager,
     required BuildContext context,
   }) async {
-    bool isSent = false;
     Response? response;
     try {
       response = await NetworkServices.post(
@@ -193,39 +201,15 @@ class Repository {
 
     /// if the status code is 200 then the otp is sent successfully and it will return true
     /// else it will return false
-    if (response?.statusCode == 200) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response?.body ?? "")["message"],
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-        isSent = true;
-      }
+    if (context.mounted &&
+        NetworkServices.checkResponse(
+          response: response!,
+          context: context,
+        )) {
+      return true;
     } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              response?.body ?? "",
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-      }
-      isSent = false;
+      return false;
     }
-
-    return isSent;
   }
 
   /// - [resetPassword] method is used to reset the password of the user.
@@ -238,7 +222,6 @@ class Repository {
     required bool isManager,
     required BuildContext context,
   }) async {
-    bool hasReset = false;
     Response? response;
     try {
       response = await NetworkServices.post(
@@ -259,41 +242,16 @@ class Repository {
 
     /// if the status code is 200 then the password is reset successfully and it will return true
     /// else it will return false
-    if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response?.body ?? "")["message"],
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
 
-        hasReset = true;
-      }
+    if (context.mounted &&
+        NetworkServices.checkResponse(
+          response: response!,
+          context: context,
+        )) {
+      return true;
     } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response?.body ?? "")["message"],
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-
-        hasReset = false;
-      }
+      return false;
     }
-
-    return hasReset;
   }
 
   /// ! - here [toEmail] is the new email to be added and [assigneeEmail] is the email to which the new email is to be assigned
@@ -305,6 +263,7 @@ class Repository {
     required String remarks,
     required String firstName,
     required String lastName,
+    required BuildContext context,
   }) async {
     Response? response;
     try {
@@ -327,15 +286,22 @@ class Repository {
     log("Repository - addUser - Response - status: ${response?.statusCode}");
     log("Repository - addUser - Response - data: ${response?.body}");
 
-    if (response?.statusCode == 200) {
+    if (context.mounted &&
+        NetworkServices.checkResponse(
+          response: response!,
+          context: context,
+        )) {
       return true;
     } else {
       return false;
     }
   }
 
-  static Future<bool> sendOTP(
-      {required String email, required BuildContext context}) async {
+  /// - [sendOTP] is used to send the OTP when the user is trying to login and they are unverified.
+  static Future<bool> sendOTP({
+    required String email,
+    required BuildContext context,
+  }) async {
     Response? response;
     try {
       response = await NetworkServices.post(
@@ -351,35 +317,13 @@ class Repository {
     log("Repository - sendOTP - Response - status: ${response?.statusCode}");
     log("Repository - sendOTP - Response - data: ${response?.body}");
 
-    if (response?.statusCode == 200) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response?.body ?? "")["message"],
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-      }
+    if (context.mounted &&
+        NetworkServices.checkResponse(
+          response: response!,
+          context: context,
+        )) {
       return true;
     } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response?.body ?? "")["message"],
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-      }
       return false;
     }
   }
@@ -413,35 +357,13 @@ class Repository {
     log("Repository - addTask - Response - status: ${response?.statusCode}");
     log("Repository - addTask - Response - data: ${response?.body}");
 
-    if (jsonDecode(response?.body ?? "")["status_code"] == 200) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response?.body ?? "")["message"],
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-      }
+    if (context.mounted &&
+        NetworkServices.checkResponse(
+          response: response!,
+          context: context,
+        )) {
       return true;
     } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              jsonDecode(response?.body ?? "")["message"],
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: AppColors.primaryColor,
-          ),
-        );
-      }
       return false;
     }
   }

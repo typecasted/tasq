@@ -58,6 +58,7 @@ class SignUpController extends GetxController {
         password: passwordTextFieldController.text,
         isManager: isManager.isTrue,
         firmName: companyNameTextFieldController.text,
+        context: context,
       );
 
       if (context.mounted) hideFullScreenLoader(context: context);
@@ -90,7 +91,7 @@ class SignUpController extends GetxController {
               builder: (context) => OTPScreen(
                 email: emailTextFieldController.text,
                 isManager: isManager.isTrue,
-                isFromLogin: false,
+                // isFromLogin: false,
               ),
             ),
             (route) {

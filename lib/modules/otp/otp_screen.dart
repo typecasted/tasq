@@ -14,10 +14,10 @@ import 'otp_controller.dart';
 
 class OTPScreen extends StatefulWidget {
   final String email;
-  
+
   final bool isManager;
-  
-  final bool isFromLogin;
+
+  // final bool isFromLogin;
 
   /// - [OTPScreen] screen is used to verify the otp sent to the user's email address.
   /// - it will require the email to pass to the [OTPController] to verify the otp for given email.
@@ -25,7 +25,7 @@ class OTPScreen extends StatefulWidget {
     super.key,
     required this.email,
     required this.isManager,
-    required this.isFromLogin,
+    // required this.isFromLogin,
   });
 
   @override
@@ -175,7 +175,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     otpController.onConfirmButtonTap(
                       context: context,
                       email: widget.email,
-                      isManager: widget.isManager, isFromLogin: widget.isFromLogin,
+                      isManager: widget.isManager,
+                      // isFromLogin: widget.isFromLogin,
                     );
                   },
                 ),
