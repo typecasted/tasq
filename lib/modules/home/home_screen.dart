@@ -55,276 +55,270 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: Get.height * 0.02,
-                      horizontal: Get.width * 0.05,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        /// Day, Date and Notification icon
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              homeController.dateTimeString.value,
-                              style: TextStyle(
-                                fontFamily: FontFamily.poppins,
-                                fontSize: Get.height * 0.018,
-                                // color: Colors.black,
-                              ),
-                            ),
-                            SvgPicture.asset(
-                              Assets.svgs.icNotificationBellFilled,
-                            )
-                          ],
-                        ),
-
-                        /// Greeting Message
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: Get.height * 0.03,
-                          ),
-                          child: Text(
-                            homeController.greetingMessage.value,
+              : Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: Get.height * 0.02,
+                    horizontal: Get.width * 0.05,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// Day, Date and Notification icon
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            homeController.dateTimeString.value,
                             style: TextStyle(
                               fontFamily: FontFamily.poppins,
-                              fontSize: Get.height * 0.025,
-                              fontWeight: FontWeight.w700,
+                              fontSize: Get.height * 0.018,
+                              // color: Colors.black,
                             ),
                           ),
-                        ),
+                          SvgPicture.asset(
+                            Assets.svgs.icNotificationBellFilled,
+                          )
+                        ],
+                      ),
 
-                        /// My Priority Tasks
-                        Text(
-                          AppStrings.myPriorityTasks,
+                      /// Greeting Message
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: Get.height * 0.03,
+                        ),
+                        child: Text(
+                          homeController.greetingMessage.value,
                           style: TextStyle(
                             fontFamily: FontFamily.poppins,
-                            fontSize: Get.height * 0.02,
-                            fontWeight: FontWeight.w600,
+                            fontSize: Get.height * 0.025,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
+                      ),
 
-                        /// Priority Tasks slider
-                        Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: Get.height * 0.01),
-                          child: SizedBox(
-                            width: Get.width,
-                            //
+                      /// My Priority Tasks
+                      Text(
+                        AppStrings.myTasks,
+                        style: TextStyle(
+                          fontFamily: FontFamily.poppins,
+                          fontSize: Get.height * 0.02,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
 
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: homeController.priorityTasks.length,
-                              // scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return TaskDetailsScreen(
-                                            task: homeController
-                                                .priorityTasks[index],
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: Get.height * 0.01,
-                                      // horizontal: Get.width * 0.02,
+                      SizedBox(
+                        height: Get.height * 0.02,
+                      ),
+
+                      /// Priority Tasks slider
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: () async {},
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: homeController.priorityTasks.length,
+                            // scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return TaskDetailsScreen(
+                                          task: homeController
+                                              .priorityTasks[index],
+                                        );
+                                      },
                                     ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        // gradient: LinearGradient(
-                                        //   colors: [
-                                        //     AppColors.primaryColor,
-                                        //     AppColors.primaryColorLight,
-                                        //   ],
-                                        //   begin: Alignment.topLeft,
-                                        //   end: Alignment.bottomRight,
-                                        // ),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: Get.height * 0.01,
+                                    // horizontal: Get.width * 0.02,
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      // gradient: LinearGradient(
+                                      //   colors: [
+                                      //     AppColors.primaryColor,
+                                      //     AppColors.primaryColorLight,
+                                      //   ],
+                                      //   begin: Alignment.topLeft,
+                                      //   end: Alignment.bottomRight,
+                                      // ),
 
-                                        color: AppColors.primaryColorLight
-                                            .withOpacity(0.5),
+                                      color: AppColors.primaryColorLight
+                                          .withOpacity(0.5),
 
-                                        border: Border.all(
-                                          color: AppColors.primaryColor,
-                                          width: 1,
-                                        ),
+                                      border: Border.all(
+                                        color: AppColors.primaryColor,
+                                        width: 1,
                                       ),
-                                      height: Get.height * 0.18,
-                                      width: Get.width * 0.35,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: Get.width * 0.04,
-                                          vertical: Get.height * 0.01),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
+                                    ),
+                                    height: Get.height * 0.18,
+                                    width: Get.width * 0.35,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: Get.width * 0.04,
+                                        vertical: Get.height * 0.01),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              homeController
+                                                      .priorityTasks[index]
+                                                      .title ??
+                                                  "",
+                                              style: TextStyle(
+                                                fontFamily: FontFamily.poppins,
+                                                fontSize: Get.height * 0.019,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+
+                                            /// Task Status
+
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: Get.width * 0.02,
+                                                  vertical: Get.height * 0.005),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: AppColors.primaryColor,
+                                              ),
+                                              child: Text(
                                                 homeController
                                                         .priorityTasks[index]
-                                                        .title ??
-                                                    "",
+                                                        .status ??
+                                                    "Task Status",
                                                 style: TextStyle(
                                                   fontFamily:
                                                       FontFamily.poppins,
-                                                  fontSize: Get.height * 0.019,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: Get.height * 0.015,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white,
                                                 ),
                                               ),
-
-                                              /// Task Status
-
-                                              Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal:
-                                                        Get.width * 0.02,
-                                                    vertical:
-                                                        Get.height * 0.005),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: AppColors.primaryColor,
-                                                ),
-                                                child: Text(
-                                                  homeController
-                                                          .priorityTasks[index]
-                                                          .status ??
-                                                      "Task Status",
-                                                  style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.poppins,
-                                                    fontSize:
-                                                        Get.height * 0.015,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Text(
-                                            homeController.priorityTasks[index]
-                                                    .description ??
-                                                "",
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.poppins,
-                                              fontSize: Get.height * 0.015,
-                                              fontWeight: FontWeight.w500,
                                             ),
+                                          ],
+                                        ),
+                                        Text(
+                                          homeController.priorityTasks[index]
+                                                  .description ??
+                                              "",
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.poppins,
+                                            fontSize: Get.height * 0.015,
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                );
-                              },
-                            ),
+                                ),
+                              );
+                            },
                           ),
                         ),
+                      ),
 
-                        // /// Daily Tasks
-                        // Text(
-                        //   AppStrings.dailyTasks,
-                        //   style: TextStyle(
-                        //     fontFamily: FontFamily.poppins,
-                        //     fontSize: Get.height * 0.02,
-                        //     fontWeight: FontWeight.w600,
-                        //   ),
-                        // ),
+                      // /// Daily Tasks
+                      // Text(
+                      //   AppStrings.dailyTasks,
+                      //   style: TextStyle(
+                      //     fontFamily: FontFamily.poppins,
+                      //     fontSize: Get.height * 0.02,
+                      //     fontWeight: FontWeight.w600,
+                      //   ),
+                      // ),
 
-                        // /// Daily Tasks List
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(
-                        //     vertical: Get.height * 0.01,
-                        //   ),
-                        //   child: GetBuilder<HomeController>(
-                        //     init: homeController,
-                        //     id: "dailyTasks",
-                        //     builder: (controller) {
-                        //       return ListView.builder(
-                        //         shrinkWrap: true,
-                        //         physics: const NeverScrollableScrollPhysics(),
-                        //         itemCount: homeController.dailyTasks.length,
-                        //         itemBuilder: (context, index) {
-                        //           return GestureDetector(
-                        //             behavior: HitTestBehavior.translucent,
-                        //             onTap: () {
-                        //               homeController
-                        //                       .dailyTasks[index].isCompleted =
-                        //                   !homeController
-                        //                       .dailyTasks[index].isCompleted;
-                        //               homeController.update(["dailyTasks"]);
-                        //             },
-                        //             child: Padding(
-                        //               padding: EdgeInsets.symmetric(
-                        //                 vertical: Get.height * 0.01,
-                        //                 horizontal: Get.width * 0.02,
-                        //               ),
-                        //               child: Row(
-                        //                 mainAxisAlignment:
-                        //                     MainAxisAlignment.spaceBetween,
-                        //                 children: [
-                        //                   Text(
-                        //                     homeController
-                        //                         .dailyTasks[index].title,
-                        //                     style: TextStyle(
-                        //                       fontFamily: FontFamily.poppins,
-                        //                       fontSize: Get.height * 0.018,
-                        //                       fontWeight: FontWeight.w600,
-                        //                       color: homeController
-                        //                               .dailyTasks[index]
-                        //                               .isCompleted
-                        //                           ? AppColors.primaryColor
-                        //                           : Colors.black,
-                        //                     ),
-                        //                   ),
-                        //                   Obx(
-                        //                     () => Checkbox(
-                        //                       shape: RoundedRectangleBorder(
-                        //                         borderRadius:
-                        //                             BorderRadius.circular(50),
-                        //                       ),
-                        //                       value: homeController
-                        //                           .dailyTasks[index]
-                        //                           .isCompleted,
-                        //                       onChanged: (value) {
-                        //                         homeController.dailyTasks[index]
-                        //                             .isCompleted = value!;
-                        //                         homeController
-                        //                             .update(["dailyTasks"]);
-                        //                       },
-                        //                     ),
-                        //                   ),
-                        //                 ],
-                        //               ),
-                        //             ),
-                        //           );
-                        //         },
-                        //       );
-                        //     },
-                        //   ),
-                        // )
-                      ],
-                    ),
+                      // /// Daily Tasks List
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(
+                      //     vertical: Get.height * 0.01,
+                      //   ),
+                      //   child: GetBuilder<HomeController>(
+                      //     init: homeController,
+                      //     id: "dailyTasks",
+                      //     builder: (controller) {
+                      //       return ListView.builder(
+                      //         shrinkWrap: true,
+                      //         physics: const NeverScrollableScrollPhysics(),
+                      //         itemCount: homeController.dailyTasks.length,
+                      //         itemBuilder: (context, index) {
+                      //           return GestureDetector(
+                      //             behavior: HitTestBehavior.translucent,
+                      //             onTap: () {
+                      //               homeController
+                      //                       .dailyTasks[index].isCompleted =
+                      //                   !homeController
+                      //                       .dailyTasks[index].isCompleted;
+                      //               homeController.update(["dailyTasks"]);
+                      //             },
+                      //             child: Padding(
+                      //               padding: EdgeInsets.symmetric(
+                      //                 vertical: Get.height * 0.01,
+                      //                 horizontal: Get.width * 0.02,
+                      //               ),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+                      //                   Text(
+                      //                     homeController
+                      //                         .dailyTasks[index].title,
+                      //                     style: TextStyle(
+                      //                       fontFamily: FontFamily.poppins,
+                      //                       fontSize: Get.height * 0.018,
+                      //                       fontWeight: FontWeight.w600,
+                      //                       color: homeController
+                      //                               .dailyTasks[index]
+                      //                               .isCompleted
+                      //                           ? AppColors.primaryColor
+                      //                           : Colors.black,
+                      //                     ),
+                      //                   ),
+                      //                   Obx(
+                      //                     () => Checkbox(
+                      //                       shape: RoundedRectangleBorder(
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(50),
+                      //                       ),
+                      //                       value: homeController
+                      //                           .dailyTasks[index]
+                      //                           .isCompleted,
+                      //                       onChanged: (value) {
+                      //                         homeController.dailyTasks[index]
+                      //                             .isCompleted = value!;
+                      //                         homeController
+                      //                             .update(["dailyTasks"]);
+                      //                       },
+                      //                     ),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           );
+                      //         },
+                      //       );
+                      //     },
+                      //   ),
+                      // )
+                    ],
                   ),
                 ),
         ),

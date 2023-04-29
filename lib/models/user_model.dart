@@ -5,76 +5,171 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
+  String? message;
+  Body? body;
+
+  UserModel({
+    this.message,
+    this.body,
+  });
+
+  UserModel copyWith({
+    String? message,
+    Body? body,
+  }) =>
+      UserModel(
+        message: message ?? this.message,
+        body: body ?? this.body,
+      );
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        message: json["message"],
+        body: Body.fromJson(json["body"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "message": message,
+        "body": body?.toJson(),
+      };
+}
+
+class Body {
+  Model? model;
+
+  Body({
+    this.model,
+  });
+
+  Body copyWith({
+    Model? model,
+  }) =>
+      Body(
+        model: model ?? this.model,
+      );
+
+  factory Body.fromJson(Map<String, dynamic> json) => Body(
+        model: Model.fromJson(json["model"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "model": model?.toJson(),
+      };
+}
+
+class Model {
+  String? id;
   String? firstName;
   String? lastName;
   String? userName;
+  String? firmName;
   String? email;
-  int? totalTasks;
-  int? completeTasks;
+  String? password;
+  List<User>? users;
+  String? otp;
   bool? isVerified;
-  List<Users>? users;
+  int? completeTasks;
+  int? totalTasks;
 
-  UserModel({
+  Model({
+    this.id,
     this.firstName,
     this.lastName,
     this.userName,
+    this.firmName,
     this.email,
+    this.password,
     this.totalTasks,
-    this.completeTasks,
-    this.isVerified,
     this.users,
+    this.otp,
+    this.isVerified,
+    this.completeTasks,
   });
 
-  UserModel.fromJson(Map<String, dynamic> json) {
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    userName = json['userName'];
-    email = json['email'];
-    totalTasks = json['totalTasks'];
-    completeTasks = json['completeTasks'];
-    isVerified = json['isVerified'];
-    if (json['users'] != null) {
-      users = <Users>[];
-      json['users'].forEach((dynamic v) {
-        users?.add(Users.fromJson(v as Map<String, dynamic>));
-      });
-    }
-  }
+  Model copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? userName,
+    String? firmName,
+    String? email,
+    String? password,
+    int? totalTasks,
+    List<User>? users,
+    dynamic otp,
+    bool? isVerified,
+    int? completeTasks,
+  }) =>
+      Model(
+        id: id ?? this.id,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        userName: userName ?? this.userName,
+        firmName: firmName ?? this.firmName,
+        email: email ?? this.email,
+        password: password ?? this.password,
+        totalTasks: totalTasks ?? this.totalTasks,
+        users: users ?? this.users,
+        otp: otp ?? this.otp,
+        isVerified: isVerified ?? this.isVerified,
+        completeTasks: completeTasks ?? this.completeTasks,
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['firstName'] = firstName ?? "";
-    data['lastName'] = lastName ?? "";
-    data['userName'] = userName ?? "";
-    data['email'] = email ?? "";
-    data['totalTasks'] = totalTasks ?? 0;
-    data['completeTasks'] = completeTasks ?? 0;
-    data['isVerified'] = isVerified ?? false;
-    if (users != null) {
-      data['users'] = users?.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  factory Model.fromJson(Map<String, dynamic> json) => Model(
+        id: json["_id"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        userName: json["userName"],
+        firmName: json["firmName"],
+        email: json["email"],
+        password: json["password"],
+        totalTasks: json["totalTasks"],
+        users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
+        otp: json["otp"],
+        isVerified: json["isVerified"],
+        completeTasks: json["completeTasks"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "userName": userName,
+        "firmName": firmName,
+        "email": email,
+        "password": password,
+        "totalTasks": totalTasks,
+        "users": List<dynamic>.from(users!.map((x) => x.toJson())),
+        "otp": otp,
+        "isVerified": isVerified,
+        "completeTasks": completeTasks,
+      };
 }
 
-class Users {
-  String? email;
+class User {
   String? designation;
+  String? email;
 
-  Users({
-    this.email,
+  User({
     this.designation,
+    this.email,
   });
 
-  Users.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-    designation = json['designation'];
-  }
+  User copyWith({
+    String? designation,
+    String? email,
+  }) =>
+      User(
+        designation: designation ?? this.designation,
+        email: email ?? this.email,
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['email'] = email ?? "";
-    data['designation'] = designation ?? "";
-    return data;
-  }
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        designation: json["designation"],
+        email: json["email"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "designation": designation,
+        "email": email,
+      };
 }

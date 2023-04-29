@@ -59,7 +59,7 @@ class AddTaskController extends GetxController {
       assigneeList.add("Select Assignee");
 
       final userData = await LocalStorage.getUserData();
-      userData?.users?.forEach(
+      userData?.body?.model?.users?.forEach(
         (element) {
           if (element.email != null && element.email != "") {
             assigneeList.add(element.email!);
@@ -128,8 +128,9 @@ class AddTaskController extends GetxController {
           description: descriptionController.text,
           start: startDate.value.toIso8601String(),
           end: endDate.value.toIso8601String(),
-          email:
-              isManager.value ? selectedAssignee.value : userData?.email ?? "",
+          email: isManager.value
+              ? selectedAssignee.value
+              : userData?.body?.model?.email ?? "",
           isPersonal: !isManager.value,
           context: context,
         );

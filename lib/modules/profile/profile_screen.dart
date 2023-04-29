@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             const SizedBox(height: 55),
                             Text(
-                              profileController.userData.value.firstName ?? '',
+                              profileController.userData.value.body?.model?.firstName ?? '',
                               style: TextStyle(
                                 color: AppColors.primaryColor,
                                 fontSize: 18,
@@ -104,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              profileController.userData.value.email ?? '',
+                              profileController.userData.value.body?.model?.email ?? '',
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,
@@ -113,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              "Completed Tasks : ${profileController.userData.value.completeTasks != null ? profileController.userData.value.completeTasks.toString() : ''}",
+                              "Completed Tasks : ${profileController.userData.value.body?.model?.completeTasks != null ? profileController.userData.value.body?.model?.completeTasks.toString() : ''}",
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,
@@ -192,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               MaterialPageRoute(
                                 builder: (context) => AddUserScreen(
                                   managerEmail:
-                                      profileController.userData.value.email ??
+                                      profileController.userData.value.body?.model?.email ??
                                           "",
                                 ),
                               ),

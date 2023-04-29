@@ -165,6 +165,7 @@ class HomeController extends GetxController {
       DailyTaskModel(title: "Task 7", isCompleted: false),
     ];
   }
+
 }
 
 HomeController get homeController => Get.put(HomeController());
