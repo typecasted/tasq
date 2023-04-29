@@ -34,7 +34,10 @@ class HomeController extends GetxController {
     await getGreetingsMessage();
 
     if (context.mounted) {
-      await getTasksData(context: context);
+      await getTasksData(
+        context: context,
+        isPersonal: false,
+      );
     }
     isLoading.value = false;
   }
@@ -132,12 +135,13 @@ class HomeController extends GetxController {
 
   getTasksData({
     required BuildContext context,
+    required bool isPersonal,
   }) async {
     isTaskLoading.value = true;
     taskList.clear();
 
     final userData = await LocalStorage.getUserData();
-    final bool isPersonal = !(await LocalStorage.getIsLoggedInAsManager());
+    // final bool isPersonal = !(await LocalStorage.getIsLoggedInAsManager());
 
     if (context.mounted) {
       taskList.value = (await Repository.getTask(

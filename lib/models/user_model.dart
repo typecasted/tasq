@@ -123,7 +123,9 @@ class Model {
         email: json["email"],
         password: json["password"],
         totalTasks: json["totalTasks"],
-        users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
+        users: json["users"] == null
+            ? <User>[]
+            : List<User>.from(json["users"].map((x) => User.fromJson(x))),
         otp: json["otp"],
         isVerified: json["isVerified"],
         completeTasks: json["completeTasks"],

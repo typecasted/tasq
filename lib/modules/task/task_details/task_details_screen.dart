@@ -22,8 +22,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   @override
   void initState() {
     super.initState();
-
     taskDetailController = Get.put(TaskDetailController());
+    taskDetailController.onInit();
   }
 
   @override
@@ -49,23 +49,25 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.edit,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddOrEditTaskScreen(
-                    isEdit: true,
-                    task: widget.task,
+          taskDetailController.isManager.value || widget.task.isPersonal!
+              ? IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.black,
                   ),
-                ),
-              );
-            },
-          ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddOrEditTaskScreen(
+                          isEdit: true,
+                          task: widget.task,
+                        ),
+                      ),
+                    );
+                  },
+                )
+              : const SizedBox(),
         ],
       ),
       body: Padding(

@@ -61,7 +61,7 @@ class AddTaskController extends GetxController {
       final userData = await LocalStorage.getUserData();
       userData?.body?.model?.users?.forEach(
         (element) {
-          if (element.email != null && element.email != "") {
+          if (element.email != null && element.email != "" && !assigneeList.contains(element.email!)) {
             assigneeList.add(element.email!);
           }
         },
