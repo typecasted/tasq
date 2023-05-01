@@ -34,10 +34,8 @@ class DashboardController extends GetxController {
 
     /// initializing the lists
     dashboardScreenList.addAll([
-      const Center(child: HomeScreen()),
-      const Center(
-        child: OrganizationDashboardScreen(),
-      ),
+      const HomeScreen(),
+      const OrganizationDashboardScreen(),
       const ProfileScreen(),
     ]);
 

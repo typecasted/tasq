@@ -88,4 +88,6 @@ class AppStrings {
   static String note = 'Note';
 
   static String myTasks = 'My Tasks';
+
+  static String yourTasks = 'Your Tasks';
 }

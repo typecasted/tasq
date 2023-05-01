@@ -73,46 +73,6 @@ class _DashboardState extends State<Dashboard> {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: SvgPicture.asset(
-      //         Assets.svgs.icHomeFilled,
-      //         colorFilter: ColorFilter.mode(
-      //           dashboardController.currentScreenIndex.value == 0
-      //               ? AppColors.primaryColor
-      //               : AppColors.primaryColorLight,
-      //           BlendMode.srcIn,
-      //         ),
-      //       ),
-      //       label: "Home",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: SvgPicture.asset(
-      //         Assets.svgs.icCalenderFilled,
-      //         colorFilter: ColorFilter.mode(
-      //           dashboardController.currentScreenIndex.value == 1
-      //               ? AppColors.primaryColor
-      //               : AppColors.primaryColorLight,
-      //           BlendMode.srcIn,
-      //         ),
-      //       ),
-      //       label: "Calender",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: SvgPicture.asset(
-      //         Assets.svgs.icPersonFilled,
-      //         colorFilter: ColorFilter.mode(
-      //           dashboardController.currentScreenIndex.value == 2
-      //               ? AppColors.primaryColor
-      //               : AppColors.primaryColorLight,
-      //           BlendMode.srcIn,
-      //         ),
-      //       ),
-      //       label: "Profile",
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
