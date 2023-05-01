@@ -61,6 +61,7 @@ class Model {
   String? firstName;
   String? lastName;
   String? userName;
+  String? profilePicture;
   String? firmName;
   String? email;
   String? password;
@@ -75,6 +76,7 @@ class Model {
     this.firstName,
     this.lastName,
     this.userName,
+    this.profilePicture,
     this.firmName,
     this.email,
     this.password,
@@ -90,6 +92,7 @@ class Model {
     String? firstName,
     String? lastName,
     String? userName,
+    String? profilePicture,
     String? firmName,
     String? email,
     String? password,
@@ -104,6 +107,7 @@ class Model {
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
         userName: userName ?? this.userName,
+        profilePicture: profilePicture ?? this.profilePicture,
         firmName: firmName ?? this.firmName,
         email: email ?? this.email,
         password: password ?? this.password,
@@ -119,6 +123,7 @@ class Model {
         firstName: json["firstName"],
         lastName: json["lastName"],
         userName: json["userName"],
+        profilePicture: json["profilePicture"],
         firmName: json["firmName"],
         email: json["email"],
         password: json["password"],

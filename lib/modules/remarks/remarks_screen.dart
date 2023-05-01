@@ -108,7 +108,7 @@ class _RemarkScreenState extends State<RemarkScreen> {
                                       color: Colors.grey.withOpacity(0.2),
                                       spreadRadius: 1,
                                       blurRadius: 5,
-                                      offset: Offset(
+                                      offset: const Offset(
                                         0,
                                         3,
                                       ),

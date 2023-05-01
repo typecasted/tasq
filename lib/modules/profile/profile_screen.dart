@@ -5,7 +5,7 @@ import 'package:tasq/utils/app_colors.dart';
 
 import '../../utils/app_strings.dart';
 import '../add_user/add_user_screen.dart';
-import 'my_profile/my_profile_screen.dart';
+import 'my_profile/edit_profile_screen.dart';
 import 'profile_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -95,7 +95,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             const SizedBox(height: 55),
                             Text(
-                              profileController.userData.value.body?.model?.firstName ?? '',
+                              profileController
+                                      .userData.value.body?.model?.firstName ??
+                                  '',
                               style: TextStyle(
                                 color: AppColors.primaryColor,
                                 fontSize: 18,
@@ -104,7 +106,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              profileController.userData.value.body?.model?.email ?? '',
+                              profileController
+                                      .userData.value.body?.model?.email ??
+                                  '',
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,
@@ -152,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: AppColors.primaryColor,
                   ),
                   title: Text(
-                    'Profile',
+                    'Edit Profile',
                     style: TextStyle(
                       color: AppColors.primaryColor,
                       fontSize: 16,
@@ -191,9 +195,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => AddUserScreen(
-                                  managerEmail:
-                                      profileController.userData.value.body?.model?.email ??
-                                          "",
+                                  managerEmail: profileController
+                                          .userData.value.body?.model?.email ??
+                                      "",
                                 ),
                               ),
                             );

@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-/// controller
-import 'package:tasq/utils/app_colors.dart';
-
 import '../../../common_widgets/task_details_tile.dart';
 
 /// utils import
 import '../../../utils/app_strings.dart';
 import '../../../utils/fonts.gen.dart';
-import '../../task/add_or_edit_task/add_task_screen.dart';
-import '../../task/models/task_model.dart';
 import '../../task/task_details/task_details_screen.dart';
 import 'assignee_controller.dart';
 
@@ -34,7 +28,6 @@ class _AssigneeScreenState extends State<AssigneeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SafeArea(
         child: Obx(
           () => assigneeController.isLoading.value
@@ -108,8 +101,8 @@ class _AssigneeScreenState extends State<AssigneeScreen> {
                                         assigneeController.taskList.length,
                                     itemBuilder: (context, index) {
                                       return TaskDetailsTile(
-                                        taskDetails: assigneeController
-                                            .taskList[index],
+                                        taskDetails:
+                                            assigneeController.taskList[index],
                                         onTap: () {
                                           Navigator.push(
                                             context,
@@ -117,14 +110,12 @@ class _AssigneeScreenState extends State<AssigneeScreen> {
                                               builder: (context) {
                                                 return TaskDetailsScreen(
                                                   taskId: assigneeController
-                                                          .taskList[index]
-                                                          .id ??
+                                                          .taskList[index].id ??
                                                       "",
-                                                  isPersonal:
-                                                      assigneeController
-                                                              .taskList[index]
-                                                              .isPersonal ??
-                                                          false,
+                                                  isPersonal: assigneeController
+                                                          .taskList[index]
+                                                          .isPersonal ??
+                                                      false,
                                                 );
                                               },
                                             ),

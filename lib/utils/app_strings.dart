@@ -92,4 +92,6 @@ class AppStrings {
   static String yourTasks = 'Your Tasks';
 
   static String yourAssignees = 'Your Assignees';
+
+  static String designation = 'Designation';
 }
