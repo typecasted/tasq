@@ -11,10 +11,13 @@ import 'add_task_controller.dart';
 class AddOrEditTaskScreen extends StatefulWidget {
   final bool isEdit;
   final TaskModel? task;
+  final String email;
+
   const AddOrEditTaskScreen({
     super.key,
-    required this.isEdit,
     this.task,
+    required this.isEdit,
+    this.email = "",
   });
 
   @override
@@ -29,6 +32,9 @@ class _AddOrEditTaskScreenState extends State<AddOrEditTaskScreen> {
     super.initState();
     addTaskController = Get.put(AddTaskController());
     addTaskController.onInitStateCalled(widget: widget);
+    if (widget.email.isNotEmpty) {
+      addTaskController.selectedAssignee.value = widget.email;
+    }
   }
 
   @override

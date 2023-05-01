@@ -4,10 +4,13 @@ import 'package:get/get.dart';
 /// controller
 import 'package:tasq/utils/app_colors.dart';
 
+import '../../../common_widgets/task_details_tile.dart';
+
 /// utils import
 import '../../../utils/app_strings.dart';
 import '../../../utils/fonts.gen.dart';
 import '../../task/add_or_edit_task/add_task_screen.dart';
+import '../../task/models/task_model.dart';
 import '../../task/task_details/task_details_screen.dart';
 import 'assignee_controller.dart';
 
@@ -31,26 +34,7 @@ class _AssigneeScreenState extends State<AssigneeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return const AddOrEditTaskScreen(
-                  isEdit: false,
-                );
-              },
-            ),
-          ).then((value) {
-            assigneeController.getTasksData(
-              context: context,
-            );
-          });
-        },
-        backgroundColor: AppColors.primaryColor,
-        child: const Icon(Icons.add),
-      ),
+
       body: SafeArea(
         child: Obx(
           () => assigneeController.isLoading.value
@@ -65,9 +49,6 @@ class _AssigneeScreenState extends State<AssigneeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Day, Date and Notification icon
-
-                      /// Greeting Message
                       Padding(
                         padding: EdgeInsets.symmetric(
                           vertical: Get.height * 0.03,
@@ -123,10 +104,12 @@ class _AssigneeScreenState extends State<AssigneeScreen> {
                                     shrinkWrap: true,
                                     physics:
                                         const AlwaysScrollableScrollPhysics(),
-                                    itemCount: assigneeController.taskList.length,
+                                    itemCount:
+                                        assigneeController.taskList.length,
                                     itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        behavior: HitTestBehavior.translucent,
+                                      return TaskDetailsTile(
+                                        taskDetails: assigneeController
+                                            .taskList[index],
                                         onTap: () {
                                           Navigator.push(
                                             context,
@@ -134,140 +117,31 @@ class _AssigneeScreenState extends State<AssigneeScreen> {
                                               builder: (context) {
                                                 return TaskDetailsScreen(
                                                   taskId: assigneeController
-                                                          .taskList[index].id ??
-                                                      "",
-                                                  isPersonal: assigneeController
                                                           .taskList[index]
-                                                          .isPersonal ??
-                                                      false,
+                                                          .id ??
+                                                      "",
+                                                  isPersonal:
+                                                      assigneeController
+                                                              .taskList[index]
+                                                              .isPersonal ??
+                                                          false,
                                                 );
                                               },
                                             ),
                                           ).then(
                                             (value) async {
-                                              assigneeController.isLoading.value =
-                                                  true;
+                                              assigneeController
+                                                  .isLoading.value = true;
 
-                                              await assigneeController.getTasksData(
+                                              await assigneeController
+                                                  .getTasksData(
                                                 context: context,
                                               );
-                                              assigneeController.isLoading.value =
-                                                  false;
+                                              assigneeController
+                                                  .isLoading.value = false;
                                             },
                                           );
                                         },
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: Get.height * 0.01,
-                                            // horizontal: Get.width * 0.02,
-                                          ),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              // gradient: LinearGradient(
-                                              //   colors: [
-                                              //     AppColors.primaryColor,
-                                              //     AppColors.primaryColorLight,
-                                              //   ],
-                                              //   begin: Alignment.topLeft,
-                                              //   end: Alignment.bottomRight,
-                                              // ),
-
-                                              color: AppColors.primaryColorLight
-                                                  .withOpacity(0.5),
-
-                                              border: Border.all(
-                                                color: AppColors.primaryColor,
-                                                width: 1,
-                                              ),
-                                            ),
-                                            height: Get.height * 0.18,
-                                            width: Get.width * 0.35,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: Get.width * 0.04,
-                                                vertical: Get.height * 0.01),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      assigneeController
-                                                              .taskList[index]
-                                                              .title ??
-                                                          "",
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            FontFamily.poppins,
-                                                        fontSize:
-                                                            Get.height * 0.019,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                    ),
-
-                                                    /// Task Status
-
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: Get
-                                                                      .width *
-                                                                  0.02,
-                                                              vertical:
-                                                                  Get.height *
-                                                                      0.005),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                      ),
-                                                      child: Text(
-                                                        assigneeController
-                                                                .taskList[index]
-                                                                .status ??
-                                                            "Task Status",
-                                                        style: TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .poppins,
-                                                          fontSize: Get.height *
-                                                              0.015,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Text(
-                                                  assigneeController.taskList[index]
-                                                          .description ??
-                                                      "",
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.poppins,
-                                                    fontSize:
-                                                        Get.height * 0.015,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
                                       );
                                     },
                                   ),

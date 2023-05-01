@@ -1,7 +1,7 @@
 /// package imports
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:tasq/common_widgets/task_details_tile.dart';
 
 /// controller
 import 'package:tasq/modules/home/home_controller.dart';
@@ -10,7 +10,6 @@ import 'package:tasq/utils/app_colors.dart';
 /// utils import
 import '../../utils/app_strings.dart';
 import '../../utils/fonts.gen.dart';
-import '../../utils/assets.gen.dart';
 import '../task/add_or_edit_task/add_task_screen.dart';
 import '../task/task_details/task_details_screen.dart';
 
@@ -145,8 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         const AlwaysScrollableScrollPhysics(),
                                     itemCount: homeController.taskList.length,
                                     itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        behavior: HitTestBehavior.translucent,
+                                      return TaskDetailsTile(
                                         onTap: () {
                                           Navigator.push(
                                             context,
@@ -177,118 +175,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             },
                                           );
                                         },
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: Get.height * 0.01,
-                                            // horizontal: Get.width * 0.02,
-                                          ),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              // gradient: LinearGradient(
-                                              //   colors: [
-                                              //     AppColors.primaryColor,
-                                              //     AppColors.primaryColorLight,
-                                              //   ],
-                                              //   begin: Alignment.topLeft,
-                                              //   end: Alignment.bottomRight,
-                                              // ),
-
-                                              color: AppColors.primaryColorLight
-                                                  .withOpacity(0.5),
-
-                                              border: Border.all(
-                                                color: AppColors.primaryColor,
-                                                width: 1,
-                                              ),
-                                            ),
-                                            height: Get.height * 0.18,
-                                            width: Get.width * 0.35,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: Get.width * 0.04,
-                                                vertical: Get.height * 0.01),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      homeController
-                                                              .taskList[index]
-                                                              .title ??
-                                                          "",
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            FontFamily.poppins,
-                                                        fontSize:
-                                                            Get.height * 0.019,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                    ),
-
-                                                    /// Task Status
-
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: Get
-                                                                      .width *
-                                                                  0.02,
-                                                              vertical:
-                                                                  Get.height *
-                                                                      0.005),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                      ),
-                                                      child: Text(
-                                                        homeController
-                                                                .taskList[index]
-                                                                .status ??
-                                                            "Task Status",
-                                                        style: TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .poppins,
-                                                          fontSize: Get.height *
-                                                              0.015,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Text(
-                                                  homeController.taskList[index]
-                                                          .description ??
-                                                      "",
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.poppins,
-                                                    fontSize:
-                                                        Get.height * 0.015,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
+                                        taskDetails:
+                                            homeController.taskList[index],
                                       );
                                     },
                                   ),

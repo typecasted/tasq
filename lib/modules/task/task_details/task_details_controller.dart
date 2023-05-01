@@ -53,10 +53,10 @@ class TaskDetailController extends GetxController {
   Future<void> onActionButtonTap(
       {required BuildContext context,
       required bool isPersonal,
-      required String status}) async {
+      required String status,
+      required String email
+      }) async {
     showFullScreenLoader(context: context);
-
-    final userData = await LocalStorage.getUserData();
 
     if (context.mounted) {}
     final isEdited = await Repository.editTask(
@@ -66,7 +66,7 @@ class TaskDetailController extends GetxController {
       id: task.value.id,
       description: task.value.description ?? "",
       title: task.value.title ?? "",
-      email: userData!.body!.model!.email ?? "",
+      email: email,
       end: task.value.end?.toIso8601String() ?? "",
       isCompleted: task.value.isCompleted ?? false,
       start: task.value.start?.toIso8601String() ?? "",

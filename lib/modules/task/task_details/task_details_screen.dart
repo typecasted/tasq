@@ -241,6 +241,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                             isPersonal:
                                 taskDetailController.task.value.isPersonal!,
                             taskDetailController: taskDetailController,
+                            email: taskDetailController.task.value.email!,
                           ),
                         ],
                       ),
@@ -340,12 +341,15 @@ class TaskStatusActionButton extends StatefulWidget {
   final bool isManager;
   final bool isPersonal;
   final TaskDetailController taskDetailController;
+  final String email;
+
   const TaskStatusActionButton({
     super.key,
     required this.status,
     required this.isManager,
     required this.isPersonal,
     required this.taskDetailController,
+    required this.email,
   });
 
   @override
@@ -380,7 +384,7 @@ class _TaskStatusActionButtonState extends State<TaskStatusActionButton> {
           /// once manager approves the task it will show completed in the status
           return "";
         } else {
-          return "Completed";
+          return "";
         }
       }
 
@@ -407,8 +411,10 @@ class _TaskStatusActionButtonState extends State<TaskStatusActionButton> {
         else if (widget.status == "Under review") {
           /// once manager approves the task it will show completed in the status
           return "Approve";
+        } else if (widget.status == "Approved") {
+          return "Complete";
         } else {
-          return "Approved";
+          return "";
         }
       }
     }
@@ -437,6 +443,8 @@ class _TaskStatusActionButtonState extends State<TaskStatusActionButton> {
           return "";
         } else if (taskStatusActionButtonText == "Approve") {
           return "Approved";
+        } else if (taskStatusActionButtonText == "Complete") {
+          return "Completed";
         } else {
           return "";
         }
@@ -448,6 +456,8 @@ class _TaskStatusActionButtonState extends State<TaskStatusActionButton> {
           return "Under review";
         } else if (taskStatusActionButtonText == "Approve") {
           return "Approved";
+        } else if (taskStatusActionButtonText == "Complete") {
+          return "Completed";
         } else {
           return "";
         }
@@ -474,6 +484,7 @@ class _TaskStatusActionButtonState extends State<TaskStatusActionButton> {
                 context: context,
                 isPersonal: widget.isPersonal,
                 status: getSendingStatus(),
+                email: widget.email,
               );
             },
             child: Text(
