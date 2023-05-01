@@ -595,4 +595,36 @@ class Repository {
       return UserModel();
     }
   }
+
+  static deleteUser({
+    required BuildContext context,
+    required String email,
+    required String userEmail,
+  }) async {
+    Response? response;
+
+    try {
+      response = await NetworkServices.post(
+        path: "/delete-user",
+        data: {
+          "email": email,
+          "userEmail": userEmail,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - deleteUser - error: $e", stackTrace: s);
+    }
+
+    log("Repository - deleteUser - Response - status: ${response?.statusCode}");
+    log("Repository - deleteUser - Response - data: ${response?.body}");
+
+    if (NetworkServices.checkResponse(
+      response: response!,
+      context: context,
+    )) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -53,6 +53,20 @@ class _TaskListingScreenState extends State<TaskListingScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              taskListingController.deleteUser(
+                context: context,
+                userEmail: widget.assignee.email ?? "",
+              );
+            },
+            icon: Icon(
+              Icons.delete_rounded,
+              color: AppColors.primaryColor,
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

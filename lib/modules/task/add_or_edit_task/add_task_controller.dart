@@ -119,8 +119,14 @@ class AddTaskController extends GetxController {
     required bool isEdit,
     required TaskModel? task,
     required BuildContext context,
+
+    /// this field is used when a manager wants to create a task for themselves.
+    bool isNormalTask = true,
   }) async {
-    if (validateFields(context: context)) {
+    if (validateFields(
+      context: context,
+      isNormal: isNormalTask,
+    )) {
       showFullScreenLoader(context: context);
 
       final userData = await LocalStorage.getUserData();
@@ -130,10 +136,10 @@ class AddTaskController extends GetxController {
           description: descriptionController.text,
           start: startDate.value.toIso8601String(),
           end: endDate.value.toIso8601String(),
-          email: isManager.value
+          email: isManager.value && !isNormalTask
               ? selectedAssignee.value
               : userData?.body?.model?.email ?? "",
-          isPersonal: !isManager.value,
+          isPersonal: !isManager.value || isNormalTask,
           context: context,
         );
 
@@ -166,7 +172,7 @@ class AddTaskController extends GetxController {
     }
   }
 
-  bool validateFields({required BuildContext context}) {
+  bool validateFields({required BuildContext context, required bool isNormal}) {
     if (titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -202,7 +208,9 @@ class AddTaskController extends GetxController {
         ),
       );
       return false;
-    } else if (isManager.value && selectedAssignee.value == "Select Assignee") {
+    } else if (isManager.value &&
+        !isNormal &&
+        selectedAssignee.value == "Select Assignee") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(

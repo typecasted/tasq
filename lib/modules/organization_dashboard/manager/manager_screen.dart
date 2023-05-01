@@ -91,6 +91,10 @@ class _ManagerScreenState extends State<ManagerScreen> {
                                       );
                                     },
                                   ),
+                                ).then(
+                                  (value) {
+                                    managerController.getManagerInfo();
+                                  },
                                 );
                               },
                               title: Text(
@@ -124,6 +128,10 @@ class _ManagerScreenState extends State<ManagerScreen> {
                                         );
                                       },
                                     ),
+                                  ).then(
+                                    (value) {
+                                      managerController.getManagerInfo();
+                                    },
                                   );
                                 },
                                 icon: Icon(

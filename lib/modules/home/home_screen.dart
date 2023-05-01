@@ -10,6 +10,7 @@ import 'package:tasq/utils/app_colors.dart';
 /// utils import
 import '../../utils/app_strings.dart';
 import '../../utils/fonts.gen.dart';
+import '../../utils/local_storage.dart';
 import '../task/add_or_edit_task/add_task_screen.dart';
 import '../task/task_details/task_details_screen.dart';
 
@@ -33,13 +34,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
+          final isManager = await LocalStorage.getIsLoggedInAsManager();
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) {
-                return const AddOrEditTaskScreen(
+                return AddOrEditTaskScreen(
                   isEdit: false,
+                  isNormal: isManager,
                 );
               },
             ),

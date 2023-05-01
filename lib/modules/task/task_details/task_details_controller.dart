@@ -105,6 +105,11 @@ class TaskDetailController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  void deleteTask({
+    required BuildContext context,
+    required String id,
+  }) {}
 }
 
 

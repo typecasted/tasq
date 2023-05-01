@@ -12,9 +12,6 @@ class EditProfileController extends GetxController {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  // TextEditingController designationController = TextEditingController();
-
-  // Rx<File> profilePicFile = File("").obs;
 
   FileImage? profilePic;
 
