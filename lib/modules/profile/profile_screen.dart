@@ -4,6 +4,7 @@ import 'package:tasq/modules/statistics/statistics_screen.dart';
 import 'package:tasq/utils/app_colors.dart';
 
 import '../../utils/app_strings.dart';
+import '../../utils/fonts.gen.dart';
 import '../add_user/add_user_screen.dart';
 import 'my_profile/edit_profile_screen.dart';
 import 'profile_controller.dart';
@@ -135,6 +136,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: CircleAvatar(
                         radius: 40,
                         backgroundColor: Colors.grey[200],
+                        child: Center(
+                          child: Text(
+                            profileController
+                                    .userData.value.body?.model?.firstName
+                                    ?.substring(0, 1)
+                                    .toUpperCase() ??
+                                '',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryColor,
+                              fontFamily: FontFamily.poppins,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],

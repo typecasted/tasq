@@ -22,7 +22,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   @override
   void initState() {
     editProfileController = Get.put(EditProfileController());
-    editProfileController.onInit();
+    editProfileController.initializeField();
     super.initState();
   }
 
@@ -93,20 +93,53 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
                           Stack(
                             children: [
-                              Center(
-                                child: CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.grey[300],
+                              GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  // editProfileController.pickImage();
+                                },
+                                child: Center(
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.grey[300],
+                                    // foregroundImage: editProfileController
+                                    //         .profilePicFile.value.path.isEmpty
+                                    //     ? null
+                                    //     : FileImage(
+                                    //         editProfileController
+                                    //             .profilePicFile.value,
+                                    //       ),
+
+                                    child: Center(
+                                      child: Text(
+                                        editProfileController
+                                            .firstNameController.text[0]
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.primaryColor,
+                                          fontFamily: FontFamily.poppins,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                              Positioned(
-                                right: Get.width * 0.32,
-                                bottom: 0,
-                                child: Icon(
-                                  Icons.edit_square,
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
+                              // Positioned(
+                              //   right: Get.width * 0.32,
+                              //   bottom: 0,
+                              //   child: GestureDetector(
+                              //     behavior: HitTestBehavior.translucent,
+                              //     onTap: () {
+                              //       // editProfileController.pickImage();
+                              //     },
+                              //     child: Icon(
+                              //       Icons.edit_square,
+                              //       color: AppColors.primaryColor,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                           SizedBox(
@@ -114,7 +147,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
 
                           /// Name text and text field.
-
                           Text(
                             AppStrings.firstName,
                             style: TextStyle(
@@ -193,6 +225,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             textInputType: TextInputType.emailAddress,
                             textEditingController:
                                 editProfileController.emailController,
+                            enabled: false,
                           ),
 
                           SizedBox(
@@ -204,11 +237,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           ),
 
                           /// Save button.
-
                           GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            onTap: () {
-                              Navigator.pop(context);
+                            onTap: () async {
+                              await editProfileController.updateProfile(
+                                context: context,
+                              );
                             },
                             child: Container(
                               width: double.infinity,

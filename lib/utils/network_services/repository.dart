@@ -497,7 +497,6 @@ class Repository {
     required BuildContext context,
     required String message,
     required String email,
-    
     required String dateTime,
   }) async {
     Response? response;
@@ -520,6 +519,43 @@ class Repository {
     log("Repository - addRemarks - Response - data: ${response?.body}");
 
     if (NetworkServices.checkResponse(response: response!, context: context)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static updateProfile({
+    required UserModel userData,
+    required BuildContext context,
+    required bool isManager,
+  }) async {
+    Response? response;
+
+    try {
+      response = await NetworkServices.post(
+        path: "/update-user-profile",
+        data: {
+          "email": userData.body!.model!.email,
+          "firstName": userData.body!.model!.firstName,
+          "lastName": userData.body!.model!.lastName,
+          "profilePicture": userData.body!.model!.profilePicture ?? "",
+          "isManager": isManager.toString(),
+          "firmName": userData.body!.model!.firmName ?? "",
+          "designation": userData.body?.model?.designation ?? "",
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - updateProfile - error: $e", stackTrace: s);
+    }
+
+    log("Repository - updateProfile - Response - status: ${response?.statusCode}");
+    log("Repository - updateProfile - Response - data: ${response?.body}");
+
+    if (NetworkServices.checkResponse(
+      response: response!,
+      context: context,
+    )) {
       return true;
     } else {
       return false;

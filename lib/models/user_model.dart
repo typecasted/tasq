@@ -70,6 +70,7 @@ class Model {
   bool? isVerified;
   int? completeTasks;
   int? totalTasks;
+  String? designation;
 
   Model({
     this.id,
@@ -85,6 +86,7 @@ class Model {
     this.otp,
     this.isVerified,
     this.completeTasks,
+    this.designation,
   });
 
   Model copyWith({
@@ -101,6 +103,7 @@ class Model {
     dynamic otp,
     bool? isVerified,
     int? completeTasks,
+    String? designation,
   }) =>
       Model(
         id: id ?? this.id,
@@ -116,6 +119,7 @@ class Model {
         otp: otp ?? this.otp,
         isVerified: isVerified ?? this.isVerified,
         completeTasks: completeTasks ?? this.completeTasks,
+        designation: designation ?? this.designation,
       );
 
   factory Model.fromJson(Map<String, dynamic> json) => Model(
@@ -134,6 +138,7 @@ class Model {
         otp: json["otp"],
         isVerified: json["isVerified"],
         completeTasks: json["completeTasks"],
+        designation: json["designation"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -149,6 +154,7 @@ class Model {
         "otp": otp,
         "isVerified": isVerified,
         "completeTasks": completeTasks,
+        "designation": designation,
       };
 }
 
