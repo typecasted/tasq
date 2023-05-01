@@ -368,7 +368,7 @@ class Repository {
     }
   }
 
-  static Future<List<TaskModel>?> getTask({
+  static Future< /* List<TaskModel>? */ dynamic> getTask({
     String? id,
     required String email,
     required bool isPersonal,
@@ -379,7 +379,7 @@ class Repository {
       response = await NetworkServices.post(
         path: "/get-task",
         data: {
-          "id": id ?? "",
+          "_id": id ?? "",
           "email": email,
           "isPersonal": isPersonal.toString(),
         },
@@ -391,18 +391,72 @@ class Repository {
     log("Repository - getTask - Response - status: ${response?.statusCode}");
     log("Repository - getTask - Response - data: ${response?.body}");
 
+    if (/* context.mounted && */
+        NetworkServices.checkResponse(
+      response: response!,
+      context: context,
+    )) {
+      if (id == null) {
+        return List<TaskModel>.from(
+          jsonDecode(response.body)["tasks"].map(
+            (x) => TaskModel.fromJson(x),
+          ),
+        );
+      } else {
+        return TaskModel.fromJson(
+          jsonDecode(response.body)["tasks"][0],
+        );
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<bool> editTask({
+    required BuildContext context,
+    required bool isPersonal,
+    required String status,
+    // required TaskModel taskModel,
+    String? id,
+    required String title,
+    required String description,
+    required String start,
+    required String end,
+    required String email,
+    required String taskId,
+    required bool isCompleted,
+  }) async {
+    Response? response;
+    try {
+      response = await NetworkServices.post(
+        path: "/edit-task",
+        data: {
+          "_id": id ?? taskId,
+          "email": email,
+          "title": title,
+          "description": description,
+          "start": start,
+          "end": end,
+          "status": status,
+          "isCompleted": isCompleted.toString(),
+          "isPersonal": isPersonal.toString(),
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - updateTaskStatus - error: $e", stackTrace: s);
+    }
+
+    log("Repository - updateTaskStatus - Response - status: ${response?.statusCode}");
+    log("Repository - updateTaskStatus - Response - data: ${response?.body}");
+
     if (context.mounted &&
         NetworkServices.checkResponse(
           response: response!,
           context: context,
         )) {
-      return List<TaskModel>.from(
-        jsonDecode(response.body)["tasks"].map(
-          (x) => TaskModel.fromJson(x),
-        ),
-      );
+      return true;
     } else {
-      return null;
+      return false;
     }
   }
 }

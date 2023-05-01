@@ -61,7 +61,9 @@ class AddTaskController extends GetxController {
       final userData = await LocalStorage.getUserData();
       userData?.body?.model?.users?.forEach(
         (element) {
-          if (element.email != null && element.email != "" && !assigneeList.contains(element.email!)) {
+          if (element.email != null &&
+              element.email != "" &&
+              !assigneeList.contains(element.email!)) {
             assigneeList.add(element.email!);
           }
         },
@@ -113,7 +115,7 @@ class AddTaskController extends GetxController {
     );
   }
 
-  Future<void> createTask({
+  Future<void> createOrEditTask({
     required bool isEdit,
     required TaskModel? task,
     required BuildContext context,
@@ -136,6 +138,25 @@ class AddTaskController extends GetxController {
         );
 
         if (isAdded && context.mounted) {
+          Navigator.pop(context);
+        }
+      } else {
+        bool isEdited = await Repository.editTask(
+          title: titleController.text,
+          description: descriptionController.text,
+          start: startDate.value.toIso8601String(),
+          end: endDate.value.toIso8601String(),
+          email: isManager.value
+              ? selectedAssignee.value
+              : userData?.body?.model?.email ?? "",
+          isPersonal: !isManager.value,
+          context: context,
+          taskId: task?.id ?? "",
+          isCompleted: task?.isCompleted ?? false,
+          status: task?.status ?? "",
+        );
+
+        if (isEdited && context.mounted) {
           Navigator.pop(context);
         }
       }

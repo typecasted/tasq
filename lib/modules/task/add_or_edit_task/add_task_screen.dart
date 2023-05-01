@@ -588,7 +588,7 @@ class _AddOrEditTaskScreenState extends State<AddOrEditTaskScreen> {
                         width: Get.width * 0.9,
                         child: TextButton(
                           onPressed: () {
-                            addTaskController.createTask(
+                            addTaskController.createOrEditTask(
                               isEdit: widget.isEdit,
                               task: widget.task,
                               context: context,

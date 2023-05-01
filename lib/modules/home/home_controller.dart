@@ -36,7 +36,7 @@ class HomeController extends GetxController {
     if (context.mounted) {
       await getTasksData(
         context: context,
-        isPersonal: false,
+        isPersonal: true,
       );
     }
     isLoading.value = false;

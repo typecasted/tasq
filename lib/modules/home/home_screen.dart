@@ -113,7 +113,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       /// Priority Tasks slider
                       Expanded(
                         child: RefreshIndicator(
-                          onRefresh: () async {},
+                          onRefresh: () async {
+                            homeController.isLoading.value = true;
+
+                            homeController.getTasksData(
+                              isPersonal: true,
+                              context: context,
+                            );
+                            homeController.isLoading.value = false;
+                          },
                           child: Obx(
                             () => homeController.taskList.isEmpty
                                 ? Center(
@@ -128,10 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                                 : ListView.builder(
                                     shrinkWrap: true,
-                                    physics: const BouncingScrollPhysics(),
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
                                     itemCount: homeController.taskList.length,
-
-                                    // scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       return GestureDetector(
                                         behavior: HitTestBehavior.translucent,
@@ -141,11 +148,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                             MaterialPageRoute(
                                               builder: (context) {
                                                 return TaskDetailsScreen(
-                                                  task: homeController
-                                                      .taskList[index],
+                                                  taskId: homeController
+                                                          .taskList[index].id ??
+                                                      "",
+                                                  isPersonal: homeController
+                                                          .taskList[index]
+                                                          .isPersonal ??
+                                                      false,
                                                 );
                                               },
                                             ),
+                                          ).then(
+                                            (value) {
+                                              homeController.isLoading.value =
+                                                  true;
+                                              homeController.getTasksData(
+                                                isPersonal: true,
+                                                context: context,
+                                              );
+                                              homeController.isLoading.value =
+                                                  false;
+                                            },
                                           );
                                         },
                                         child: Padding(

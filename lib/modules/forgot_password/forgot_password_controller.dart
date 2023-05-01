@@ -25,7 +25,7 @@ class ForgotPasswordController extends GetxController {
   Future<void> onSubmitTap({
     required BuildContext context,
   }) async {
-    if (validateFields()) {
+    if (validateFields(context: context)) {
       showFullScreenLoader(context: context);
 
       /// Forgot password API call
@@ -58,16 +58,16 @@ class ForgotPasswordController extends GetxController {
     }
   }
 
-  bool validateFields() {
+  bool validateFields({required BuildContext context}) {
     if (emailTextController.text.isEmpty) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please enter email"),
         ),
       );
       return false;
     } else if (!GetUtils.isEmail(emailTextController.text)) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please enter valid email"),
         ),
