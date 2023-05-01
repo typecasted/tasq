@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:tasq/models/login_response_model.dart';
+import 'package:tasq/models/remarks_list.dart';
 import 'package:tasq/models/user_model.dart';
 import '../../common_widgets/full_screen_loader.dart';
 import '../../modules/otp/otp_screen.dart';
@@ -454,6 +455,71 @@ class Repository {
           response: response!,
           context: context,
         )) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<List<RemarksModel>> getRemarks({
+    required String taskId,
+    required BuildContext context,
+  }) async {
+    Response? response;
+
+    try {
+      response = await NetworkServices.post(
+        path: "/get-remarks",
+        data: {
+          "taskId": taskId,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - getRemarks - error: $e", stackTrace: s);
+    }
+
+    log("Repository - getRemarks - Response - status: ${response?.statusCode}");
+    log("Repository - getRemarks - Response - data: ${response?.body}");
+
+    if (NetworkServices.checkResponse(response: response!, context: context)) {
+      return List<RemarksModel>.from(
+        jsonDecode(response.body)["remarks"].map(
+          (x) => RemarksModel.fromJson(x),
+        ),
+      );
+    } else {
+      return [];
+    }
+  }
+
+  static Future<bool> addRemarks({
+    required String taskId,
+    required BuildContext context,
+    required String message,
+    required String email,
+    
+    required String dateTime,
+  }) async {
+    Response? response;
+
+    try {
+      response = await NetworkServices.post(
+        path: "/add-remark",
+        data: {
+          "taskId": taskId,
+          "message": message,
+          "email": email,
+          "dateTime": dateTime,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - addRemarks - error: $e", stackTrace: s);
+    }
+
+    log("Repository - addRemarks - Response - status: ${response?.statusCode}");
+    log("Repository - addRemarks - Response - data: ${response?.body}");
+
+    if (NetworkServices.checkResponse(response: response!, context: context)) {
       return true;
     } else {
       return false;

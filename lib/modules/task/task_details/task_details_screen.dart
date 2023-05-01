@@ -254,7 +254,9 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                               behavior: HitTestBehavior.translucent,
                               onTap: () {
                                 taskDetailController.onRemarksTap(
-                                    context: context);
+                                  context: context,
+                                  taskId: widget.taskId,
+                                );
                               },
                               child: Row(
                                 mainAxisAlignment:
@@ -273,6 +275,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                     onPressed: () {
                                       taskDetailController.onRemarksTap(
                                         context: context,
+                                        taskId: widget.taskId,
                                       );
                                     },
                                     icon: const Icon(

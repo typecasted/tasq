@@ -39,12 +39,17 @@ class TaskDetailController extends GetxController {
     isLoading.value = false;
   }
 
-  void onRemarksTap({required BuildContext context}) {
+  void onRemarksTap({
+    required BuildContext context,
+    required String taskId,
+  }) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
-          return const RemarkScreen();
+          return RemarkScreen(
+            taskId: taskId,
+          );
         },
       ),
     );
@@ -54,8 +59,7 @@ class TaskDetailController extends GetxController {
       {required BuildContext context,
       required bool isPersonal,
       required String status,
-      required String email
-      }) async {
+      required String email}) async {
     showFullScreenLoader(context: context);
 
     if (context.mounted) {}
