@@ -127,7 +127,7 @@ class HomeController extends GetxController {
     final userData = await LocalStorage.getUserData();
 
     greetingMessage.value =
-        "Welcome ${userData?.body?.model?.firmName ?? ""}!!!";
+        "Welcome ${userData?.body?.model?.firstName ?? ""}!!!";
   }
 
   /// - [taskList] is used to show the list of tasks.
