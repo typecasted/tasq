@@ -185,7 +185,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       MaterialPageRoute(
                         builder: (context) => const MyProfileScreen(),
                       ),
-                    );
+                    ).then((value) async {
+                      await profileController.fetchUserData(context: context);
+                    });
                   },
                 ),
                 Obx(

@@ -561,4 +561,38 @@ class Repository {
       return false;
     }
   }
+
+  static Future<UserModel> getUserData({
+    required String email,
+    required String isManager,
+    required BuildContext context,
+  }) async {
+    Response? response;
+
+    try {
+      response = await NetworkServices.post(
+        path: "/get-user-profile",
+        data: {
+          "email": email,
+          "isManager": isManager,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - getUserData - error: $e", stackTrace: s);
+    }
+
+    log("Repository - getUserData - Response - status: ${response?.statusCode}");
+    log("Repository - getUserData - Response - data: ${response?.body}");
+
+    if (NetworkServices.checkResponse(
+      response: response!,
+      context: context,
+    )) {
+      return UserModel.fromJson(
+        jsonDecode(response.body),
+      );
+    } else {
+      return UserModel();
+    }
+  }
 }

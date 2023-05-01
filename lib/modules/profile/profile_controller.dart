@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasq/models/user_model.dart';
@@ -34,6 +33,20 @@ class ProfileController extends GetxController {
 
   Future<void> initProfileScreen() async {
     isLoggedInAsManager.value = await LocalStorage.getIsLoggedInAsManager();
+    userData.value = await LocalStorage.getUserData() ?? UserModel();
+  }
+
+  Future<void> fetchUserData({
+    required BuildContext context,
+  }) async {
+    // userData.value = await Repository.getUserData(
+    //   context: context,
+    //   email: (await LocalStorage.getUserData())!.body!.model!.email ?? "",
+    //   isManager: (await LocalStorage.getIsLoggedInAsManager()).toString(),
+    // );
+
+    // await LocalStorage.saveUserData(data: userData.value);
+
     userData.value = await LocalStorage.getUserData() ?? UserModel();
   }
 }

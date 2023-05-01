@@ -153,6 +153,22 @@ class HomeController extends GetxController {
 
     isTaskLoading.value = false;
   }
+
+  Future<void> fetchUserData({
+    required BuildContext context,
+  }) async {
+    // final userData = await Repository.getUserData(
+    //   context: context,
+    //   email: (await LocalStorage.getUserData())!.body!.model!.email ?? "",
+    //   isManager: (await LocalStorage.getIsLoggedInAsManager()).toString(),
+    // );
+
+    // await LocalStorage.saveUserData(
+    //   data: userData,
+    // );
+
+    await getGreetingsMessage();
+  }
 }
 
 HomeController get homeController => Get.put(HomeController());
