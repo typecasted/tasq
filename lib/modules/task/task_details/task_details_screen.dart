@@ -247,36 +247,40 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
                       const Divider(height: 30),
 
-                      GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () {
-                          taskDetailController.onRemarksTap(context: context);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              AppStrings.remarks,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: FontFamily.poppins,
+                      widget.isPersonal
+                          ? const SizedBox()
+                          : GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                taskDetailController.onRemarksTap(
+                                    context: context);
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    AppStrings.remarks,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: FontFamily.poppins,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      taskDetailController.onRemarksTap(
+                                        context: context,
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.open_in_new_outlined,
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                taskDetailController.onRemarksTap(
-                                  context: context,
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.open_in_new_outlined,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
 
                       // // Progress bar
                       // Text(
@@ -356,7 +360,7 @@ class _TaskStatusActionButtonState extends State<TaskStatusActionButton> {
       } else if (widget.status == "In Progress") {
         return "Complete";
       } else {
-        return "Completed";
+        return "";
       }
     } else {
       /// if the logged in user is not manager then action button will change accordingly
@@ -416,8 +420,6 @@ class _TaskStatusActionButtonState extends State<TaskStatusActionButton> {
         return "In Progress";
       } else if (taskStatusActionButtonText == "Complete") {
         return "Completed";
-      } else {
-        return "";
       }
     } else {
       /// if the logged in user is not manager then action button will change accordingly

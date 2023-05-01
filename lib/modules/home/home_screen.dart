@@ -44,7 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-          );
+          ).then((value) {
+            homeController.getTasksData(
+              isPersonal: true,
+              context: context,
+            );
+          });
         },
         backgroundColor: AppColors.primaryColor,
         child: const Icon(Icons.add),
@@ -75,9 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               // color: Colors.black,
                             ),
                           ),
-                          SvgPicture.asset(
-                            Assets.svgs.icNotificationBellFilled,
-                          )
+                          // SvgPicture.asset(
+                          //   Assets.svgs.icNotificationBellFilled,
+                          // )
                         ],
                       ),
 
@@ -159,10 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               },
                                             ),
                                           ).then(
-                                            (value) {
+                                            (value) async {
                                               homeController.isLoading.value =
                                                   true;
-                                              homeController.getTasksData(
+
+                                              await homeController.getTasksData(
                                                 isPersonal: true,
                                                 context: context,
                                               );
