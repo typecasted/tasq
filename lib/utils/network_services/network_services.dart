@@ -8,7 +8,7 @@ import '../app_colors.dart';
 
 class NetworkServices {
   /// - [baseUrl] is the base url of the backend
-  static const String baseUrl = "http://192.168.1.39:3000";
+  static const String baseUrl = "http://192.168.154.205:3000";
 
   /// - [checkResponse] is used to check the response of the backend
   /// - [response] is the response of the backend

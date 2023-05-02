@@ -189,37 +189,37 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                   ),
 
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: Get.height * 0.03,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 10,
-                          child: Divider(color: AppColors.primaryColor),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Get.width * 0.02),
-                          child: Text(
-                            AppStrings.orLoginWith,
-                            style: TextStyle(
-                              fontSize: Get.height * 0.014,
-                              color: AppColors.solidTextColor,
-                              fontFamily: FontFamily.poppins,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                          child: Divider(color: AppColors.primaryColor),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(
+                  //     vertical: Get.height * 0.03,
+                  //   ),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       SizedBox(
+                  //         width: 10,
+                  //         child: Divider(color: AppColors.primaryColor),
+                  //       ),
+                  //       Padding(
+                  //         padding: EdgeInsets.symmetric(
+                  //             horizontal: Get.width * 0.02),
+                  //         child: Text(
+                  //           AppStrings.orLoginWith,
+                  //           style: TextStyle(
+                  //             fontSize: Get.height * 0.014,
+                  //             color: AppColors.solidTextColor,
+                  //             fontFamily: FontFamily.poppins,
+                  //             fontWeight: FontWeight.w400,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       SizedBox(
+                  //         width: 10,
+                  //         child: Divider(color: AppColors.primaryColor),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
 
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,

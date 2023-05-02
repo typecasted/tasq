@@ -6,6 +6,7 @@ import 'package:tasq/common_widgets/full_screen_loader.dart';
 import 'package:tasq/utils/network_services/repository.dart';
 
 import '../../utils/app_colors.dart';
+import '../../utils/local_storage.dart';
 
 class AddUserController extends GetxController {
   TextEditingController toEmailController = TextEditingController();
@@ -46,6 +47,8 @@ class AddUserController extends GetxController {
     )) {
       showFullScreenLoader(context: context);
 
+      final userData = await LocalStorage.getUserData();
+
       bool isSent = await Repository.addUser(
         managerEmail: managerEmail,
         toEmail: toEmailController.text,
@@ -55,6 +58,8 @@ class AddUserController extends GetxController {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         context: context,
+        firmName: userData?.body?.model?.firmName ?? "",
+        // firmName:
       );
 
       log("AddUserController - addUserButtonTap - isSent: $isSent");

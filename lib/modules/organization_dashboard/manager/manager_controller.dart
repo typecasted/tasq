@@ -21,7 +21,9 @@ class ManagerController extends GetxController {
     log("getManagerInfo called");
     isLoading.value = true;
 
-    assigneeList.clear();
+    if (assigneeList.isNotEmpty) {
+      assigneeList.clear();
+    }
 
     userData = (await LocalStorage.getUserData())!;
 

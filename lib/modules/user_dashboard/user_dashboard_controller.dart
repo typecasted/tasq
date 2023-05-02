@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasq/modules/organization_dashboard/organization_dashboard_screen.dart';
+import 'package:tasq/utils/local_storage.dart';
 
 /// utils imports
 import '../../utils/assets.gen.dart';
@@ -32,18 +33,36 @@ class DashboardController extends GetxController {
     dashboardScreenList.clear();
     navIconList.clear();
 
-    /// initializing the lists
-    dashboardScreenList.addAll([
-      const HomeScreen(),
-      const OrganizationDashboardScreen(),
-      const ProfileScreen(),
-    ]);
+    final userData = await LocalStorage.getUserData();
 
-    navIconList.addAll([
-      Assets.svgs.icHomeFilled,
-      Assets.svgs.icCalenderFilled,
-      Assets.svgs.icPersonFilled,
-    ]);
+    userData?.body?.model?.firmName != null
+        ? navIconList.addAll([
+            Assets.svgs.icHomeFilled,
+            Assets.svgs.icCalenderFilled,
+            Assets.svgs.icPersonFilled,
+          ])
+        : navIconList.addAll([
+            Assets.svgs.icHomeFilled,
+            // Assets.svgs.icCalenderFilled,
+            Assets.svgs.icPersonFilled,
+          ]);
+
+    userData?.body?.model?.firmName != null
+        ?
+
+        /// initializing the lists
+        dashboardScreenList.addAll([
+            const HomeScreen(),
+            const OrganizationDashboardScreen(),
+            const ProfileScreen(),
+          ])
+        : dashboardScreenList.addAll([
+            const HomeScreen(),
+            // const OrganizationDashboardScreen(),
+            const ProfileScreen(),
+          ]);
+
+    
   }
 
   void changeScreen(int index) {

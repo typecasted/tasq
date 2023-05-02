@@ -116,15 +116,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            const SizedBox(height: 5),
-                            Text(
-                              "Completed Tasks : ${profileController.userData.value.body?.model?.completeTasks != null ? profileController.userData.value.body?.model?.completeTasks.toString() : ''}",
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+
+                            // const SizedBox(height: 5),
+                            // Text(
+                            //   "Completed Tasks : ${profileController.userData.value.body?.model?.completeTasks != null ? profileController.userData.value.body?.model?.completeTasks.toString() : ''}",
+                            //   style: const TextStyle(
+                            //     color: Colors.black,
+                            //     fontSize: 14,
+                            //     fontWeight: FontWeight.w400,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

@@ -74,74 +74,87 @@ class _ManagerScreenState extends State<ManagerScreen> {
                       ),
 
                       Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: managerController.assigneeList.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              dense: true,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return TaskListingScreen(
-                                        assignee: managerController
-                                            .assigneeList[index],
+                        child: managerController.assigneeList.isEmpty
+                            ? Center(
+                                child: Text(
+                                  "No Assignees",
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.poppins,
+                                    fontSize: Get.height * 0.02,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    managerController.assigneeList.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    dense: true,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return TaskListingScreen(
+                                              assignee: managerController
+                                                  .assigneeList[index],
+                                            );
+                                          },
+                                        ),
+                                      ).then(
+                                        (value) {
+                                          managerController.getManagerInfo();
+                                        },
                                       );
                                     },
-                                  ),
-                                ).then(
-                                  (value) {
-                                    managerController.getManagerInfo();
-                                  },
-                                );
-                              },
-                              title: Text(
-                                managerController.assigneeList[index].email ??
-                                    "",
-                                style: TextStyle(
-                                  fontFamily: FontFamily.poppins,
-                                  fontSize: Get.height * 0.02,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              subtitle: Text(
-                                managerController
-                                        .assigneeList[index].designation ??
-                                    "",
-                                style: TextStyle(
-                                  fontFamily: FontFamily.poppins,
-                                  fontSize: Get.height * 0.018,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              trailing: IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return TaskListingScreen(
-                                          assignee: managerController
-                                              .assigneeList[index],
+                                    title: Text(
+                                      managerController
+                                              .assigneeList[index].email ??
+                                          "",
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.poppins,
+                                        fontSize: Get.height * 0.02,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      managerController.assigneeList[index]
+                                              .designation ??
+                                          "",
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.poppins,
+                                        fontSize: Get.height * 0.018,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    trailing: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return TaskListingScreen(
+                                                assignee: managerController
+                                                    .assigneeList[index],
+                                              );
+                                            },
+                                          ),
+                                        ).then(
+                                          (value) {
+                                            managerController.getManagerInfo();
+                                          },
                                         );
                                       },
+                                      icon: Icon(
+                                        Icons.arrow_forward_ios_outlined,
+                                        size: Get.height * 0.02,
+                                      ),
                                     ),
-                                  ).then(
-                                    (value) {
-                                      managerController.getManagerInfo();
-                                    },
                                   );
                                 },
-                                icon: Icon(
-                                  Icons.arrow_forward_ios_outlined,
-                                  size: Get.height * 0.02,
-                                ),
                               ),
-                            );
-                          },
-                        ),
                       ),
                     ],
                   ),

@@ -264,6 +264,7 @@ class Repository {
     required String remarks,
     required String firstName,
     required String lastName,
+    required String firmName,
     required BuildContext context,
   }) async {
     Response? response;
@@ -278,6 +279,7 @@ class Repository {
           "note": remarks,
           "firstName": firstName,
           "lastName": lastName,
+          "firmName": firmName,
         },
       );
     } on Exception catch (e, s) {
@@ -471,7 +473,7 @@ class Repository {
       response = await NetworkServices.post(
         path: "/get-remarks",
         data: {
-          "taskId": taskId,
+          "task_id": taskId,
         },
       );
     } on Exception catch (e, s) {
@@ -505,7 +507,7 @@ class Repository {
       response = await NetworkServices.post(
         path: "/add-remark",
         data: {
-          "taskId": taskId,
+          "task_id": taskId,
           "message": message,
           "email": email,
           "dateTime": dateTime,
