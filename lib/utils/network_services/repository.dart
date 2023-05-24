@@ -66,6 +66,8 @@ class Repository {
           context: context,
         )) {
       return userModelFromJson(response.body);
+    } else {
+      return null;
     }
   }
 
@@ -133,10 +135,11 @@ class Repository {
               },
             ),
           );
+        } else {
+          return null;
         }
-
-        return null;
       }
+      return null;
     }
   }
 

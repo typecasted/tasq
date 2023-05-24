@@ -88,6 +88,7 @@ class _RemarkScreenState extends State<RemarkScreen> {
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               return Container(
+                                width: Get.width * 3,
                                 margin: EdgeInsets.only(
                                   bottom: Get.height * 0.02,
                                 ),

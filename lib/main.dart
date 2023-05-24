@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tasq',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: AppColors.materialColor,
         scaffoldBackgroundColor: Colors.white,

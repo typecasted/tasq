@@ -48,11 +48,11 @@ class Body {
       );
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-        model: Model.fromJson(json["model"]),
+        model: Model.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "model": model?.toJson(),
+        "user": model?.toJson(),
       };
 }
 
