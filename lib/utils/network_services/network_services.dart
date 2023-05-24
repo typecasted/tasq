@@ -8,6 +8,7 @@ import '../app_colors.dart';
 
 class NetworkServices {
   /// - [baseUrl] is the base url of the backend
+  /// - add your local host IP and port here
   static const String baseUrl = "http://192.168.138.205:3000";
 
   /// - [checkResponse] is used to check the response of the backend

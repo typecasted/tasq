@@ -632,4 +632,35 @@ class Repository {
       return false;
     }
   }
+
+  static Future<List<TaskModel>?> getStatistics({
+    required String userEmail,
+    required BuildContext context,
+  }) async {
+    Response? response;
+
+    try {
+      response = await NetworkServices.post(
+        path: "/statistics",
+        data: {
+          "email": userEmail,
+        },
+      );
+    } on Exception catch (e, s) {
+      log("Repository - getStatistics - error: $e", stackTrace: s);
+    }
+
+    log("Repository - getStatistics - Response - status: ${response?.statusCode}");
+    log("Repository - getStatistics - Response - data: ${response?.body}");
+
+    if (NetworkServices.checkResponse(
+      response: response!,
+      context: context,
+    )) {
+      return List<TaskModel>.from(
+          jsonDecode(response.body)["tasks"].map((x) => TaskModel.fromJson(x)));
+    } else {
+      return null;
+    }
+  }
 }

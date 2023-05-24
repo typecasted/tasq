@@ -39,7 +39,7 @@ class HomeController extends GetxController {
         isPersonal: true,
       );
     }
-    isLoading.value = false;
+    isLoading.value = false;    
   }
 
   /// - [getDayAndDateValues] function is used to get the current Day and Date.
@@ -171,4 +171,4 @@ class HomeController extends GetxController {
   }
 }
 
-HomeController get homeController => Get.put(HomeController());
+
