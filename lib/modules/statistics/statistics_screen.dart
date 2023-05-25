@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasq/modules/statistics/employee_listing_screen.dart';
 
 import '../../utils/app_colors.dart';
 import '../../utils/app_strings.dart';
@@ -7,7 +8,7 @@ import '../../utils/fonts.gen.dart';
 import 'statistics_screen_controller.dart';
 
 class StatisticsScreen extends StatefulWidget {
-const StatisticsScreen({super.key});
+  const StatisticsScreen({super.key});
 
   @override
   State<StatisticsScreen> createState() => _StatisticsScreenState();
@@ -30,17 +31,90 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StatisticsGridScreen(statisticsController: statisticsController);
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+
+        title: Text(
+          AppStrings.statistics,
+          style: TextStyle(
+
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            fontFamily: FontFamily.poppins,
+            color: AppColors.primaryColor,
+          ),
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            margin: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: AppColors.primaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: const Icon(
+
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 18,
+            ),
+          ),
+        ),
+      ),
+      body: Obx(
+        () => !statisticsController.isLoading.value
+            ? statisticsController.isManager.value
+                ? EmployeeListingScreenStats(
+                    statisticsController: statisticsController,
+                  )
+                : StatisticsGridScreen(
+                    statisticsController: statisticsController,
+                  )
+            : Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
+              ),
+      ),
+    );
   }
 }
 
-class StatisticsGridScreen extends StatelessWidget {
+class StatisticsGridScreen extends StatefulWidget {
   const StatisticsGridScreen({
     super.key,
     required this.statisticsController,
+    this.userEmail,
   });
 
   final StatisticsController statisticsController;
+  final String? userEmail;
+
+  @override
+  State<StatisticsGridScreen> createState() => _StatisticsGridScreenState();
+}
+
+class _StatisticsGridScreenState extends State<StatisticsGridScreen> {
+  @override
+  void initState() {
+    super.initState();
+    widget.statisticsController.getStatistics(
+      context: context,
+      userEmail: widget.userEmail,
+    );
+  }
+
+  @override
+  void dispose() {
+    widget.statisticsController.configureStatisticsScreen();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +169,8 @@ class StatisticsGridScreen extends StatelessWidget {
                   topRight: Radius.circular(40),
                 ),
               ),
-              child: Obx(() => statisticsController.isLoading.value
+              child: Obx(() => widget.statisticsController.isStatsLoading.value
+
                       ? Center(
                           child: CircularProgressIndicator(
                             color: AppColors.primaryColor,
@@ -108,12 +183,15 @@ class StatisticsGridScreen extends StatelessWidget {
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
                           ),
-                          itemCount: statisticsController.statisticsMap.length,
+                          itemCount:
+                              widget.statisticsController.statisticsMap.length,
                           itemBuilder: (context, index) {
                             return StatisticCard(
-                              title: statisticsController.statisticsMap.keys
+                              title: widget
+                                  .statisticsController.statisticsMap.keys
                                   .toList()[index],
-                              value: statisticsController.statisticsMap.values
+                              value: widget
+                                  .statisticsController.statisticsMap.values
                                   .toList()[index]
                                   .toString(),
                             );

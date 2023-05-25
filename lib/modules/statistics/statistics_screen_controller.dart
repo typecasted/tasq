@@ -13,6 +13,9 @@ class StatisticsController extends GetxController {
   /// [isLoading] is used for showing and hiding and loader at the time of screen initialization.
   RxBool isLoading = true.obs;
 
+  /// [isStatsLoading] is used for showing and hiding and loader at the time of getting statistics data.
+  RxBool isStatsLoading = true.obs;
+
   /// [totalTasks] is used to show the total number of tasks.
   int totalTasks = 0;
 
@@ -39,6 +42,11 @@ class StatisticsController extends GetxController {
 
   UserModel? _userData;
 
+  /// [isManager] is used to check if the user is manager or not.
+  RxBool isManager = false.obs;
+
+  List<User> assigneeList = [];
+
   /// [statisticsMap] is used to show the statistics data in the grid view.
   RxMap<String, int> get statisticsMap => {
         "Total Tasks": totalTasks,
@@ -55,6 +63,7 @@ class StatisticsController extends GetxController {
   /// it will be called in [initState] method of [StatisticsScreen] widget.
   /// it will set the initial values of the variables.
   /// it will also get the user data from the local storage.
+  /// if the user is manager then it will get the list of the assignees.
   configureStatisticsScreen() async {
     isLoading.value = true;
     totalTasks = 0;
@@ -68,6 +77,18 @@ class StatisticsController extends GetxController {
     isLoading.value = false;
 
     _userData = await LocalStorage.getUserData();
+
+    isManager.value = await LocalStorage.getIsLoggedInAsManager();
+
+    if (isManager.value) {
+      _userData?.body?.model?.users?.forEach(
+        (element) {
+          assigneeList.add(element);
+        },
+      );
+    }
+
+    isLoading.value = false;
   }
 
   /// [getStatistics] method will get the statistics data.
@@ -75,11 +96,11 @@ class StatisticsController extends GetxController {
   /// if the user is not manager then it will get the statistics data of the logged in user's email.
   Future<void> getStatistics(
       {required BuildContext context, String? userEmail}) async {
-    final bool isManager = await LocalStorage.getIsLoggedInAsManager();
-
+    // isStatsLoading.value = true;
     taskList = await Repository.getStatistics(
-      userEmail:
-          isManager ? userEmail ?? "" : _userData?.body?.model?.email ?? "",
+      userEmail: isManager.value
+          ? userEmail ?? ""
+          : _userData?.body?.model?.email ?? "",
       context: context,
     );
 
@@ -104,7 +125,7 @@ class StatisticsController extends GetxController {
       }
     }
 
-    isLoading.value = false;
+    isStatsLoading.value = false;
   }
 
   /// [onStatisticsTileTap] method will be called when the user tap on the statistics tile.
