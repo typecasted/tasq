@@ -99,61 +99,64 @@ class _TaskListingScreenState extends State<TaskListingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Obx(
-              () => taskListingController.isLoading.value
-                  ? SizedBox(
-                      height: Get.height * 0.8,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : taskListingController.taskList.isEmpty
-                      ? SizedBox(
-                          height: Get.height * 0.8,
-                          child: Center(
-                            child: Text(
-                              "No tasks assigned",
-                              style: TextStyle(
-                                fontSize: Get.height * 0.024,
-                                fontWeight: FontWeight.w500,
+            Expanded(
+              
+              child: Obx(
+                () => taskListingController.isLoading.value
+                    ? SizedBox(
+                        height: Get.height * 0.8,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : taskListingController.taskList.isEmpty
+                        ? SizedBox(
+                            height: Get.height * 0.8,
+                            child: Center(
+                              child: Text(
+                                "No tasks assigned",
+                                style: TextStyle(
+                                  fontSize: Get.height * 0.024,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: taskListingController.taskList.length,
-                          itemBuilder: (context, index) {
-                            return TaskDetailsTile(
-                              taskDetails:
-                                  taskListingController.taskList[index],
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return TaskDetailsScreen(
-                                        isPersonal: false,
-                                        taskId: taskListingController
-                                                .taskList[index].id ??
-                                            "",
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: taskListingController.taskList.length,
+                            itemBuilder: (context, index) {
+                              return TaskDetailsTile(
+                                taskDetails:
+                                    taskListingController.taskList[index],
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return TaskDetailsScreen(
+                                          isPersonal: false,
+                                          taskId: taskListingController
+                                                  .taskList[index].id ??
+                                              "",
+                                        );
+                                      },
+                                    ),
+                                  ).then(
+                                    (value) {
+                                      taskListingController
+                                          .initTaskListingScreenList(
+                                        context: context,
+                                        email: widget.assignee.email ?? "",
                                       );
                                     },
-                                  ),
-                                ).then(
-                                  (value) {
-                                    taskListingController
-                                        .initTaskListingScreenList(
-                                      context: context,
-                                      email: widget.assignee.email ?? "",
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        ),
-            
+                                  );
+                                },
+                              );
+                            },
+                          ),
+              
+              ),
             ),
           ],
         ),
