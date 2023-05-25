@@ -7,7 +7,7 @@ import '../../utils/fonts.gen.dart';
 import 'statistics_screen_controller.dart';
 
 class StatisticsScreen extends StatefulWidget {
-  const StatisticsScreen({super.key});
+const StatisticsScreen({super.key});
 
   @override
   State<StatisticsScreen> createState() => _StatisticsScreenState();
@@ -19,7 +19,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   @override
   void initState() {
     super.initState();
-    statisticsController.getStatistics(context: context);
+    statisticsController.configureStatisticsScreen();
   }
 
   @override
@@ -27,6 +27,20 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     statisticsController.dispose();
     super.dispose();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return StatisticsGridScreen(statisticsController: statisticsController);
+  }
+}
+
+class StatisticsGridScreen extends StatelessWidget {
+  const StatisticsGridScreen({
+    super.key,
+    required this.statisticsController,
+  });
+
+  final StatisticsController statisticsController;
 
   @override
   Widget build(BuildContext context) {
